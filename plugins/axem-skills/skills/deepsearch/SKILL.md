@@ -197,7 +197,7 @@ Plusieurs modes peuvent être activés simultanément.
 ### 🎯 Mode Social Listening
 **Triggers** : "qui parle de [marque/personne]", "monitor [X]", "mentions de", "veille concurrentielle", "que dit-on de"
 
-**Cible** : la `marque_a_monitorer` du triage (ex: "Axem IA", "Synapse IA", concurrent).
+**Cible** : la `marque_a_monitorer` du triage (ex: "Axem IA", une marque concurrente).
 
 **Agents** :
 - **SL-1** — Mentions cross-plateformes (Reddit + X + YouTube comments + LinkedIn + presse) sur 30 derniers jours.
