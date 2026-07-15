@@ -1,0 +1,6 @@
+{
+  "name": "axem-skills",
+  "description": "Skills génériques réutilisables de Clément Predo (Axem IA) : recherche adversariale, design, process, méta-outils.",
+  "version": "1.0.0",
+  "author": { "name": "Clément Predo" }
+}

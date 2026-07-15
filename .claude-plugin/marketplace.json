@@ -1,0 +1,11 @@
+{
+  "name": "axem-marketplace",
+  "owner": { "name": "Clément Predo" },
+  "plugins": [
+    {
+      "name": "axem-skills",
+      "source": "./plugins/axem-skills",
+      "description": "Skills génériques réutilisables (recherche, design, process, méta) de Clément Predo — Axem IA"
+    }
+  ]
+}

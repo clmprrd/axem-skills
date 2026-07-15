@@ -1,0 +1,249 @@
+<!--
+  BASE TEMPLATE — webinar-prep skill
+  ====================================
+  Copy this whole file as the starting point for a new cheat sheet, then:
+    1. Fill in the <title> and the header (event name, date, time, your segment).
+    2. Rebuild the <div class="nav"> links to match the real sections you create.
+    3. Rebuild the .timeline rows to match the real program (mark your own row with class="row mine").
+    4. For each section of the script, duplicate one ".card" block (see the two examples
+       below: a plain talking-point card, and a demo card with a copyable prompt).
+       Give each <pre> a unique id (p-demo1, p-demo2, ...) and match it in the button's
+       onclick="copyPrompt('THE-ID', this)".
+    5. Keep the <script> block at the bottom EXACTLY as-is — it's the clipboard-copy logic,
+       already handles the file:// / non-secure-context case that breaks the plain
+       navigator.clipboard API in several browsers.
+    6. Delete this comment block once you're done.
+-->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[NOM DU WEBINAIRE] — Script &amp; Prompts</title>
+<style>
+:root{
+  --bg:#f6f5f2; --card:#ffffff; --ink:#1a1a1a; --muted:#6b6b6b;
+  --line:#e6e3dd; --accent:#cc6b49; --accent2:#2f6f6b; --gold:#c79a3a;
+  --soft:#fbf9f6; --danger:#b1542f;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+  line-height:1.55;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:20px 18px 90px;}
+
+/* Sticky nav */
+.nav{position:sticky;top:0;z-index:50;background:rgba(246,245,242,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--line);padding:10px 0;margin:-20px -18px 20px;padding-left:18px;padding-right:18px;
+  display:flex;gap:6px;flex-wrap:wrap;}
+.nav a{font-size:12px;font-weight:700;color:var(--accent2);text-decoration:none;background:#fff;
+  border:1px solid var(--line);padding:6px 10px;border-radius:999px;white-space:nowrap;}
+.nav a:hover{background:var(--soft);}
+
+header.hero{background:linear-gradient(135deg,#2f6f6b 0%,#264f4c 100%);color:#fff;border-radius:18px;
+  padding:24px 26px;box-shadow:0 8px 24px rgba(0,0,0,.12);margin-bottom:18px;}
+header.hero .kicker{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;opacity:.8;margin:0 0 8px;}
+header.hero h1{margin:0 0 6px;font-size:23px;line-height:1.25;}
+header.hero .sub{font-size:13.5px;opacity:.9;margin:0 0 14px;}
+.meta{display:flex;flex-wrap:wrap;gap:7px;}
+.meta span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);padding:5px 10px;
+  border-radius:999px;font-size:12px;}
+
+.timeline{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:20px;
+  font-size:13px;}
+.timeline .row{display:flex;gap:10px;padding:5px 0;border-bottom:1px dashed var(--line);}
+.timeline .row:last-child{border-bottom:none;}
+.timeline .t{flex:0 0 76px;font-weight:700;color:var(--accent2);font-variant-numeric:tabular-nums;}
+.timeline .who{flex:0 0 74px;font-weight:700;color:var(--muted);}
+.timeline .desc{flex:1;}
+.timeline .row.mine{background:rgba(204,107,73,.07);border-radius:8px;}
+.timeline .row.mine .who{color:var(--accent);}
+
+.section-title{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  margin:30px 2px 12px;font-weight:800;}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:16px;
+  box-shadow:0 1px 3px rgba(0,0,0,.05);}
+.card h3{margin:0 0 3px;font-size:17px;}
+.card .tag-row{margin:2px 0 12px;}
+.tag{display:inline-block;background:var(--soft);border:1px solid var(--line);color:var(--muted);
+  font-size:11px;padding:2px 8px;border-radius:999px;margin:2px 4px 2px 0;font-weight:600;}
+.tag.time{background:rgba(47,111,107,.13);color:var(--accent2);border-color:transparent;}
+.tag.warn{background:rgba(177,84,47,.14);color:var(--danger);border-color:transparent;font-weight:800;}
+
+.script p{font-size:14.5px;margin:0 0 10px;}
+.script .say{background:var(--soft);border-left:3px solid var(--accent2);padding:10px 13px;border-radius:8px;
+  font-style:italic;color:#33514f;margin:8px 0;font-size:14px;}
+.script .cue{color:var(--muted);font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;
+  margin:14px 0 4px;}
+.script .action{background:rgba(199,154,58,.12);border:1px solid rgba(199,154,58,.3);border-radius:8px;
+  padding:9px 12px;font-size:13.5px;margin:8px 0;}
+.script .action b{color:#9c7720;}
+
+.promptbox{margin-top:12px;background:#1f2724;border-radius:10px;overflow:hidden;border:1px solid #16302b;}
+.promptbox .plabel{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  background:#16302b;color:#bfe3dd;font-size:11px;letter-spacing:.04em;text-transform:uppercase;
+  font-weight:800;padding:8px 12px;}
+.promptbox pre{margin:0;padding:14px 15px;color:#e9f3f0;font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+  font-size:13px;line-height:1.55;white-space:pre-wrap;}
+.copybtn{background:var(--accent);color:#fff;border:none;padding:6px 13px;border-radius:999px;
+  font-size:11.5px;font-weight:800;cursor:pointer;letter-spacing:.02em;white-space:nowrap;
+  transition:background .15s, transform .1s;}
+.copybtn:hover{background:var(--danger);}
+.copybtn:active{transform:scale(.95);}
+.copybtn.copied{background:var(--accent2)!important;}
+.promptbox.bonus{border-color:#5a3b1a;}
+.promptbox.bonus .plabel{background:#3a2810;color:#f3d9a9;}
+.promptbox.bonus pre{color:#f6ecd9;}
+.promptbox.bonus{background:#241c10;}
+.promptbox.bonus .copybtn{background:var(--gold);color:#241c10;}
+
+.compliance{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+@media(max-width:640px){.compliance{grid-template-columns:1fr;}}
+.ccard{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13px;}
+.ccard b{display:block;font-size:13px;color:var(--ink);margin-bottom:3px;}
+
+.qplant{background:var(--card);border:1px dashed var(--line);border-radius:10px;padding:8px 12px;
+  margin:6px 0;font-size:13.5px;}
+
+.check{background:var(--card);border:1px dashed var(--line);border-radius:14px;padding:16px 18px;
+  font-size:13.5px;color:#444;}
+.check li{margin:5px 0;}
+
+.foot{text-align:center;color:var(--muted);font-size:12px;margin-top:26px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- STEP 2: rebuild these anchors to match your real sections -->
+<div class="nav">
+  <a href="#timing">⏱️ Déroulé</a>
+  <a href="#demo1">Démo 1</a>
+  <a href="#qa">Q&amp;A</a>
+  <a href="#check">Checklist</a>
+</div>
+
+<!-- STEP 1: event header -->
+<header class="hero">
+  <p class="kicker">[Organisateur × Partenaire] — Webinaire live</p>
+  <h1>[Titre du webinaire]</h1>
+  <p class="sub">"[Accroche / promesse du webinaire]"</p>
+  <div class="meta">
+    <span>📅 [Date]</span>
+    <span>⏱️ [Horaire] ([durée totale])</span>
+    <span>🎯 Ta partie : [durée] de [type]</span>
+    <span>🔴 [Outils/connecteurs utilisés]</span>
+  </div>
+</header>
+
+<!-- STEP 3: full program timeline, your row highlighted with class="row mine" -->
+<div class="timeline" id="timing">
+  <div class="row"><div class="t">[00:00]</div><div class="who">[Qui]</div><div class="desc">[Ce qui se passe]</div></div>
+  <div class="row mine"><div class="t">[+X min]</div><div class="who">🎤 TOI</div><div class="desc"><b>[Ta portion en une phrase.]</b> [Résumé de l'enchaînement.]</div></div>
+  <div class="row"><div class="t">[+X min]</div><div class="who">[Qui]</div><div class="desc">[Ce qui se passe]</div></div>
+  <!-- if your segment ends up longer than what was agreed with other speakers, flag it visibly, e.g.: -->
+  <!-- <div class="row mine"><div class="t">⚠️</div><div class="who"></div><div class="desc">Dépasse le timing validé de X min — à signaler aux autres intervenants.</div></div> -->
+</div>
+
+<div class="section-title">🎤 Ton segment — script mot-à-mot</div>
+
+<!-- EXAMPLE A: a plain talking-point card (no live demo, no prompt) -->
+<div class="card">
+  <h3>[Titre de la section]</h3>
+  <div class="tag-row"><span class="tag time">≈X min</span></div>
+  <div class="script">
+    <p class="cue">[Repère, ex: "Tu prends la main :"]</p>
+    <div class="say">"[Réplique à dire, la plus proche possible du mot pour mot.]"</div>
+    <div class="action"><b>Action à l'écran :</b> [ce qu'il faut faire pendant/entre les répliques].</div>
+  </div>
+</div>
+
+<!-- EXAMPLE B: a demo card with a copy-paste prompt — duplicate this block per demo,
+     give the <pre> a unique id and match it in the button's onclick -->
+<div class="card" id="demo1">
+  <h3>Démo 1 — [Nom de la démo]</h3>
+  <div class="tag-row"><span class="tag time">≈X min</span><span class="tag">[Outil A]</span><span class="tag">[Outil B]</span></div>
+  <div class="script">
+    <p class="cue">Setup :</p>
+    <div class="say">"[Pose le problème avant de montrer la démo — jamais une démo qui démarre sans contexte.]"</div>
+    <div class="action"><b>Action :</b> colle le prompt ci-dessous, laisse tourner, commente pendant l'exécution — jamais de blanc.</div>
+  </div>
+  <div class="promptbox">
+    <div class="plabel"><span>📋 Prompt à coller</span><button class="copybtn" onclick="copyPrompt('p-demo1', this)">Copier</button></div>
+    <pre id="p-demo1">[Prompt complet ici. Nomme explicitement le connecteur/outil utilisé
+DANS le texte du prompt, ex: "Utilise le connecteur Gmail : ..."]</pre>
+  </div>
+  <div class="script">
+    <p class="cue">Pendant que ça tourne (plusieurs phrases, pas une seule — mieux vaut trop que un blanc) :</p>
+    <div class="say">"[Phrase 1 : explique ce qui se passe techniquement.]"</div>
+    <div class="say">"[Phrase 2 : relie au métier / à la douleur de l'audience.]"</div>
+    <div class="say">"[Phrase 3 : réassurance — contrôle humain, sécurité, ce que l'outil NE fait PAS tout seul.]"</div>
+  </div>
+  <!-- Optional bonus prompt, kept separate from the main one -->
+  <div class="promptbox bonus">
+    <div class="plabel"><span>⏰ Bonus — [ex: automatisation en direct]</span><button class="copybtn" onclick="copyPrompt('p-demo1-bonus', this)">Copier</button></div>
+    <pre id="p-demo1-bonus">[Prompt bonus, optionnel si le timing le permet.]</pre>
+  </div>
+</div>
+
+<div class="section-title" id="qa">🙋 Q&amp;A</div>
+<div class="card">
+  <div class="script">
+    <div class="say">"[Phrase d'ouverture du Q&amp;A.]"</div>
+    <p class="cue">Réflexe pendant tes réponses :</p>
+    <div class="action">[Le pont que chaque réponse doit faire vers l'action demandée (CTA), ex: "ça, on le regarderait précisément sur votre cas en audit."]</div>
+  </div>
+  <p class="cue" style="margin-top:14px;">Questions de secours si la salle est timide :</p>
+  <div class="qplant">💬 "[Question plantée 1]"</div>
+  <div class="qplant">💬 "[Question plantée 2]"</div>
+</div>
+
+<div class="section-title" id="check">✅ Checklist technique — avant le live</div>
+<div class="check">
+  <ul>
+    <li><b>[Compte/outil A]</b> connecté et prêt.</li>
+    <li><b>[Fichier de démo]</b> ouvert et à portée de main.</li>
+    <li><b>Cette page ouverte dans un onglet à côté</b> de l'outil de présentation pour copier les prompts en un clic pendant le live.</li>
+    <li><b>Répéter l'enchaînement une fois</b> avant le direct.</li>
+  </ul>
+</div>
+
+<p class="foot">Script généré avec le skill webinar-prep — usage interne, à ouvrir en local pendant le live.</p>
+
+</div>
+
+<script>
+function copyPrompt(id, btn){
+  const el = document.getElementById(id);
+  const text = el.innerText;
+  function fallbackCopy(){
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly','');
+    ta.style.position = 'fixed';
+    ta.style.top = '-1000px';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try { document.execCommand('copy'); } catch(e) { console.error(e); }
+    document.body.removeChild(ta);
+  }
+  try{
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).catch(fallbackCopy);
+    } else {
+      fallbackCopy();
+    }
+  }catch(e){
+    fallbackCopy();
+  }
+  const old = btn.textContent;
+  btn.textContent = '✅ Copié !';
+  btn.classList.add('copied');
+  setTimeout(function(){ btn.textContent = old; btn.classList.remove('copied'); }, 1600);
+}
+</script>
+</body>
+</html>
