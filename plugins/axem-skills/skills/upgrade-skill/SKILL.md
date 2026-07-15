@@ -28,7 +28,7 @@ juste après sa création ou avant de le partager.
 1. Liste tous les skills du vault : `Glob 06-Skills-Claude/**/SKILL.md`.
 2. Liste tous les skills plugin visibles dans `<available_skills>` (nom, description
    affichée, `location`).
-3. Croiser avec `memory/sessions/*audit-tokens*` si une fiche existe déjà (ex.
+3. Croiser avec `(mémoire interne)` si une fiche existe déjà (ex.
    `2026-07-01-audit-tokens-mensuel.md`) pour ne pas repartir de zéro sur l'usage réel.
 4. **Découpage en lots pour la lecture complète** : les 3 dimensions de la Phase 2
    nécessitent de lire le fichier SKILL.md **en entier** (la dimension sécurité ne peut
@@ -83,7 +83,7 @@ Produire, dans cet ordre :
 3. **Doublons/fusions candidats** : paires de skills à regrouper, avec justification.
 4. **Fichier livrable** : écrire le rapport complet dans
    `06-Skills-Claude/audits/<YYYY-MM-DD>-audit-skills.md`, et une fiche courte dans
-   `memory/sessions/<YYYY-MM-DD>-audit-skills.md` (frontmatter standard du vault).
+   `(mémoire interne)` (frontmatter standard du vault).
 
 Ne jamais improviser un score sans avoir réellement lu le fichier complet (via les
 sous-agents en mode batch, directement en mode ciblé) — pas d'évaluation "à vue de nez"
@@ -114,7 +114,7 @@ pas skill par skill (sinon intraitable dès que plusieurs skills sont concernés
    valide un par un à son rythme au lieu d'un aller-retour par skill.
 4. Prévenir que ça peut créer un doublon plutôt que remplacer l'original si le skill fait
    partie d'un plugin groupé (cas vécu avec `deepsearch`, cf.
-   `memory/decisions/2026-07-02-deepsearch-github-stars-find-skill-fusion.md`).
+   `(mémoire interne)`).
 
 ---
 

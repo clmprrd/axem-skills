@@ -22,7 +22,7 @@ Ne jamais deviner un chiffre, un engagement ou une clause qui engage Clément vi
 ### 1. Cartographier les inconnues
 Avant de poser une seule question, lire ce qui existe déjà :
 - Le document/brief reçu du tiers (ex: questionnaire, brief, cahier des charges) — lister EXHAUSTIVEMENT chaque sous-question, pas juste les titres de section.
-- Le vault Obsidian (`memory/`, `CRM/`, `13-Comptabilite/`, `referentiel-decision.md`) pour toute donnée déjà écrite qui répond à une sous-question.
+- Le vault Obsidian (vos notes internes (mémoire, CRM, compta)) pour toute donnée déjà écrite qui répond à une sous-question.
 - Les transcripts Fathom pertinents, au cas où Clément aurait déjà donné une réponse à l'oral.
 
 Croiser les deux : chaque sous-question devient soit "déjà répondu, à réutiliser tel quel" (ne pas re-demander), soit "à trancher avec Clément" (va dans un lot).

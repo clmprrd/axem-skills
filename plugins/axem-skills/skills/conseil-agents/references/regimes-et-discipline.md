@@ -38,7 +38,7 @@ Deux règles d'or :
 2. **Sortie compacte par sous-agent** (levier n°2). `verdict ≤200 mots + reco n°1 + 3-5 sources`, et **renvoie
    des références, pas le contenu brut** (« synthétise, ne dump pas »). ⚠️ Mais ne pas sur-compresser : un verdict
    amputé de son raisonnement coûte en qualité. Vise le dense, pas le vide.
-3. **Réutilise avant de chercher** : Phase 0 vérifie `memory/` + le vault (`08-Idees-et-veille`). Si un verdict
+3. **Réutilise avant de chercher** : Phase 0 vérifie `(mémoire interne)` + le vault (`08-Idees-et-veille`). Si un verdict
    récent existe (ex: `crawl4ai-ecarte-deepsearch`), pointe dessus au lieu de relancer 15 agents.
 4. **Un seul tour de deepsearch par défaut.** Vague 2 uniquement si un angle *critique* manque après la Phase 2 —
    pas « pour être sûr ».

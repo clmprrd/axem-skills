@@ -98,7 +98,7 @@ JAMAIS un dump du contenu des pages. Ajoute dans chaque prompt : « ne recopie p
 citations courtes seulement ». Un agent qui renvoie 60k tokens de verbatim, c'est 95 % de gaspillage.
 
 Autres leviers : (1) le triage calibre le nombre d'agents au sujet — `lite` = 3-5 agents sans QR, ne PAS
-sur-dimensionner ; (2) réutilise `memory/` + le vault avant de chercher un sujet déjà traité ; (3) un seul tour
+sur-dimensionner ; (2) réutilise `(mémoire interne)` + le vault avant de chercher un sujet déjà traité ; (3) un seul tour
 de collecte par défaut, pas de vague 2 « pour être sûr » ; (4) zéro chevauchement d'angles entre agents.
 
 ## ÉTAGE 0 — Triage automatique (1 agent, AVANT tout le reste)

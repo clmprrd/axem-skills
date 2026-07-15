@@ -63,7 +63,7 @@ en cours), puis fixe :
 - **angles** : 3 à 8 (ou jusqu'à 15 en plénier) angles distincts et non-chevauchants, chacun avec une consigne courte
 - **besoin_web** : le sujet a-t-il des faits à vérifier EN LIGNE (marché, concurrents, best practices, benchmark),
   OU est-ce un pur sujet interne (code, process, fichier local) ? ⚠️ **décisif pour la Phase 1.**
-- **déjà_traité** : un verdict existe-t-il déjà dans `memory/` ou le vault (`08-Idees-et-veille`) ? Si oui → pars de
+- **déjà_traité** : un verdict existe-t-il déjà dans `(mémoire interne)` ou le vault (`08-Idees-et-veille`) ? Si oui → pars de
   là, dis-le à Clément, allège. Rien ne coûte moins qu'une recherche évitée.
 - **code_a_corriger** / **irreversible_en_jeu** : pour cadrer la Phase 3.
 

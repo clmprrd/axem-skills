@@ -152,4 +152,4 @@ les 3 métriques (RAM/CPU/disque) + alerte si franchissement de seuil.
 - 07/07/2026 → v2 : adoption de Mole (57k⭐) comme moteur, extension au CPU et
   au disque. Décision suite à une session où le script maison RAM-only ne
   couvrait ni le CPU (load avg 23) ni le disque (22 Go dispo, nettoyage manuel
-  fastidieux via `du -sh`/`rm -rf`). Voir `memory/outils/2026-07-07-mole-mac-cleaner.md`.
+  fastidieux via `du -sh`/`rm -rf`). Voir `(mémoire interne)`.
