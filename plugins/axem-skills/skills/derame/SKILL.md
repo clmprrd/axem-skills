@@ -40,7 +40,7 @@ Si Homebrew indisponible, fallback sur l'ancien script maison :
   `kill`, `quit app`) se fait **d'abord en `--dry-run`**, puis **seulement après
   confirmation explicite de Clément** en vrai.
 - **NE JAMAIS** kill/quitter un process, supprimer un fichier, désinstaller une
-  app ou lancer `mo clean --force`/`mo purge`/`mo uninstall` sans son accord.
+  app ou lancer `mo clean`/`mo purge`/`mo uninstall` sans son accord.
 - Tout s'exécute sur la **VRAIE machine de Clément** via `desktop-commander`
   (`mcp__desktop-commander__start_process` / `mcp__Desktop_Commander__start_process`),
   **jamais** dans le sandbox `mcp__workspace__bash` (ça mesurerait le Linux du
@@ -106,10 +106,15 @@ proposés (comme pour un vrai nettoyage disque : multiSelect sur les catégories
 
 ### Étape 6 — Exécuter SEULEMENT les catégories validées
 ```bash
-mo clean --force        # si Clément valide le nettoyage cache/logs
+mo clean                # si Clément valide le nettoyage cache/logs (PAS de --force : l'option n'existe pas dans Mole 1.44.1, elle fait échouer la commande)
 mo purge                # si Clément valide les artefacts de projets
 mo uninstall            # app par app, seulement celles cochées par Clément
 ```
+Note : `mo clean` exécute directement (les seules options sont `--dry-run`,
+`--external`, `--whitelist`, `--debug`). Les caches système + volumes Xcode
+Simulator nécessitent `sudo` : en session Claude headless le prompt sudo échoue
+(`/dev/tty: Device not configured`), donc laisser Clément lancer `sudo mo clean`
+lui-même pour ces ~3-4 Go supplémentaires.
 Toute opération est loguée dans `~/Library/Logs/mole/operations.log`,
 consultable avec `mo history`. Mentionne ce log si Clément veut vérifier après
 coup ce qui a été fait.

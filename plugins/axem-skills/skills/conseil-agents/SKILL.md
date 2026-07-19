@@ -124,6 +124,9 @@ Pour les recos validées, actionnables maintenant :
 - **Code** : fixers `model: sonnet` en **worktree** (un par lot cohérent), build vert obligatoire, push tôt. Puis un
   reviewer adversarial (`sonnet`, ou `opus` effort `high` si fix critique) qui essaie de casser chaque fix.
 - **Process / contenu / skill** : applique directement (edit fichiers) + un reviewer.
+- **Email** : si le livrable est un mail (relance, réponse, propal), invoque le skill `/email` (Skill tool) pour le
+  rédiger — jamais de HTML rédigé à la main directement. `/email` garantit la voix Clément, l'anti-em-dash, le
+  threading correct et la bonne PJ ; les rédiger à la main dans `/conseil-agents` fait sauter ces garde-fous.
 - **Loop-until-dry** : relance un mini-round si un problème réel subsiste. Stop après **2 rounds sans nouveau problème**
   OU budget atteint. Loggue corrigé / restant.
 - Autonomie sur les fixes évidents ; garde les vraies questions pour la Phase 4. **JAMAIS d'irréversible sans go.**
@@ -156,5 +159,12 @@ que le conseil n'a pas pu trancher (direction, goût, priorités, budget) + les 
   vient de ne PAS sur-dimensionner.
 - Read-only en recherche, worktrees pour le code, push tôt, jamais d'irréversible sans go.
 - Zéro complaisance : si le conseil conclut que la cible est à jeter, le dire franchement.
+- **Piège observé (17/07/2026)** : sur une session longue où Clément enchaîne plusieurs sujets `/conseil-agents`
+  d'affilée (ou interrompt avec une autre demande en cours de route), la Phase 4 se fait sauter silencieusement —
+  on livre le résultat de la Phase 3 et on passe direct au sujet suivant sans le batch. Avant de considérer
+  un `/conseil-agents` terminé, vérifie explicitement : *ai-je appelé `AskUserQuestion` en Phase 4 ?* Si non,
+  ce n'est pas fini, même si un livrable concret (mail, doc, code) a déjà été produit.
+- **Zéro tiret cadratin (—)** dans tout livrable texte produit par ce pipeline (mail, doc, synthèse) — même règle
+  que `/email`. Scanner avant de livrer.
 - Détail opérationnel : [`references/regimes-et-discipline.md`](references/regimes-et-discipline.md).
 - Voir [[clement-collaboration-style]], [[askuser-batch-before-after-complex-tasks]], [[orchestrate-skill]] / [[design-fleet-skill]].
