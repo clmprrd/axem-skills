@@ -31,7 +31,7 @@ Si `mo` n'est pas installé sur la machine (ex : Mac d'Alexis) :
 brew install mole
 ```
 Si Homebrew indisponible, fallback sur l'ancien script maison :
-`bash "/Users/clementpredo/Downloads/Axem-IA-Hub/06-Skills-Claude/derame/derame.sh"`
+`bash "/Users/clementpredo/Axem-IA-Hub/06-Skills-Claude/derame/derame.sh"`
 (diagnostic RAM only, sans le volet disque/CPU/Mole).
 
 ## ⚠️ Règle d'or (inchangée, non négociable)

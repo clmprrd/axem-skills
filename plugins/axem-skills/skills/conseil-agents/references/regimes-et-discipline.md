@@ -4,11 +4,15 @@ Chargé à la demande par le SKILL.md principal. Le corps du skill garde les ré
 
 ## Les 3 régimes (choisis en Phase 0 par l'orchestrateur, en contexte)
 
-| Régime | Quand | Deepsearch | Débat | Coût cible |
-|---|---|---|---|---|
-| **⚡ Éclair** | question cadrée, décision quasi binaire, ou vault a déjà 80 % de la réponse | 3-4 agents Sonnet | 3 lentilles (Sceptique, Stratège, Pragmatique) | léger |
-| **⚖️ Standard** (défaut) | vraie question ouverte, impact réel, plusieurs options | 6-8 agents Sonnet | 5 lentilles | moyen |
-| **🏛️ Plénier** | décision structurante, gros budget, irréversible, ou Clément dit « à fond / sans pitié / plénier » | 10-15 agents Sonnet | 5 lentilles + Contrarian round 2 | lourd, assumé |
+| Régime | Quand | Angles (deepsearch) | Terrain (si `besoin_web`) | Débat | Coût cible |
+|---|---|---|---|---|---|
+| **⚡ Éclair** | question cadrée, décision quasi binaire, ou vault a déjà 80 % de la réponse | 3-4 agents Sonnet | **1** collecteur | 3 lentilles (Sceptique, Stratège, Pragmatique) | léger |
+| **⚖️ Standard** (défaut) | vraie question ouverte, impact réel, plusieurs options | 6-8 agents Sonnet | **3** collecteurs | 5 lentilles | moyen |
+| **🏛️ Plénier** | décision structurante, gros budget, irréversible, ou Clément dit « à fond / sans pitié / plénier » | 10-15 agents Sonnet | **6** collecteurs (pilier complet) | 5 lentilles + Contrarian round 2 | lourd, assumé |
+
+L'axe **terrain** (Reddit/X vécu réel) + la **triangulation** (Phase 1.5) s'arment dès que `besoin_web: true` (décision
+Clément 24/07). `besoin_web: false` (sujet interne code/process) → 0 terrain, 0 triangulation. Le garde-fou coût du
+Workflow interdit toute bascule Apify **payante** silencieuse quand les routes Reddit gratuites tombent en sandbox.
 
 En cas de doute → **Standard**. Le sous-dimensionnement est le mode d'échec *silencieux* (réponse pauvre sans alerte) ;
 le sur-dimensionnement n'est que du gaspillage visible. Donc au moindre doute, prends le régime au-dessus.

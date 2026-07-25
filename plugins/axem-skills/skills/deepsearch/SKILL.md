@@ -313,6 +313,11 @@ anti-bot léger type Cloudflare).
 - Si une plateforme refuse, **passer à la route alternative** sans insister.
 - Mentionner explicitement dans le rapport quand un fetch a échoué.
 
+### 🔒 GARDE-FOU COÛT — jamais de bascule payante silencieuse (appris le 24/07/2026)
+**Règle** : routes gratuites d'abord ; si elles échouent (reddit.com bloqué par la policy navigateur, CAPTCHA DuckDuckGo, WebSearch qui filtre le domaine), **NE PAS** basculer vers un actor Apify facturé ni Bright Data payant. **Signaler « terrain partiel, route gratuite bloquée »** et **dégrader** le score de fraîcheur/couverture. **Aucune dépense de crédits sans feu vert explicite de Clément.**
+
+📄 **Source de vérité unique** (contexte, limites, ce que le garde-fou ne fait PAS, comment débloquer le terrain gratuit) : `06-Skills-Claude/conseil-agents/references/gardes-fous-et-outils.md` dans le vault. Ne pas dupliquer la règle ici : elle a déjà divergé une fois. Voir aussi [[apify-fallback-payant-quand-reddit-gratuit-bloque]].
+
 ---
 
 ## ÉTAGE 1 — Lancer TOUS les agents en parallèle (un seul message)
