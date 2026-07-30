@@ -235,14 +235,21 @@ Plusieurs modes peuvent être activés simultanément.
 WebFetch standard rate beaucoup de plateformes (login walls, JS-heavy, bots blocked).
 Utilise ces routes alternatives :
 
-> 🆓 **Si `agent-reach` est installé** (CLI, `github.com/Panniantong/agent-reach`, MIT,
-> gratuit — installé sur le Mac mini serveur, à vérifier ailleurs via `agent-reach doctor`) :
-> c'est la **méthode à essayer en premier pour Web/YouTube/RSS/GitHub/Web Search**, avant tout
-> le reste ci-dessous — une seule commande `agent-reach fetch <url>` route automatiquement vers
-> le bon outil (yt-dlp, Jina Reader, feedparser, gh CLI, Exa) avec fallback auto en cas d'échec.
-> Pour Reddit/X/Twitter, agent-reach nécessite une config de compte (cookies via Cookie-Editor,
-> idéalement un compte secondaire dédié, pas le compte principal) — si pas configuré, retombe
-> sur les skills dédiés `reddit-fetch`/`adhx-twitter-reader` ci-dessous.
+> 🆓 **`agent-reach` est installé sur le Mac de Clément** (CLI, `github.com/Panniantong/agent-reach`,
+> MIT, gratuit), dans un environnement Python isolé, accessible directement par la commande
+> `agent-reach`. État vérifié le 29/07/2026 : **4 canaux sur 15 fonctionnent** (n'importe quelle
+> page web via Jina Reader, RSS/Atom, V2EX, et YouTube avec sous-titres). `agent-reach doctor`
+> donne l'état canal par canal en une commande, sans échec silencieux.
+>
+> ⚠️ **Ce n'est PAS la route à essayer en premier.** Évalué le 29/07/2026 : sur son périmètre réel,
+> il n'apporte rien de plus que l'existant. Pour le web, **Bright Data reste supérieur** (rendu JS
+> et anti-bot, ce que Jina Reader ne fait pas). Pour Reddit, X et YouTube, les skills dédiés
+> ci-dessous (`reddit-fetch`, `adhx-twitter-reader`, `youtube-transcript`) marchent **sans
+> authentification**, là où agent-reach exigerait des cookies de compte avec un risque de
+> bannissement assumé par le projet lui-même. Verdict complet : mémoire `agent-reach-ecarte`.
+>
+> **Quand s'en servir quand même** : pour lire un flux RSS ou une page V2EX, et surtout pour
+> `agent-reach doctor` quand on veut savoir vite quelle route d'accès est cassée.
 
 ### Reddit
 - 🆓 **EN PREMIER : skill `reddit-fetch`** (installé 07/07/2026, gratuit) — technique du
