@@ -86,6 +86,48 @@ Une fois tous les lots traités, refaire une passe de croisement complet (comme 
 - Toujours inclure, quand c'est pertinent, une option qui reporte la décision (call, plus tard) plutôt que de forcer un choix immédiat sur un point que Clément préfère garder ouvert.
 - Ne jamais reformuler une réponse déjà donnée dans un lot précédent en la faisant passer pour une nouvelle question — si un point est tranché, il est tranché.
 
+## La barre à atteindre : le troisième bloc de toute question qui ouvre un chantier
+
+Intégré le 26/08/2026, méthode « gauntlet loop » (Matt Shumer, vidéo `youtu.be/BNjzXcEXmg4`). Skill dédié : `/gauntlet-loop`.
+
+Un prompt qui produit vraiment quelque chose tient en trois blocs, pas un seul :
+
+1. **LA TÂCHE** : quoi. C'est ce que le batch cadre déjà bien.
+2. **LA MÉTHODE** : comment. Combien d'agents, quel découpage, qui vérifie le travail.
+3. **LA BARRE** : quand on s'arrête. **C'est celui qui manquait, et c'est celui qui coûte le plus cher quand il manque.**
+
+**La règle.** Dès qu'une question ouvre un chantier de production (un livrable, un build, un run long, une série
+de posts, une page, un deck, un visuel), **l'option recommandée dit contre quoi on se compare et à quoi on
+reconnaîtra que c'est fini**. Pas « on y va ? », mais « on y va, la référence à battre est X, on s'arrête quand
+un critique aveugle préfère la nôtre ».
+
+**Pourquoi c'est dur, pas cosmétique.** Une barre exprimée en adjectif (« du propre », « du niveau pro »,
+« du AAA ») n'est pas une barre : rien ne peut jamais la déclarer atteinte, donc soit on livre trop tôt, soit la
+boucle ne s'arrête jamais. Une barre utile nomme **un objet réel qui existe déjà** : la charte du client, le site
+du concurrent, le post qui a fait 400 likes, le deck de la dernière formation, la photo de référence. Un objet
+réel se compare côte à côte ; un adjectif ne se compare pas.
+
+**Le corollaire, et il coûte des heures.** Un « oui vas-y » sur une tâche floue lance un run qui optimise *à la
+perfection* vers la mauvaise cible. Cas source de la méthode : une page produit visuellement superbe, générée en
+1 h 19 de calcul, et entièrement hors de la charte réelle de la marque. Le système n'avait rien raté, c'est la
+prémisse qui était fausse. Exactement le mode d'échec déjà documenté partout ailleurs ici : le raisonnement est
+rarement fautif, **c'est presque toujours la prémisse qui est périmée ou à côté**.
+
+**Ce que ça change dans la forme des questions :**
+
+- Une question qui lance un run long porte sur **la barre**, pas sur la permission. « Contre quoi on se
+  compare ? » apprend quelque chose. « Je lance ? » n'apprend rien : ce n'est donc pas une question, c'est une
+  décision à prendre seul et à annoncer en une ligne (filtre du 22/08).
+- **Quand plusieurs références sont plausibles, elles deviennent les options de la question.** C'est le cas où le
+  batch a le plus de valeur : Clément est le seul à savoir laquelle compte réellement pour lui.
+- Sur un run long, ajouter une option d'**intensité** (une passe rapide / la boucle complète jusqu'à ce que le
+  critique préfère la nôtre), avec le coût en temps annoncé dans la description de l'option. Une boucle complète
+  se compte en heures, ça se dit avant, pas après.
+
+**Où ça ne s'applique pas** : un arbitrage, un choix de priorité, une validation de chiffre, un envoi. Ces
+questions ne produisent pas d'artefact, elles n'ont donc aucune référence à battre. Ne pas fabriquer une barre
+pour la forme.
+
 ## Exemple de séquencement (mail de réponse à un questionnaire partenaire)
 
 1. Lot 1 — Positionnement & chiffres d'activité (statut juridique, clients citables, volume d'activité)

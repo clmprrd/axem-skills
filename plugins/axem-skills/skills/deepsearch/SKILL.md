@@ -3,6 +3,25 @@ name: deepsearch
 description: "Skill unique de recherche multi-plateformes (Reddit, X, YouTube, Instagram, TikTok, LinkedIn, sources fiables) avec sous-agents parallèles et 7 modes auto-détectés : YouTube Research, Reddit Deep Dive, X Pulse, Instagram Trends, Social Listening, Creator Shortlist, Viral Pattern Analysis. Responsables qualité qui challengent les takes terrain vs sources fiables. À utiliser OBLIGATOIREMENT dès que Clément demande de chercher, vérifier, fouiller, monitorer, identifier des créateurs ou comprendre un sujet. Triggers : cherche, deep search, reddit, twitter, X, youtube, instagram, tiktok, fouille, vrais users, qui parle de, monitor, meilleurs créateurs, shortlist, pourquoi ce post marche, tendances, viral, résume cette vidéo, comparatif, avis, risques, analyse, podcast, créateurs, mentions. S'active sur /deepsearch."
 ---
 
+# DeepSearch — banc d'essai de la collecte
+
+> ⚠️ **Ce n'est plus la porte d'entrée.** Depuis le 22/08/2026, la recherche passe par `/conseil-agents`, qui
+> détecte tout seul qu'une demande est une question de fait et bascule en **régime 🔍 Recherche** : collecte,
+> triangulation, synthèse, sans convoquer de débat. Clément n'a plus à choisir sa commande.
+>
+> Ce skill reste invocable pour **une seule raison** : exercer la collecte isolément quand quelque chose cloche,
+> et vérifier route par route ce qui répond encore. Sans ce banc d'essai, une dérive de la collecte passerait des
+> mois sans être détectée. Le diagnostic direct :
+>
+> ```bash
+> ~/.claude/scrapling/.venv/bin/python ~/.claude/scrapling/collect.py doctor
+> ```
+>
+> Les routes réellement vivantes, testées et datées, sont dans
+> `06-Skills-Claude/conseil-agents/references/collecte.md`. **Les sections « routes par plateforme » ci-dessous
+> sont conservées pour leur historique mais plusieurs sont périmées** : Apify payant n'est plus une option,
+> `old.reddit.com/.json` rend 403 depuis mai 2026, et Nitter se réduit à la seule instance `nitter.net`.
+
 # DeepSearch — Skill Unique de Recherche Multi-Sources avec Modes Spécialisés
 
 Clément ne vérifie pas les sources lui-même. C'est ta responsabilité absolue.
@@ -42,6 +61,17 @@ challengées** par les sources institutionnelles avant d'être servies à Cléme
 ## Pipeline en 4 étages
 
 ```
+
+## Avant de chercher : ce qu'on connaît déjà
+
+Lis **`08-Idees-et-veille/_INDEX-PROJETS-OSS.md`** avant l'étage 0. C'est la sortie de la veille GitHub
+hebdomadaire : vingt projets au plus, ce qu'ils font, leurs étoiles, leur dernier commit, et la décision
+déjà prise sur chacun. Régénère-le d'abord : `python3 ~/.claude/scrapling/index_projets_oss.py`
+
+**Si un projet de cette liste répond directement à la question posée, cite-le**, avec ce qu'il apporte et
+son état. C'est la différence entre chercher à chaque fois et savoir. Sinon, silence : ne force jamais une
+mention faible, elle décrédibilise les vraies.
+
 [ÉTAGE 0 — Triage & Mode Detection] (1 agent rapide < 30s)
   └─ Détecte la profondeur (Lite/Standard/Heavy)
      + le ou les modes spécialisés à activer
@@ -154,7 +184,7 @@ Plusieurs modes peuvent être activés simultanément.
 
 **Agents** :
 - **YT-1** — Top vidéos pertinentes (15) via WebSearch + `site:youtube.com [sujet]`. Note titre, chaîne, vues, durée, date.
-- **YT-2** — Transcripts complets pour les 5-8 meilleures via Apify YouTube Transcript actor. Extrait insights, frameworks, contre-arguments.
+- **YT-2** — Transcripts complets pour les 5-8 meilleures via le skill `youtube-transcript` (gratuit). `collect.py yt-channel <id>` pour les dernieres videos d'une chaine. Extrait insights, frameworks, contre-arguments.
 - **YT-3** — 5 chaînes de référence (taille audience, fréquence, qualité éditoriale).
 
 **Livrable additionnel** : Section 🎬 "À regarder" — 10 timestamps précis + 5 chaînes à follow.
@@ -173,7 +203,7 @@ Plusieurs modes peuvent être activés simultanément.
 **Triggers** : "se dit en ce moment sur X", "monitor x", "discours twitter", "voix qui montent"
 
 **Agents** (en plus des 3 X standards) :
-- **XP-1** — Scrape récent (7 jours) via Apify Twitter scraper sur keywords + hashtags.
+- **XP-1** — `collect.py x-search "<mot-cle>"` (gratuit, sans compte, ~20 resultats avec engagement), et `collect.py x-user <handle>` pour une timeline.
 - **XP-2** — Top accounts par engagement réel (likes, RT, replies).
 - **XP-3** — Threads viraux + analyse des quote tweets.
 
@@ -183,7 +213,7 @@ Plusieurs modes peuvent être activés simultanément.
 **Triggers** : "instagram", "ig", "carrousels", "reels", "créateurs ig", "que se passe-t-il sur ig"
 
 **Agents** :
-- **IG-1** — Comptes business du domaine via Apify Instagram scraper.
+- **IG-1** — `collect.py instagram <compte>` : profil public, abonnes, posts avec likes et commentaires. La recherche par hashtag, elle, reste fermee.
 - **IG-2** — Carrousels viraux & extraction des hooks (slide 1) des top comptes.
 - **IG-3** — Reels & hashtags qui convertissent.
 
@@ -192,7 +222,7 @@ Plusieurs modes peuvent être activés simultanément.
 ### 🎬 Mode TikTok (bonus)
 **Triggers** : "tiktok", "tiktok dit", "tiktoks viraux"
 
-**Agent** : **TT-1** via Apify TikTok scraper — vidéos qui buzzent, créateurs émergents, sons utilisés.
+**Agent** : **TT-1** TikTok n'a plus de route gratuite verifiee. Signaler « plateforme non couverte » plutot que de basculer sur un actor facture.
 
 ### 🎯 Mode Social Listening
 **Triggers** : "qui parle de [marque/personne]", "monitor [X]", "mentions de", "veille concurrentielle", "que dit-on de"
@@ -230,102 +260,102 @@ Plusieurs modes peuvent être activés simultanément.
 
 ---
 
-## Hacks d'accès aux plateformes (CRITIQUE — à utiliser systématiquement)
+## 🎯 LES SIX CONTRAINTES QUI FONT LA PROFONDEUR (ajoutées le 17/08/2026)
 
-WebFetch standard rate beaucoup de plateformes (login walls, JS-heavy, bots blocked).
-Utilise ces routes alternatives :
+> **D'où ça vient.** Le 17/08/2026, une recherche sur « quelle banque pro choisir » a produit un comparatif
+> tarifaire honnête et complet… qui a raté le fait décisif : **Qonto avait sorti un serveur MCP officiel,
+> référencé au répertoire des connecteurs Claude depuis deux mois**, ce qui ramenait un écart de prix de
+> 19 € à 1 €. Clément l'a vu sur LinkedIn, pas dans le rapport. Une seconde recherche l'a trouvé en un
+> passage — **avec exactement les six contraintes ci-dessous, et c'est la seule différence entre les deux**.
+> Elles ne coûtent rien et se copient dans n'importe quel brief.
 
-> 🆓 **`agent-reach` est installé sur le Mac de Clément** (CLI, `github.com/Panniantong/agent-reach`,
-> MIT, gratuit), dans un environnement Python isolé, accessible directement par la commande
-> `agent-reach`. État vérifié le 29/07/2026 : **4 canaux sur 15 fonctionnent** (n'importe quelle
-> page web via Jina Reader, RSS/Atom, V2EX, et YouTube avec sous-titres). `agent-reach doctor`
-> donne l'état canal par canal en une commande, sans échec silencieux.
->
-> ⚠️ **Ce n'est PAS la route à essayer en premier.** Évalué le 29/07/2026 : sur son périmètre réel,
-> il n'apporte rien de plus que l'existant. Pour le web, **Bright Data reste supérieur** (rendu JS
-> et anti-bot, ce que Jina Reader ne fait pas). Pour Reddit, X et YouTube, les skills dédiés
-> ci-dessous (`reddit-fetch`, `adhx-twitter-reader`, `youtube-transcript`) marchent **sans
-> authentification**, là où agent-reach exigerait des cookies de compte avec un risque de
-> bannissement assumé par le projet lui-même. Verdict complet : mémoire `agent-reach-ecarte`.
->
-> **Quand s'en servir quand même** : pour lire un flux RSS ou une page V2EX, et surtout pour
-> `agent-reach doctor` quand on veut savoir vite quelle route d'accès est cassée.
+### 1. Chercher l'intégration avec l'outillage du demandeur, jamais seulement le produit
 
-### Reddit
-- 🆓 **EN PREMIER : skill `reddit-fetch`** (installé 07/07/2026, gratuit) — technique du
-  "DDG-hop" : naviguer une fois vers `html.duckduckgo.com/html/?q=site:reddit.com/r/SUB+requête`
-  via Claude-in-Chrome, cliquer le 1er résultat (pose le cookie de session Reddit), puis
-  naviguer directement vers n'importe quelle URL `.json` pour le reste de la session. Marche
-  pour 1-3 threads ciblés sans dépendre d'Apify.
-- **Toujours** préférer `old.reddit.com` à `reddit.com` si fallback WebFetch/curl direct.
-- **Endpoint JSON public** : ajouter `.json` à toute URL.
-  - Thread : `https://old.reddit.com/r/[sub]/comments/[id]/.json` → post + arbre de commentaires complet avec scores
-  - Top d'un sub : `https://old.reddit.com/r/[sub]/top/.json?t=year` (ou `month`, `week`, `all`)
-  - Hot : `https://old.reddit.com/r/[sub]/hot/.json`
-- Si le skill `reddit-fetch` échoue/rate-limite ou qu'il faut du vrai volume (dizaines de
-  threads), passer à un Actor Apify (`trudax/reddit-scraper-lite`, payant à l'usage).
+Le réflexe est de comparer les caractéristiques d'un produit. **Ajoute systématiquement l'angle : « ce
+candidat se branche-t-il sur ce que le demandeur utilise déjà tous les jours ? »** Connecteur MCP, API
+publique, intégration Zapier/Make/n8n, compatibilité avec son outil comptable, son CRM, son navigateur.
 
-### X / Twitter
-- 🆓 **EN PREMIER : skill `adhx-twitter-reader`** (installé 07/07/2026, gratuit, sans auth, sans
-  rate-limit en lecture) — colle une URL x.com/twitter.com, récupère le post en JSON structuré
-  (contenu complet, auteur, engagement). Idéal pour lire un tweet/thread précis déjà identifié.
-- **WebFetch sur x.com / twitter.com échoue presque toujours** (login wall) — ne pas insister,
-  passer direct au skill ADHX ou aux routes ci-dessous.
-- **Routes de secours (recherche large / volume, ADHX ne fait que lire un post donné)** :
-  - **Nitter** : `nitter.net/[user]` ou miroirs (`xcancel.com`, `nitter.privacydev.net`) — tester en cascade
-  - **Apify Twitter scraper** (préféré gros volume) : `apidojo/twitter-scraper-lite` ou `quacker/twitter-scraper`
-  - **Wayback Machine** : `web.archive.org/web/[URL twitter]`
+Chez Clément, l'outillage à tester par défaut : **Claude Code et les connecteurs MCP**, Indy, Gmail et
+Google Workspace, LinkedIn, Notion, Stripe, WhatsApp, Fathom. Un produit qui s'y branche vaut souvent plus
+que 30 % d'écart de prix, et **aucun comparatif du marché ne mentionne jamais ce critère**.
 
-### YouTube
-- **Recherche** : WebSearch fonctionne.
-- **Transcripts** : 🆓 **EN PREMIER : skill `youtube-transcript`** (installé 07/07/2026, gratuit,
-  `uv run scripts/get_transcript.py <url>`) — récupère les sous-titres (auto ou manuels)
-  directement, sans Apify. NE PAS faire WebFetch sur youtube.com pour le contenu.
-  - Si la vidéo n'a pas de sous-titres ou que le skill échoue → fallback Apify
-    (`streamers/youtube-scraper` ou `apify/youtube-transcripts-scraper`) ou
-    `youtubetranscript.com/?server_vid=[VIDEO_ID]`.
-- **Métadonnées** : WebFetch sur la page de la vidéo OK pour vues/date/durée.
+### 2. Contrainte de fraîcheur explicite, avec une date-plancher
 
-### Instagram
-- **Quasi tout fermé** sans login.
-- **Apify** : `apify/instagram-scraper` (posts), `apify/instagram-profile-scraper` (comptes), `apify/instagram-hashtag-scraper`.
+Sans consigne, un agent cite volontiers une page de 2024 et la présente comme l'état de l'art. Écris dans
+le brief : *« Une source antérieure à [date] ne répond PAS à la question. Si tu ne trouves que du contenu
+ancien, dis-le explicitement plutôt que de le présenter comme la réponse. »*
 
-### TikTok
-- **Apify** : `clockworks/tiktok-scraper` ou `apify/tiktok-scraper`.
+Et **exige la date de publication de chaque source**. Une source non datée est traitée comme non fiable.
 
-### LinkedIn
-- **Login wall** sur la plupart.
-- WebSearch + `site:linkedin.com/posts` ou `site:linkedin.com/pulse` capte les publics indexés.
-- Apify `apify/linkedin-scraper` (avec parcimonie).
+### 3. Taxonomie de statut obligatoire
 
-### Web générique (sites d'entreprise, SPA, JS-heavy)
-Seul vrai trou identifié dans cette liste (conseil d'agents du 15/07/2026, voir
-`08-Idees-et-veille/2026-07-15-crawl4ai-ecarte.md`) : les 12 agents "sources fiables"
-ne reposaient que sur WebSearch/WebFetch, sans solution robuste et gratuite pour du
-contenu chargé en JS (dashboards, pages produit dynamiques, sites en React/Vue,
-anti-bot léger type Cloudflare).
-- 🆓 **EN PREMIER (à tester)** : connecteur navigateur déjà connecté (Claude-in-Chrome
-  / Control_Chrome) — rendu JS réel, zéro quota, zéro nouvel outil. Naviguer vers
-  l'URL, lire le texte/DOM rendu.
-- Si le connecteur navigateur échoue ou n'est pas dispo : **Bright Data**
-  (`mcp__brightdata-plugin__scrape` ou skill `brightdata-plugin:scrape`) — gratuit
-  jusqu'à 5000 requêtes/mois, gère rendu JS + anti-bot, sortie markdown propre.
-- **Apify** (RAG Web Browser actor ou scraper générique) seulement en dernier recours
-  si les deux précédents échouent — payant à l'usage.
-- ❌ Ne pas installer crawl4ai — évalué et écarté (incompatible avec l'environnement
-  sandboxé Claude Code, redondant avec Bright Data déjà connecté). Détail complet dans
-  la note vault ci-dessus.
+Sur tout sujet de produit, d'outil ou de service, impose quatre catégories et interdis le flou :
 
-### Toujours
-- Si une plateforme refuse, **passer à la route alternative** sans insister.
-- Mentionner explicitement dans le rapport quand un fetch a échoué.
+| Statut | Ce que ça veut dire |
+|---|---|
+| **DISPONIBLE** | Utilisable aujourd'hui par le demandeur, sans liste d'attente |
+| **ANNONCÉ** | Communiqué mais pas livré, ou livré ailleurs |
+| **BÊTA FERMÉE** | Existe mais inaccessible sans invitation |
+| **RUMEUR** | Une seule source, non confirmée |
 
-### 🔒 GARDE-FOU COÛT — jamais de bascule payante silencieuse (appris le 24/07/2026)
-**Règle** : routes gratuites d'abord ; si elles échouent (reddit.com bloqué par la policy navigateur, CAPTCHA DuckDuckGo, WebSearch qui filtre le domaine), **NE PAS** basculer vers un actor Apify facturé ni Bright Data payant. **Signaler « terrain partiel, route gratuite bloquée »** et **dégrader** le score de fraîcheur/couverture. **Aucune dépense de crédits sans feu vert explicite de Clément.**
+Sans cette grille, « Qonto a annoncé une intégration IA » et « le connecteur est en ligne depuis deux mois »
+se ressemblent dans un rapport. Ce sont deux décisions opposées.
 
-📄 **Source de vérité unique** (contexte, limites, ce que le garde-fou ne fait PAS, comment débloquer le terrain gratuit) : `06-Skills-Claude/conseil-agents/references/gardes-fous-et-outils.md` dans le vault. Ne pas dupliquer la règle ici : elle a déjà divergé une fois. Voir aussi [[apify-fallback-payant-quand-reddit-gratuit-bloque]].
+### 4. L'absence de preuve n'est pas une preuve d'absence
+
+Quand une vérification a déjà été faite et n'a rien donné, **écris-la dans le brief avec sa portée exacte**,
+sinon l'agent la refait ou pire, s'arrête dessus.
+
+> *Exemple réel : « Une interrogation du registre de connecteurs de l'environnement de l'utilisateur a
+> renvoyé zéro résultat. Cela prouve seulement qu'aucun connecteur n'est disponible DANS SON ENVIRONNEMENT
+> — pas qu'il n'en existe aucun. Un serveur peut exister sur GitHub, être annoncé sans être publié, ou être
+> distribué hors registre. »*
+
+C'est cette phrase qui a fait chercher ailleurs, et qui a trouvé.
+
+### 5. Un angle « et si ça n'existe pas ? », toujours
+
+Le dernier angle de toute vague doit être : **« si la chose cherchée n'existe pas, qu'est-ce qui existe
+vraiment et qui répond au même besoin ? »** Il garantit un livrable utile dans les deux cas, et il produit
+souvent la vraie réponse — l'API publique, l'agrégateur, le contournement.
+
+Sans lui, une recherche qui ne trouve rien rend un rapport vide. Avec lui, elle rend une alternative.
+
+### 6. Les annuaires et les dépôts AVANT les annonces
+
+**Un produit technique vit dans les dépôts et les annuaires des mois avant sa communication officielle.**
+Le serveur MCP de Qonto existait sur GitHub depuis **juin 2025** et avait un fil communautaire en
+**septembre 2025** — l'annonce officielle date de **juin 2026**. Neuf mois d'écart.
+
+Endroits à ratisser systématiquement pour tout sujet technique, avant la presse et le blog de l'éditeur :
+`github.com/<éditeur>` · `github.com/modelcontextprotocol/servers` · **mcp.so** · **smithery.ai** ·
+**glama.ai/mcp/servers** · **pulsemcp.com** · npm · PyPI · le changelog et la doc développeurs de l'éditeur.
 
 ---
+
+## Accès aux plateformes
+
+⚠️ **Les routes par plateforme ne sont plus décrites ici.** Elles changeaient trop vite et ce fichier a fini par
+documenter des accès morts : Apify facturé, `old.reddit.com/.json` qui rend 403 depuis mai 2026, des instances
+Nitter disparues, Instagram déclaré inaccessible alors qu'il répond avec le bon en-tête.
+
+**Source unique, testée et datée** : [`../conseil-agents/references/collecte.md`](../conseil-agents/references/collecte.md).
+
+Tout passe par un module gratuit, sans compte ni cookie :
+
+```bash
+~/.claude/scrapling/.venv/bin/python ~/.claude/scrapling/collect.py doctor
+```
+
+`doctor` teste chaque route en direct et liste ce qui est mort. Les commandes disponibles : `x-search`,
+`x-user`, `x-tweet`, `reddit`, `reddit-sub`, `instagram`, `github`, `github-issues`, `yt-channel`.
+
+**Lis toujours le drapeau `fiable` de la sortie.** Une route cassée et un sujet dont personne ne parle rendent
+tous les deux zéro résultat : seul ce drapeau les distingue, et les confondre fabrique de faux verdicts.
+
+🔒 **Garde-fou coût, inchangé** : routes gratuites uniquement. Si elles échouent, signaler « terrain partiel,
+route gratuite bloquée » et dégrader. Jamais de bascule vers un actor Apify facturé ou Bright Data sans feu vert
+explicite de Clément.
 
 ## ÉTAGE 1 — Lancer TOUS les agents en parallèle (un seul message)
 
@@ -355,7 +385,7 @@ r/AskAcademia, r/medicine, r/legaladvice, r/AskHistorians, r/AskScience.
 
 **Agent X-1 — Threads d'experts** : analyse rapide originale des praticiens.
 Queries : `site:x.com [sujet] thread`, `1/`, `expert`, `[nom expert] twitter`.
-Fetch via Nitter ou Apify si X direct échoue.
+Fetch via `collect.py x-search` ou `x-user` : X direct echoue toujours, ne pas l'essayer.
 
 **Agent X-2 — Hot takes** : positions clivantes.
 Queries : `hot take`, `is wrong`, `is overrated`, `controversial`, `viral tweet`,
@@ -431,13 +461,33 @@ Ton angle spécifique : [DESCRIPTION DE L'ANGLE]
 Plateforme prioritaire : [Reddit / X / YouTube / IG / Web / etc.]
 Contexte triage : [JSON triage utile pour cet agent]
 
+⚠️ FRAÎCHEUR : une source antérieure à [DATE-PLANCHER] ne répond PAS à la question. Donne la DATE DE
+PUBLICATION de chaque source ; une source non datée est traitée comme non fiable. Si tu ne trouves que
+du contenu ancien, dis-le explicitement plutôt que de le présenter comme la réponse.
+
+⚠️ STATUT : pour tout produit, outil ou service, classe chaque trouvaille en DISPONIBLE (utilisable
+aujourd'hui) / ANNONCÉ (communiqué, pas livré) / BÊTA FERMÉE / RUMEUR (une seule source). Jamais de flou :
+« annoncé » et « disponible » mènent à deux décisions opposées.
+
+⚠️ CE QUI A DÉJÀ ÉTÉ VÉRIFIÉ, et ce que ça ne prouve pas : [LE CAS ÉCHÉANT]. Une vérification négative sur
+un périmètre restreint ne prouve pas l'inexistence — cherche ailleurs.
+
+⚠️ INTÉGRATION : le sujet se branche-t-il sur l'outillage que le demandeur utilise déjà (connecteur MCP,
+API publique, Zapier/Make/n8n, son outil comptable) ? Aucun comparatif du marché ne pose cette question,
+et c'est souvent elle qui décide.
+
+⚠️ ANNUAIRES AVANT ANNONCES : pour tout sujet technique, ratisse les dépôts et annuaires AVANT la presse
+et le blog de l'éditeur — un produit y vit des mois avant sa communication officielle.
+
 Instructions :
 1. Lance 4 à 6 recherches WebSearch avec queries variées (FR + EN si pertinent)
 2. Pour chaque recherche, fetch les 3 à 5 pages/threads les plus pertinents :
    - Reddit → endpoint `.json`
-   - X → nitter.net puis Apify si échec
-   - YouTube → Apify pour transcripts
-   - IG/TikTok → Apify scrapers
+   - X → `collect.py x-search` / `x-user`
+   - YouTube → skill `youtube-transcript`, `collect.py yt-channel`
+   - Instagram → `collect.py instagram` (profils publics ; hashtags fermés)
+   - Reddit → `collect.py reddit-sub` / `reddit`
+   - GitHub → `collect.py github` / `github-issues`, ou le CLI `gh`
    - Web → WebFetch standard
 3. Note URL, date, infos clés
 4. Si fetch échoue, mentionne-le et essaie une route alternative
@@ -614,7 +664,7 @@ le nombre, même 24 agents). TOUT l'étage 2 dans un seul message.
 rates les modes spécialisés.
 
 ❌ **Faire WebFetch direct sur instagram.com / x.com / youtube.com pour le contenu** — ça
-échoue. Toujours passer par les routes alternatives (Apify, Nitter, .json, transcript APIs).
+échoue. Toujours passer par `collect.py`, qui porte les seules routes gratuites encore vérifiées.
 
 ❌ **Ne pas afficher le score de confiance** — Clément doit savoir d'un coup d'œil si la
 synthèse est solide ou à challenger.

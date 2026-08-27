@@ -2,8 +2,8 @@ askuser-question-batch
 conseil-agents
 deepsearch
 derame
+gauntlet-loop
 ponytail
 ppt-design-check
 taste-skill
 upgrade-skill
-webinar-prep

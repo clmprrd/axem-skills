@@ -2,7 +2,10 @@
 
 Chargé à la demande par le SKILL.md principal. Le corps du skill garde les résumés ; ici c'est le détail complet.
 
-## Les 3 régimes (choisis en Phase 0 par l'orchestrateur, en contexte)
+
+⚠️ **Un 4e régime existe depuis le 22/08 : 🔍 Recherche**, décrit dans le SKILL.md. Collecte et synthèse seules, sans débat ni boucle de correction, pour les questions de fait. Il n'a pas de ligne dans le tableau ci-dessous parce qu'il ne convoque aucune lentille.
+
+## Les 4 régimes (choisis en Phase 0 par l'orchestrateur, en contexte)
 
 | Régime | Quand | Angles (deepsearch) | Terrain (si `besoin_web`) | Débat | Coût cible |
 |---|---|---|---|---|---|

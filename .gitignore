@@ -2,4 +2,9 @@
 *.old*
 *superseded*
 *.bak
+*.bak-*
 *~
+
+# 27/08/2026 : '*.bak' seul n'attrape PAS 'SKILL.md.bak-22aout' ni les sauvegardes
+# datees. Le meme caractere manquait dans build-public-plugin.sh et y laissait passer
+# trois sauvegardes dans le build public. Corrige aux deux endroits le meme jour.
