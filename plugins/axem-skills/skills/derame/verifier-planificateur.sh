@@ -154,3 +154,48 @@ OSA2
     fi
   fi
 fi
+
+# ─────────────────────────────────────────────────────────────────────────────
+# CONTROLE 3 : LE DECLENCHEUR PASSE DU COTE DU SURVEILLANT. Ajoute le 27/08/2026.
+#
+# POURQUOI
+# Le controle 2 ci-dessus ne se declenche que si le run a ecrit son debut. Or les trois
+# pannes de la semaine du 24 au 26/08 sont precisement des runs qui n'ont RIEN ecrit :
+# plafond de depense, limite hebdomadaire, planificateur inerte apres redemarrage. Un
+# surveillant arme par le surveille ne voit jamais la panne qui empeche le surveille de
+# demarrer. Verifie le 27/08 : ~/.claude/heartbeats/ ne contenait pas autopilot-debut.txt,
+# donc TOUT le bloc precedent etait inerte depuis sa creation.
+#
+# COMMENT
+# L'horaire attendu est connu et fixe : cron « 30 20 * * 1-4 ». On ne demande donc rien au
+# run. Apres 22h00 un jour ouvre lundi-jeudi, l'absence d'une FIN datee du jour est une
+# panne, que le run ait demarre ou non.
+#
+# POURQUOI C'EST AUTORISE A PARLER EN TEMPS REEL
+# Meme exception que le controle 2 : echec ou disparition d'une tache programmee.
+
+heure=$(date +%H)
+jour=$(date +%u)          # 1 = lundi ... 7 = dimanche
+AUTO_TEMOIN_ABS="$LOG_DIR/.last-alerte-autopilot-absent"
+
+if [ "$jour" -ge 1 ] && [ "$jour" -le 4 ] && [ "$heure" -ge 22 ]; then
+  minuit=$(date -j -f "%Y-%m-%d %H:%M:%S" "$(date +%Y-%m-%d) 00:00:00" +%s 2>/dev/null)
+  fin=$(cat "$AUTO_FIN" 2>/dev/null | tr -d '[:space:]')
+  fin=${fin:-0}
+  if [ -n "$minuit" ] && [ "$fin" -lt "$minuit" ]; then
+    dernier=$(cat "$AUTO_TEMOIN_ABS" 2>/dev/null | tr -d '[:space:]')
+    dernier=${dernier:-0}
+    now=$(date +%s)
+    if [ $(( now - dernier )) -gt "$SILENCE" ]; then
+      msg3="Run LinkedIn de 20h35 : aucune trace de fin ce soir. Il n'a pas tourne, ou il est mort avant d'ecrire. La file se vide de 3 creneaux par jour tant que ca dure."
+      osascript <<OSA3 >/dev/null 2>&1
+tell application "Messages"
+  set svc to 1st service whose service type = iMessage
+  send "$msg3" to buddy "$TEL" of svc
+end tell
+OSA3
+      echo "$now" > "$AUTO_TEMOIN_ABS"
+      log "ALERTE : aucune fin de run autopilote datee d'aujourd'hui a ${heure}h, iMessage envoye"
+    fi
+  fi
+fi

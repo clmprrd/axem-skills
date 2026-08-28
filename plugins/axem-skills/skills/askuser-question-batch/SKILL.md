@@ -1,6 +1,6 @@
 ---
 name: askuser-question-batch
-description: Pousse Clément à l'action par lots de questions fermées (AskUserQuestion) avec options « (Recommandé) ». À invoquer À LA FIN DE TOUT TOUR qui laisse une décision ouverte, un choix à faire, ou une suite à trancher — pas seulement pour valider un document. Déclencheurs typiques : fin d'audit, fin de diagnostic, fin de livrable, options présentées, arbitrage nécessaire, ou Clément qui dit "pose-moi des questions en batch". Le test : si la réponse se termine par une question en prose ou par "dis-moi ce que tu veux faire", c'est que ce skill aurait dû être appelé.
+description: "Pousse Clément à l'action par lots de questions fermées (AskUserQuestion) avec options « (Recommandé) ». À invoquer À LA FIN DE TOUT TOUR qui laisse une décision ouverte, un choix à faire, ou une suite à trancher — pas seulement pour valider un document. Déclencheurs typiques : fin d'audit, fin de diagnostic, fin de livrable, options présentées, arbitrage nécessaire, ou Clément qui dit \"pose-moi des questions en batch\". Le test : si la réponse se termine par une question en prose ou par \"dis-moi ce que tu veux faire\", c'est que ce skill aurait dû être appelé."
 ---
 
 # AskUser Question Batch — pousser à l'action, pas seulement valider
