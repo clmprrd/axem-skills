@@ -1,6 +1,6 @@
 ---
 name: deepsearch
-description: "Skill unique de recherche multi-plateformes (Reddit, X, YouTube, Instagram, TikTok, LinkedIn, sources fiables) avec sous-agents parallèles et 7 modes auto-détectés : YouTube Research, Reddit Deep Dive, X Pulse, Instagram Trends, Social Listening, Creator Shortlist, Viral Pattern Analysis. Responsables qualité qui challengent les takes terrain vs sources fiables. À utiliser OBLIGATOIREMENT dès que Clément demande de chercher, vérifier, fouiller, monitorer, identifier des créateurs ou comprendre un sujet. Triggers : cherche, deep search, reddit, twitter, X, youtube, instagram, tiktok, fouille, vrais users, qui parle de, monitor, meilleurs créateurs, shortlist, pourquoi ce post marche, tendances, viral, résume cette vidéo, comparatif, avis, risques, analyse, podcast, créateurs, mentions. S'active sur /deepsearch."
+description: "Recherche multi-plateformes (Reddit, X, YouTube, Instagram, TikTok, LinkedIn, sources fiables) via sous-agents paralleles, 7 modes auto-detectes. Pour chercher, verifier, fouiller, monitorer, identifier des createurs, comprendre un sujet. /deepsearch."
 ---
 
 # DeepSearch — banc d'essai de la collecte
@@ -183,8 +183,9 @@ Plusieurs modes peuvent être activés simultanément.
 **Triggers** : "youtube", "vidéo", "podcast", "résume cette vidéo", "youtuber", "chaîne"
 
 **Agents** :
-- **YT-1** — Top vidéos pertinentes (15) via WebSearch + `site:youtube.com [sujet]`. Note titre, chaîne, vues, durée, date.
-- **YT-2** — Transcripts complets pour les 5-8 meilleures via le skill `youtube-transcript` (gratuit). `collect.py yt-channel <id>` pour les dernieres videos d'une chaine. Extrait insights, frameworks, contre-arguments.
+- **YT-1** — `collect.py yt-search "<sujet>" --limit 20` : titre, chaine, vues, date, duree, sans cle API. Route ajoutee et testee le 07/09/2026, elle remplace le `site:youtube.com` par WebSearch qui rendait des resultats perimes.
+- **YT-2** — Transcripts complets pour les 5-8 meilleures via le skill `youtube-transcript`. `collect.py yt-channel <id>` pour une chaine.
+- **YT-2b** — 🔴 **`collect.py yt-comments <url ou id> --limit 40`** : c'est ICI qu'est le vecu terrain, pas dans la video. Testee le 07/09/2026, elle rend auteur, texte, date, likes et nombre de reponses.
 - **YT-3** — 5 chaînes de référence (taille audience, fréquence, qualité éditoriale).
 
 **Livrable additionnel** : Section 🎬 "À regarder" — 10 timestamps précis + 5 chaînes à follow.
@@ -203,7 +204,7 @@ Plusieurs modes peuvent être activés simultanément.
 **Triggers** : "se dit en ce moment sur X", "monitor x", "discours twitter", "voix qui montent"
 
 **Agents** (en plus des 3 X standards) :
-- **XP-1** — `collect.py x-search "<mot-cle>"` (gratuit, sans compte, ~20 resultats avec engagement), et `collect.py x-user <handle>` pour une timeline.
+- **XP-1** — 🔴 **`collect.py x-search` est MORT** depuis la fermeture de Nitter le 24/08/2026, ne pas l'appeler. La recherche X passe desormais par le **vrai Chrome de Clement** : `Control_Chrome open_url https://x.com/search?q=<requete>&src=typed_query&f=live` puis `execute_javascript` sur `article[data-testid="tweet"]`. Testee le 07/09/2026. `collect.py x-user <handle>` et `x-tweet <id>` fonctionnent toujours sans compte.
 - **XP-2** — Top accounts par engagement réel (likes, RT, replies).
 - **XP-3** — Threads viraux + analyse des quote tweets.
 
@@ -213,7 +214,7 @@ Plusieurs modes peuvent être activés simultanément.
 **Triggers** : "instagram", "ig", "carrousels", "reels", "créateurs ig", "que se passe-t-il sur ig"
 
 **Agents** :
-- **IG-1** — `collect.py instagram <compte>` : profil public, abonnes, posts avec likes et commentaires. La recherche par hashtag, elle, reste fermee.
+- **IG-1** — 🔴 **Instagram est ferme le 07/09/2026, sur les deux routes.** L'API publique rend 401 `require_login` depuis le 05/09, et le vrai Chrome de Clement redirige vers `/accounts/login` : il n'y est pas connecte. **Prerequis a lever une seule fois : se connecter a Instagram dans Chrome.** Ensuite, meme methode que X. Tant que ce n'est pas fait, un zero sur Instagram ne dit rien du sujet, il faut le declarer comme route fermee.
 - **IG-2** — Carrousels viraux & extraction des hooks (slide 1) des top comptes.
 - **IG-3** — Reels & hashtags qui convertissent.
 
@@ -385,7 +386,7 @@ r/AskAcademia, r/medicine, r/legaladvice, r/AskHistorians, r/AskScience.
 
 **Agent X-1 — Threads d'experts** : analyse rapide originale des praticiens.
 Queries : `site:x.com [sujet] thread`, `1/`, `expert`, `[nom expert] twitter`.
-Fetch via `collect.py x-search` ou `x-user` : X direct echoue toujours, ne pas l'essayer.
+Fetch via `x-user` ou `x-tweet`. Pour une RECHERCHE par mot-cle, passer par `Control_Chrome` sur x.com : `collect.py x-search` est mort depuis le 24/08/2026.
 
 **Agent X-2 — Hot takes** : positions clivantes.
 Queries : `hot take`, `is wrong`, `is overrated`, `controversial`, `viral tweet`,
@@ -482,11 +483,10 @@ et le blog de l'éditeur — un produit y vit des mois avant sa communication of
 Instructions :
 1. Lance 4 à 6 recherches WebSearch avec queries variées (FR + EN si pertinent)
 2. Pour chaque recherche, fetch les 3 à 5 pages/threads les plus pertinents :
-   - Reddit → endpoint `.json`
-   - X → `collect.py x-search` / `x-user`
-   - YouTube → skill `youtube-transcript`, `collect.py yt-channel`
-   - Instagram → `collect.py instagram` (profils publics ; hashtags fermés)
-   - Reddit → `collect.py reddit-sub` / `reddit`
+   - Reddit → `collect.py reddit-sub <sub>` ou `collect.py reddit <sub> <mots cles>`. ⚠️ L'endpoint `.json` anonyme rend 403 depuis mai 2026 et il n'existe plus de recherche Reddit GLOBALE gratuite : **cadrer un sous-reddit est la condition pour que la route existe**, pas une politesse.
+   - X → `collect.py x-user` / `x-tweet` ; pour une recherche, `Control_Chrome` sur x.com
+   - YouTube → `collect.py yt-search`, `collect.py yt-comments`, skill `youtube-transcript`
+   - Instagram → ferme, voir IG-1
    - GitHub → `collect.py github` / `github-issues`, ou le CLI `gh`
    - Web → WebFetch standard
 3. Note URL, date, infos clés

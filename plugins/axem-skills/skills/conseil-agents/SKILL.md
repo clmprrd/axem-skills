@@ -1,15 +1,6 @@
 ---
 name: conseil-agents
-description: >
-  Conseil d'agents autonome et ultra-critique. Challenge SANS PITIÉ le fonctionnement / le livrable / l'approche en cours,
-  trouve les billes à plus forte valeur, corrige en sous-agents, et rend un arbitrage. PIPELINE AUTOMATIQUE en une seule
-  invocation : (0) triage en contexte, (0.5) BATCH AMONT askuser qui cadre le scope + l'intensité AVANT toute recherche,
-  (1) deepsearch 2 axes (angles + terrain Reddit/X) via le Workflow conseil-agents-recherche [+ /find-skill si besoin
-  d'outil], (1.5) triangulation terrain vs institutionnel + transposabilité FR, (2) un CONSEIL à lentilles opposées qui
-  DÉBAT (+ steelman/pre-mortem), (3) une BOUCLE de correction, (4) un askuser-question-batch final avec options
-  recommandées, (5) persistance du verdict au vault+mémoire.
-  À DÉCLENCHER quand Clément dit : "/conseil-agents", "challenge notre fonctionnement", "conseil d'agents", "débat d'agents",
-  "critique sans pitié", "trouve les billes", "boucle autonome d'amélioration", "réunis un conseil", "challenge tout ça sans pitié".
+description: "Conseil d'agents autonome et critique: challenge sans pitie le fonctionnement en cours, deepsearch, debat a lentilles opposees, boucle de correction, arbitrage. Declencher: /conseil-agents, challenge notre fonctionnement, conseil d'agents, debat d'agents."
 argument-hint: "<le sujet / le livrable / le fonctionnement à challenger>"
 user-invocable: true
 ---
@@ -72,6 +63,27 @@ n'est plus la porte d'entrée : c'est le banc d'essai. Sans lui, une dérive de 
 être vue, faute de pouvoir l'exercer seule.
 
 ---
+
+## 🔴 LE FILTRE DES 3 MOTIFS (en tete : mesure du 05/09/2026 sur les 6 conseils non suivis)
+
+Sur 15 conseils notes, 3 se sont reveles faux mais **6 n'ont jamais ete executes**. On mesurait le
+petit probleme. Les 6 se rangent en 3 motifs, et **aucune recommandation ne sort d'ici sans avoir
+passe ce filtre** :
+
+1. **Le premier pas est un PREREQUIS** (3 cas sur 6). Le verrou de fichier LinkedIn, pose en
+   prerequis, n'etait pas code 3 semaines plus tard pendant que 3 sessions tournaient en parallele.
+   Deux scaffolds SaaS livres puis abandonnes avant le backend. **Reformule pour que le premier pas
+   soit la chose elle-meme en version reduite**, sinon la reco est refusee.
+2. **C'est un conseil de FREINAGE** (2 cas sur 6). Plafonner le sponsoring, decide le 20/08 ; le
+   lendemain Clement decide l'inverse, sans plafond. **Chiffre ce que la retenue rapporte**, en euros
+   ou en heures, contre ce qu'elle coute en opportunites. Sans ce chiffre, la reco ne passe pas.
+3. **C'est une CORVEE MANUELLE RECURRENTE** (1 cas sur 6). Une note de veille a remplir a la main,
+   jamais remplie depuis sa creation. **Si personne ne l'automatise, elle n'existera pas** : soit la
+   reco devient une tache programmee ou un script, soit elle est refusee.
+
+Le test avant d'ecrire chaque ligne du verdict : *dans quel motif tomberait cette reco si elle
+echouait ?* Si la reponse est l'un des trois, elle est deja morte, reecris-la.
+
 
 ## Avant d'écrire : qui d'autre travaille là-dessus ?
 
@@ -295,33 +307,8 @@ que personne n'exécute vaut moins qu'un premier pas imparfait qui part.
 Corollaire : **quand la recommandation est technique et réversible, ne la recommande pas, fais-la** dans la foulée
 du conseil, en Phase 3. Le facteur limitant du dispositif n'est pas la qualité des conseils, c'est leur exécution.
 
-🔴 **Durci le 27/08/2026 : une recommandation dont le premier pas est un prérequis est REFUSÉE, pas nuancée.**
-
-La contrainte ci-dessus était trop molle. Elle demandait que la recommandation « tienne en une session »,
-ce qui laissait passer « d'abord le socle, ensuite le reste » en le découpant sur le papier. Trois cas
-mesurés disent que ce découpage ne survit jamais au contact : le verrou de fichier LinkedIn, posé en
-prérequis, n'était pas codé trois semaines plus tard et trois sessions ont tourné en parallèle sur le
-même compte le 17/08, exactement le risque annoncé ; les deux fichiers `PROPOSITION-*` du 10/07 étaient
-des socles à appliquer plus tard, ils sont morts dans `patches/` et n'ont été ouverts que le 27/08, l'un
-d'eux pour découvrir en cinq minutes qu'il disait vrai depuis 48 jours.
-
-Concrètement : si le premier pas d'une recommandation consiste à construire, câbler ou sécuriser quelque
-chose avant de pouvoir faire la chose demandée, **on la reformule pour que le premier pas soit la chose
-elle-même, en version réduite**, et le prérequis devient la première écriture de ce travail, pas son
-préalable. Une recommandation qui ne survit pas à cette reformulation n'est pas mûre.
-
-🔴 **Durci le 27/08/2026 : un conseil de FREINAGE doit porter le chiffre de ce que freiner rapporte.**
-
-Trois occurrences, toutes ignorées, et Clément a fait l'inverse dans les jours qui ont suivi : borner le
-sponsoring à 2 posts par mois (le lendemain, décision d'accélérer sans plafond), gater les appels
-découverte gratuits avant tout le reste (jamais fait, c'est le sponsoring qui a avancé), adoucir la
-cadence des DM (l'envoi est passé en automatique le 21/08).
-
-Le correctif n'est pas d'arrêter de conseiller la prudence, c'est d'arrêter de la conseiller à vide.
-**Tout conseil qui propose de plafonner, ralentir, filtrer ou reporter doit chiffrer ce que la retenue
-rapporte**, en euros ou en heures, contre ce qu'elle coûte en opportunités. Sans ce chiffre, il ne passe
-pas le filtre de Phase 2 : l'expérience dit qu'il ne sera pas suivi, donc l'écrire est du bruit.
-
+🔴 **Les 3 motifs de non-suivi (prerequis, freinage sans chiffre, corvee manuelle) sont traites
+en tete de ce fichier, section LE FILTRE DES 3 MOTIFS. Ils s'appliquent ici, en Phase 2.**
 ⚠️ Ces deux règles se mesurent au registre `_RESULTATS-CONSEILS.md`. Si le taux de `non-suivi` ne bouge
 pas d'ici trois conseils, ce sont ces règles qu'il faudra retirer, pas en ajouter d'autres.
 

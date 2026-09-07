@@ -1,6 +1,6 @@
 ---
 name: askuser-question-batch
-description: "Pousse Clément à l'action par lots de questions fermées (AskUserQuestion) avec options « (Recommandé) ». À invoquer À LA FIN DE TOUT TOUR qui laisse une décision ouverte, un choix à faire, ou une suite à trancher — pas seulement pour valider un document. Déclencheurs typiques : fin d'audit, fin de diagnostic, fin de livrable, options présentées, arbitrage nécessaire, ou Clément qui dit \"pose-moi des questions en batch\". Le test : si la réponse se termine par une question en prose ou par \"dis-moi ce que tu veux faire\", c'est que ce skill aurait dû être appelé."
+description: "Pousse Clement a l'action par lots de questions fermees (AskUserQuestion), options (Recommande). A invoquer en fin de tour des qu'une decision reste ouverte: fin d'audit, fin de livrable, arbitrage. Jamais de question en prose a la place."
 ---
 
 # AskUser Question Batch — pousser à l'action, pas seulement valider
@@ -50,7 +50,7 @@ Ne jamais deviner un chiffre, un engagement ou une clause qui engage Clément vi
 ### 1. Cartographier les inconnues
 Avant de poser une seule question, lire ce qui existe déjà :
 - Le document/brief reçu du tiers (ex: questionnaire, brief, cahier des charges) — lister EXHAUSTIVEMENT chaque sous-question, pas juste les titres de section.
-- Le vault Obsidian (vos notes internes (mémoire, CRM, compta)) pour toute donnée déjà écrite qui répond à une sous-question.
+- Le vault Obsidian (`(mémoire interne)`, `(CRM interne)`, `(compta interne)`, `(referentiel interne)`) pour toute donnée déjà écrite qui répond à une sous-question.
 - Les transcripts Fathom pertinents, au cas où Clément aurait déjà donné une réponse à l'oral.
 
 Croiser les deux : chaque sous-question devient soit "déjà répondu, à réutiliser tel quel" (ne pas re-demander), soit "à trancher avec Clément" (va dans un lot).
@@ -71,6 +71,37 @@ Une fois un lot répondu, reporter les réponses telles quelles dans le document
 
 ### 5. Auditer la complétude avant de considérer le document prêt
 Une fois tous les lots traités, refaire une passe de croisement complet (comme l'étape 1) entre le document final et le brief/questionnaire d'origine, sous-question par sous-question, avec un statut ✅/🟡/❌ pour chacune. Ne déclarer le document "prêt" que si le taux de complétude est explicitement communiqué à Clément (pas juste "c'est fait") — s'il reste des 🟡/❌, les remonter avant de proposer l'envoi.
+
+## 🔴 INTERDIT ABSOLU : l'option « on s'arrête là »
+
+**Aucune option, aucune question, aucune phrase ne propose jamais d'arrêter, de reporter au
+lendemain, d'aller dormir, de reprendre à tête reposée, ni ne commente l'heure qu'il est.**
+Interdit dans les labels, dans les descriptions, dans le texte autour du batch. Sans exception,
+quelle que soit l'heure, quelle que soit la longueur de la session, même après un gros livrable.
+
+**Pourquoi c'est une règle dure.** Clément, le 05/09/2026 à 5h du matin, après une session de
+sept heures : « Pitié, arrête de me dire les trucs on s'arrête, va dormir, j'en ai marre là,
+c'est une phrase dans les questions. Je t'en supplie, arrête, trouve un moyen d'arrêter cette
+dernière question. » C'est la seule fois où il a demandé de corriger le skill lui-même.
+
+Ce qui rend l'option nuisible : elle **désamorce l'appel à l'action** que tout ce skill existe
+pour produire. Un batch dont la dernière option est « on s'arrête » invite à ne rien choisir. Elle
+est aussi paternaliste — c'est Clément qui décide quand il travaille, pas moi — et elle remplace
+une décision réelle par une non-décision, ce qui gaspille la place d'une vraie option.
+
+**Formulations bannies, et toutes leurs variantes :** « on s'arrête là », « on s'arrête pour ce
+soir », « vous allez dormir », « à tête reposée », « demain », « plus tard dans la semaine », « il
+est tard », « rien n'est urgent », « on verra à la reprise », « bonne nuit ».
+
+**Ce qu'on met à la place.** La dernière option est toujours une vraie alternative de travail :
+un autre chantier à attaquer, une vérification à faire, un angle différent sur le même sujet. Si
+Clément veut s'arrêter, il ferme la fenêtre — il n'a besoin de personne pour l'y autoriser.
+
+❌ « On s'arrête là pour ce soir, tout est installé » ❌ « À reprendre à tête reposée »
+✅ « Tester le skill sur le modèle local » ✅ « Attaquer la duplication des tâches »
+
+Le seul cas où l'arrêt se mentionne : **Clément le demande lui-même**. Alors on s'arrête, sans
+commentaire et sans le transformer en option.
 
 ## Règles de forme pour les questions
 
@@ -128,6 +159,45 @@ rarement fautif, **c'est presque toujours la prémisse qui est périmée ou à c
 questions ne produisent pas d'artefact, elles n'ont donc aucune référence à battre. Ne pas fabriquer une barre
 pour la forme.
 
+## 🔴 MODE « 4 LOTS », valide par Clement le 03/09/2026
+
+**Quand un chantier a beaucoup de decisions ouvertes en meme temps, ne pas poser 1 ou 2 questions et
+garder le reste pour plus tard. Enchainer QUATRE appels de QUATRE questions, soit 16 questions.**
+
+Clement l'a demande explicitement, puis valide apres l'avoir vu tourner : « package aussi ce style
+de question dans le skill batch askuser question, et la tu l'appelles en mode nouveau skill, 4 batch
+askuser question comme tu viens de le faire a l'instant, c'est bien ».
+
+**Comment on structure les 4 lots.** Un lot = un THEME coherent, jamais un melange. Sur le dossier
+LinkedIn du 03/09, la decoupe qui a marche :
+
+| lot | theme | exemples de questions |
+|---|---|---|
+| 1 | **production et file** | creneaux mal places, file vide, stock d'images, ratio de production |
+| 2 | **tests en cours** | tests contamines, dates de verdict, quel test declarer caduc |
+| 3 | **securite et infra** | sessions concurrentes, cooldown, disjoncteur, permissions |
+| 4 | **strategie et leviers neufs** | signal predictif, canal jamais teste, depense publicitaire, action immediate |
+
+**Ce qui rend le mode utile plutot que bavard :**
+
+- **Chaque question porte un FAIT verifie a la source dans son enonce**, jamais une supposition. « Cinq
+  posts sont programmes a 09h00, un creneau qui n'existe plus depuis ce soir » se verifie ; « la file
+  a peut-etre un probleme » ne vaut rien.
+- **Chaque option chiffre son cout ET sa contrepartie.** L'option recommandee n'est pas la plus
+  confortable, c'est celle dont le chiffre tient.
+- **On annonce la position dans la sequence** : « LOT 2 sur 4 », pour que Clement sache combien il
+  reste avant de repondre.
+- **Entre deux lots, on EXECUTE ce que le lot precedent a tranche.** Un lot 2 pose sans avoir applique
+  les reponses du lot 1 fait perdre le fil, et Clement l'a dit : ce qu'il veut c'est que le travail
+  avance entre les questions, pas qu'on empile les questions.
+
+⚠️ **Ne pas gonfler artificiellement a 16 questions.** Si un seul sujet est mur, poser une question.
+Le mode 4 lots s'active quand il y a REELLEMENT 4 themes distincts et murs, ce qui arrive sur les
+sessions longues, pas sur une demande ponctuelle.
+
+⚠️ Une question dont la reponse ne change rien a ce que je vais faire n'est pas une question, c'est
+une demande de permission deguisee. Elle se tranche seule et s'annonce en une ligne.
+
 ## Exemple de séquencement (mail de réponse à un questionnaire partenaire)
 
 1. Lot 1 — Positionnement & chiffres d'activité (statut juridique, clients citables, volume d'activité)
@@ -136,3 +206,19 @@ pour la forme.
 4. Lot 4 — Mécanique de suivi (jalons, propriété client, clauses)
 5. Audit de complétude vs le questionnaire d'origine, section par section
 6. Si des trous substantiels apparaissent (offres détaillées, preuves chiffrées, mécanique contractuelle, logistique formateurs, certifications) → nouveaux lots ciblés sur CES trous précis, en réutilisant en priorité les données déjà trouvées dans le vault (ex: cas clients chiffrés déjà documentés) avant de redemander à Clément.
+
+## 🔴 INTERDICTION DURE : la question « on coupe ? » n'existe pas (05/09/2026)
+
+**Aucune question de batch ne porte sur l'arret de la session, et aucune ne mentionne l'heure.**
+Pas de « il est 3h, on coupe ? », pas de « cette session est longue », pas de « a tete reposee ».
+
+C'est la troisieme question du batch qui recidive systematiquement, toujours sous couvert
+d'economiser des tokens. Enfreint 4 fois le 03/09 et 6 fois le 05/09, sur la meme session.
+Verbatim de Clement : « Ca me fait depenser des credits pour rien. Et si je suis en train de te
+parler, c'est que j'ai besoin de te parler. »
+
+**Le batch se termine sur la suite du travail.** Si le sujet est reellement clos, il vaut mieux un
+batch de deux questions qu'une troisieme question de remplissage sur l'arret. Et si tout est fini,
+on termine par un constat court sans question.
+
+Seule mention du temps autorisee : une **echeance externe verifiable** qui change la decision.

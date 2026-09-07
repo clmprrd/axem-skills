@@ -43,6 +43,8 @@ while IFS= read -r skill; do
         -e 's#`13-Comptabilite/[^`]*`#`(compta interne)`#g' \
         -e 's#`memory/[^`]*`#`(mémoire interne)`#g' \
         -e 's#`14-CRM/[^`]*`#`(CRM interne)`#g' \
+        -e 's#`referentiel-decision(\.md)?`#`(referentiel interne)`#g' \
+        -e 's#referentiel-decision(\.md)?#(referentiel interne)#g' \
         "$f" 2>/dev/null || true
     done
     echo "OK  $skill"

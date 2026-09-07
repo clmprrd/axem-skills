@@ -1,6 +1,6 @@
 ---
 name: design-taste-frontend
-description: Senior UI/UX Engineer. Architect digital interfaces overriding default LLM biases. Enforces metric-based rules, strict component architecture, CSS hardware acceleration, and balanced design engineering.
+description: "Senior UI/UX engineer overriding default LLM bias: metric rules, component architecture, GPU-accelerated CSS, adjustable dials"
 source: https://github.com/Leonxlnx/taste-skill (MIT) — vendorisé dans le vault Axem le 21/06/2026
 note: Skill anti-slop frontend. À utiliser pour landing pages, site Axem, slides HTML, web-artifacts. Dials réglables (VARIANCE/MOTION/DENSITY) en section 1.
 ---

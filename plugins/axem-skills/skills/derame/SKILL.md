@@ -1,14 +1,6 @@
 ---
 name: derame
-description: >
-  Déramer le Mac de Clément à la demande — RAM, CPU ET espace disque. À utiliser
-  dès que Clément dit "mon ordi rame", "déramе", "/derame", "ça bug", "libère la
-  RAM", "allège mon mac", "mon mac est lent", "nettoie la mémoire", "ça lag",
-  "j'ai plus de place", "vide mes Go", "espace disque", "mon disque est plein".
-  Le skill diagnostique RAM/CPU/disque en live sur la VRAIE machine de Clément
-  via l'outil Mole (57k⭐ GitHub, brew install mole), propose un nettoyage
-  détaillé par catégorie — et ne supprime/ferme jamais rien sans validation
-  explicite.
+description: "Diagnostique et allege RAM/CPU/disque du Mac en live (outil Mole); propose un nettoyage par categorie, ne supprime rien sans validation. /derame, ca rame, ca lag, disque plein"
 ---
 
 # 🧠 Skill `/derame` — Déramage Mac à la demande (mode doux, propulsé par Mole)

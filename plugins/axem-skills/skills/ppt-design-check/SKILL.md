@@ -1,6 +1,6 @@
 ---
 name: ppt-design-check
-description: Garde-fou design anti-"AI slop" pour toute présentation PowerPoint. À invoquer AVANT de créer un deck (direction artistique) OU quand un deck existant est moche/générique (diagnostic + correction ciblée). Fonctionne aussi bien pour une génération from-scratch (skill pptx / Cowork) que pour une édition dans le plugin officiel Claude for PowerPoint. Déclencheurs : "/ppt-design-check", "ce PPT est moche", "améliore le design de ce deck", "avant de créer les slides, check le design", "cette présentation fait trop IA".
+description: "Garde-fou anti-AI slop PowerPoint, avant creation ou sur deck existant."
 sources: recherche sourcée juillet 2026 (support.claude.com, Claude Cookbook Anthropic, github.com/anthropics/skills/pptx, superdesign.dev, winningpresentations.com)
 last_updated: 2026-07-02
 ---

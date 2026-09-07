@@ -1,14 +1,6 @@
 ---
 name: gauntlet-loop
-description: >
-  Construit et exécute un prompt "gauntlet loop" : trois blocs (LA TÂCHE / LA MÉTHODE / LA BARRE), fan-out de
-  sous-agents workers, chacun apparié à un critique AVEUGLE qui compare le résultat à une référence réelle nommée,
-  et la boucle ne s'arrête que quand le critique préfère notre version. À déclencher quand Clément dit :
-  "/gauntlet-loop", "gauntlet", "fais-le tourner jusqu'à ce que ce soit parfait", "fan out des sous-agents",
-  "boucle jusqu'à ce que ce soit au niveau de X", "je veux du niveau AAA", "mets un critique dessus",
-  "compare en aveugle avec", "polis ça jusqu'au bout", "warp drive sur cette v1".
-  À utiliser aussi comme SOUS-ROUTINE : la Phase 3 de /conseil-agents et toute demande de polish d'un livrable
-  déjà cadré (site, deck, page, visuel, doc client, page LinkedIn, prototype).
+description: "Fan-out d'agents + critique aveugle en boucle; /gauntlet-loop"
 argument-hint: "<la chose à porter au niveau maximum> [+ la référence à battre]"
 user-invocable: true
 ---

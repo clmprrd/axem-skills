@@ -1,6 +1,6 @@
 ---
 name: upgrade-skill
-description: Audite et améliore les skills Claude de Clément/Alexis — passe en revue toute la bibliothèque installée (vault + plugins) ou un skill précis, note chaque skill sur 3 dimensions (qualité de déclenchement/description, usage réel vs skills fantômes, sécurité/structure), et propose des corrections classées par priorité. Ne modifie jamais un fichier sans validation explicite. Inspiré du pattern GitHub "skill-doctor" (xigua-wang/skill-doctor, 321★) et du skill officiel skill-creator. Déclencheurs : "/upgrade-skill", "audit mes skills", "améliore ce skill", "ce skill est trop verbeux", "optimise ce skill", "check mes skills", "y'a des doublons dans mes skills ?".
+description: "Audite/ameliore les skills Claude: declenchement, usage, securite."
 version: 1.1
 created: 2026-07-02
 updated: 2026-07-02

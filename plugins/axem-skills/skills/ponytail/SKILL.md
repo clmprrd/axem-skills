@@ -1,15 +1,6 @@
 ---
 name: ponytail
-description: >
-  Forces the laziest solution that actually works — simplest, shortest, most
-  minimal. Channels a senior dev who has seen everything: question whether the
-  task needs to exist at all (YAGNI), reach for the standard library before
-  custom code, native platform features before dependencies, one line before
-  fifty. Supports intensity levels: lite, full (default), ultra. Use whenever
-  the user says "ponytail", "be lazy", "lazy mode", "simplest solution",
-  "minimal solution", "yagni", "do less", or "shortest path" — and whenever
-  they complain about over-engineering, bloat, boilerplate, or unnecessary
-  dependencies.
+description: "Force la solution la plus simple (YAGNI); code/automations, pas visuel."
 license: MIT
 source: https://github.com/DietrichGebert/ponytail — vendorisé dans le vault Axem le 21/06/2026
 note: À utiliser pour le CODE / les automations n8n / le build du site. PAS pour le contenu ou le visuel (axe différent de taste-skill).
