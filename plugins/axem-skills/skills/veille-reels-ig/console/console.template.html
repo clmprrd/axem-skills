@@ -1,0 +1,476 @@
+<title>Console Reels Axem</title>
+<div id="cr-root">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --ground:#F4F5F3; --surface:#FFFFFF; --surface-2:#E9EBE7;
+    --rule:#D7DAD4; --rule-soft:#E3E6E0;
+    --ink:#15181A; --ink-2:#4E5457; --ink-3:#7B8184;
+    --accent:#A8431C; --accent-soft:#F6E7E0;
+    --good:#2C6146; --good-soft:#E1EFE7;
+    --warn:#8A5C00; --warn-soft:#F7EEDA;
+    --blue:#2F5C8A; --blue-soft:#E3ECF5;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#0E1011; --surface:#171A1B; --surface-2:#1E2223;
+      --rule:#2B3032; --rule-soft:#232829;
+      --ink:#E9EBE8; --ink-2:#A6ACAE; --ink-3:#7B8184;
+      --accent:#E0844F; --accent-soft:#2A1A12;
+      --good:#6FBE95; --good-soft:#152520;
+      --warn:#D9A441; --warn-soft:#2A2214;
+      --blue:#7FAEDD; --blue-soft:#15202B;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0E1011; --surface:#171A1B; --surface-2:#1E2223;
+    --rule:#2B3032; --rule-soft:#232829;
+    --ink:#E9EBE8; --ink-2:#A6ACAE; --ink-3:#7B8184;
+    --accent:#E0844F; --accent-soft:#2A1A12;
+    --good:#6FBE95; --good-soft:#152520;
+    --warn:#D9A441; --warn-soft:#2A2214;
+    --blue:#7FAEDD; --blue-soft:#15202B;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);
+    font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:15px;line-height:1.55}
+  #cr-root .wrap{max-width:1080px;margin:0 auto;padding:26px 20px 80px}
+  #cr-root h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(26px,4vw,38px);
+     line-height:1;letter-spacing:-.02em;margin:0 0 6px}
+  #cr-root .sub{color:var(--ink-2);margin:0;max-width:70ch}
+  #cr-root .save{font-size:12.5px;color:var(--ink-3);margin-top:6px;min-height:1.2em}
+  #cr-root .save.err{color:var(--accent)}
+
+  .tabs{display:flex;border:1px solid var(--rule);background:var(--surface);
+        margin:22px 0 0;border-radius:2px;overflow:hidden;width:fit-content}
+  .tabs button{font:600 14px "IBM Plex Sans",sans-serif;padding:9px 20px;border:0;background:transparent;
+    color:var(--ink-2);cursor:pointer;border-right:1px solid var(--rule)}
+  .tabs button:last-child{border-right:0}
+  .tabs button[aria-selected="true"]{background:var(--accent);color:#fff}
+  .tabs button:focus-visible,.chips button:focus-visible,.seg button:focus-visible,button.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  section{margin-top:18px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chips button{font:500 13.5px "IBM Plex Sans",sans-serif;padding:6px 12px;border:1px solid var(--rule);
+    background:var(--surface);color:var(--ink-2);border-radius:999px;cursor:pointer;display:inline-flex;gap:7px;align-items:center}
+  .chips button b{font:600 13px "IBM Plex Mono",monospace;color:var(--ink);font-variant-numeric:tabular-nums}
+  .chips button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--ground)}
+  .chips button[aria-pressed="true"] b{color:var(--ground)}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--ink-3);display:inline-block}
+  .s-a_tourner{--c:var(--ink-3);--cs:var(--surface-2)} .s-tourne{--c:var(--warn);--cs:var(--warn-soft)}
+  .s-monte{--c:var(--blue);--cs:var(--blue-soft)} .s-pret{--c:var(--accent);--cs:var(--accent-soft)}
+  .s-publie{--c:var(--good);--cs:var(--good-soft)}
+  .dot[class*="s-"]{background:var(--c)}
+
+  .bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px;
+       border:1px solid var(--rule);background:var(--surface);padding:12px 16px}
+  .bar .n{font:800 24px "Bricolage Grotesque",sans-serif;font-variant-numeric:tabular-nums}
+  .bar .lab{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
+  .prog{flex:1 1 160px;height:6px;background:var(--surface-2);border-radius:3px;overflow:hidden;min-width:120px;display:flex}
+  .prog i{display:block;height:100%}
+
+  .promptbox{border:1px solid var(--rule);background:var(--surface);padding:24px 28px;margin-top:12px}
+  .meta{display:flex;gap:12px;flex-wrap:wrap;align-items:center;font-size:12.5px;color:var(--ink-3);margin-bottom:14px}
+  .kw{font-family:"IBM Plex Mono",monospace;background:var(--accent-soft);color:var(--accent);padding:2px 8px;border-radius:2px;font-weight:500}
+  .num{font:600 12.5px "IBM Plex Mono",monospace;color:var(--ink-2)}
+  .titre{font:600 19px "Bricolage Grotesque",sans-serif;margin:0 0 12px;color:var(--ink)}
+  .seg{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--rule);border-radius:2px;overflow:hidden;width:fit-content;margin:0 0 16px}
+  .seg button{font:500 13.5px "IBM Plex Sans",sans-serif;padding:7px 13px;border:0;border-right:1px solid var(--rule);
+    background:var(--surface);color:var(--ink-2);cursor:pointer;display:inline-flex;gap:7px;align-items:center}
+  .seg button:last-child{border-right:0}
+  .seg button[aria-pressed="true"]{background:var(--cs);color:var(--c);font-weight:600}
+  .seg button:disabled{cursor:not-allowed;opacity:.6}
+  .auto{font-size:12.5px;color:var(--ink-3);margin:-8px 0 14px}
+  .leg{background:var(--surface-2);border-left:3px solid var(--accent);padding:10px 14px;margin:0 0 18px;font-size:15px}
+  .leg b,.note b{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;font-weight:600}
+  .leg b{color:var(--ink-3)}
+  .script{--taille:30px;font-size:var(--taille);line-height:1.45;margin:0;max-width:100%;letter-spacing:-.005em}
+  .script .ligne{display:block;padding-left:1.2em;text-indent:-1.2em}
+  .script .bloc{margin:0 0 .85em}
+  .script .bloc:last-child{margin-bottom:0}
+  .script strong{color:var(--accent);font-weight:700}
+  .script .monte{color:var(--ink-3);font-size:.7em;margin-left:.25em}
+  .taille{display:inline-flex;gap:4px;margin-left:auto}
+  .taille button{font:600 13px "IBM Plex Sans",sans-serif;padding:5px 10px;border:1px solid var(--rule);background:var(--surface);color:var(--ink-2);border-radius:2px;cursor:pointer}
+  .nav{display:flex;gap:8px;margin-top:22px;flex-wrap:wrap;align-items:center}
+  button.btn{font:600 14px "IBM Plex Sans",sans-serif;padding:9px 16px;border:1px solid var(--rule);
+    background:var(--surface);color:var(--ink);cursor:pointer;border-radius:2px}
+  button.btn:hover{border-color:var(--accent)}
+  button.btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+  button.btn:disabled{opacity:.5;cursor:not-allowed}
+  .hint{font-size:12.5px;color:var(--ink-3)}
+  .note{border:1px solid var(--rule);border-left:3px solid var(--warn);background:var(--warn-soft);padding:12px 16px;margin:0 0 16px;font-size:14.5px}
+  .note b{color:var(--warn)}
+  .empty{padding:26px;text-align:center;color:var(--ink-3);border:1px dashed var(--rule);margin-top:12px}
+
+  .tblwrap{overflow-x:auto;border:1px solid var(--rule);background:var(--surface);margin-top:12px}
+  table{border-collapse:collapse;width:100%;font-size:14px;min-width:720px}
+  th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--rule-soft);vertical-align:middle}
+  th{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);background:var(--surface-2);
+     border-bottom:1px solid var(--rule);white-space:nowrap;font-weight:600}
+  tr:last-child td{border-bottom:0}
+  td.n{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .pill{display:inline-flex;align-items:center;gap:6px;padding:2px 9px;border-radius:999px;background:var(--cs);color:var(--c);font-size:12.5px;font-weight:600;white-space:nowrap}
+  .idx{display:inline-flex;align-items:center;gap:7px;min-width:96px}
+  .idx .b{height:7px;background:var(--accent);border-radius:2px;min-width:2px}
+  .idx.up .b{background:var(--good)} .idx.dn .b{background:var(--ink-3)}
+  form.add{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;
+    border:1px solid var(--rule);background:var(--surface);padding:14px 16px;margin-top:12px;align-items:end}
+  label{display:block;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px;font-weight:600}
+  input,select{width:100%;font:14px "IBM Plex Sans",sans-serif;padding:8px 10px;border:1px solid var(--rule);
+    background:var(--ground);color:var(--ink);border-radius:2px}
+  input:focus,select:focus{outline:2px solid var(--accent);outline-offset:-1px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+  <h1>Console Reels Axem</h1>
+  <p class="sub" id="sub"></p>
+  <p class="save" id="save" aria-live="polite"></p>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" id="t-tour" aria-selected="true" aria-controls="p-tour">Tournage</button>
+    <button role="tab" id="t-videos" aria-selected="false" aria-controls="p-videos">Vidéos</button>
+    <button role="tab" id="t-suivi" aria-selected="false" aria-controls="p-suivi">Suivi</button>
+  </div>
+
+  <section id="p-tour" role="tabpanel" aria-labelledby="t-tour">
+    <div class="chips" id="chips" role="group" aria-label="Filtrer par statut"></div>
+    <div class="bar">
+      <span class="n" id="pos">0</span><span class="lab" id="sur">sur 0</span>
+      <div class="prog" id="pbar" aria-hidden="true"></div>
+      <span class="n" id="reste">0</span><span class="lab">min à tourner</span>
+    </div>
+    <div class="promptbox" id="box">
+      <div class="meta">
+        <span class="num" id="num"></span>
+        <span class="kw" id="kw"></span>
+        <span id="dur"></span>
+        <span id="src"></span>
+        <span class="taille" role="group" aria-label="Taille du texte"><button type="button" id="moins" aria-label="Texte plus petit">A−</button><button type="button" id="plus" aria-label="Texte plus grand">A+</button></span>
+      </div>
+      <p class="titre" id="titre" hidden></p>
+      <div class="seg" id="seg" role="group" aria-label="Statut de la vidéo"></div>
+      <p class="auto" id="auto" hidden></p>
+      <p class="note" id="warnbox" hidden><b>À savoir avant de tourner</b><span id="warn"></span></p>
+      <p class="leg"><b>Légende à coller sous la vidéo</b><span id="leg"></span></p>
+      <div class="script" id="txt"></div>
+      <div class="nav">
+        <button class="btn" id="prev">Précédent</button>
+        <button class="btn pri" id="next">Suivant</button>
+        <span class="hint">Flèches pour naviguer, espace pour passer le script en « Tourné ».</span>
+      </div>
+    </div>
+    <div class="empty" id="vide-tour" hidden>Aucun script dans ce statut.</div>
+  </section>
+
+  <section id="p-videos" role="tabpanel" aria-labelledby="t-videos" hidden>
+    <p class="note"><b>Comment les statuts avancent</b>
+      « Tourné », « Monté » et « Prêt » se mettent à jour tout seuls quand le skill de veille repasse :
+      il lit les dossiers <code>~/Documents/videos/n59-…</code> (le numéro du script en tête). Un rush
+      dedans vaut « Tourné », un <code>aroll.mp4</code> vaut « Monté », un <code>final-instagram.mp4</code>
+      vaut « Prêt ». « Publié » se pose ici ou en ajoutant le post dans Suivi. Un statut ne redescend
+      jamais tout seul.</p>
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th>N°</th><th>Script</th><th>Source</th><th>Statut</th><th>Depuis</th></tr></thead>
+        <tbody id="tv"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="p-suivi" role="tabpanel" aria-labelledby="t-suivi" hidden>
+    <p class="note"><b>La règle qui rend ce registre utile</b>
+      Ne compare jamais un reel à un reel : la variance de l'algorithme va de 5 à 20 fois. L'indice
+      divise tes vues par la médiane de tes dix posts précédents. 1,00 veut dire dans ta norme. Ne
+      conclus rien avant cinq à dix posts sur la même famille d'idée.</p>
+    <form class="add" id="f">
+      <div><label for="fs">Script publié</label><select id="fs"></select></div>
+      <div><label for="fd">Date</label><input type="date" id="fd"></div>
+      <div><label for="ff">Famille d'idée</label><input id="ff" placeholder="outillage, sécurité…"></div>
+      <div><label for="fv">Vues à J+7</label><input type="number" id="fv" min="0" placeholder="0"></div>
+      <div><button class="btn pri" type="submit" id="fadd">Ajouter</button></div>
+    </form>
+    <div id="vide" class="empty">Aucun post enregistré. Ajoute le premier le jour où tu publies :
+      sans relevé dès le début, les dix premières vidéos ne diront rien.</div>
+    <div class="tblwrap" id="tw" hidden>
+      <table>
+        <thead><tr><th>Date</th><th>Script</th><th>Famille</th><th>Vues J+7</th><th>Indice</th><th></th></tr></thead>
+        <tbody id="tb"></tbody>
+      </table>
+    </div>
+    <div id="fam"></div>
+  </section>
+</div>
+
+<script type="application/json" id="etat">/*ETAT*/</script>
+<script>
+(function(){
+  "use strict";
+  var root = document.getElementById("cr-root");
+  // Source intacte capturee AVANT tout rendu : c'est elle qu'on republie, jamais le DOM vivant.
+  var SOURCE = root.outerHTML;
+  var TETE = '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Console Reels Axem</title></head><body>';
+  var ETAT = JSON.parse(document.getElementById("etat").textContent);
+  ETAT.statuts = ETAT.statuts || {};
+  ETAT.posts = ETAT.posts || [];
+  var S = ETAT.scripts || [];
+  var ORDRE = ["a_tourner", "tourne", "monte", "pret", "publie"];
+  var LIB = {a_tourner: "À tourner", tourne: "Tourné", monte: "Monté", pret: "Prêt", publie: "Publié"};
+  var $ = function(s){ return root.querySelector(s); };
+  var fmt = function(n){ return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " "); };
+  var auj = function(){ return new Date().toISOString().slice(0, 10); };
+  var statut = function(n){ var x = ETAT.statuts[String(n)]; return x && x.s ? x.s : "a_tourner"; };
+  var nom = function(s){ return s.titre || s.mot || ("Script " + s.n); };
+  var filtre = "tous", courant = null, api = null, lecture = false, minuterie = null, essais = 0, taille = 30;
+
+  try {
+    var v = JSON.parse(localStorage.getItem("cr-vue") || "{}");
+    if (v.filtre === "tous" || ORDRE.indexOf(v.filtre) >= 0) filtre = v.filtre;
+    if (typeof v.n === "number") courant = v.n;
+    if (typeof v.taille === "number") taille = Math.max(18, Math.min(56, v.taille));
+  } catch (e) {}
+  function memoriser(){ try { localStorage.setItem("cr-vue", JSON.stringify({filtre: filtre, n: courant, taille: taille})); } catch (e) {} }
+
+  function liste(){ return filtre === "tous" ? S : S.filter(function(x){ return statut(x.n) === filtre; }); }
+
+  function enTete(){
+    var lots = {};
+    S.forEach(function(x){ var l = x.lot || "sans lot"; lots[l] = (lots[l] || 0) + 1; });
+    var parts = Object.keys(lots).map(function(l){ return l + " (" + lots[l] + ")"; });
+    $("#sub").textContent = S.length + " scripts, " + parts.join(", ") +
+      (ETAT.maj ? ". Dernière mise à jour par la veille le " + ETAT.maj.split("-").reverse().join("/") + "." : ".");
+  }
+
+  function rendreChips(){
+    var c = {tous: S.length}; ORDRE.forEach(function(o){ c[o] = 0; });
+    S.forEach(function(x){ c[statut(x.n)]++; });
+    var box = $("#chips"); box.textContent = "";
+    ["tous"].concat(ORDRE).forEach(function(o){
+      var b = document.createElement("button");
+      b.type = "button"; b.setAttribute("aria-pressed", String(filtre === o)); b.dataset.f = o;
+      if (o !== "tous") { var d = document.createElement("i"); d.className = "dot s-" + o; b.appendChild(d); }
+      b.appendChild(document.createTextNode(o === "tous" ? "Tous" : LIB[o]));
+      var n = document.createElement("b"); n.textContent = c[o]; b.appendChild(n);
+      box.appendChild(b);
+    });
+    var bar = $("#pbar"); bar.textContent = "";
+    ORDRE.forEach(function(o){
+      if (!c[o] || o === "a_tourner") return;
+      var i = document.createElement("i"); i.className = "s-" + o;
+      i.style.width = (c[o] / S.length * 100) + "%"; i.style.background = "var(--c)"; bar.appendChild(i);
+    });
+    var mots = S.filter(function(x){ return statut(x.n) === "a_tourner"; })
+      .reduce(function(a, x){ return a + x.txt.split(/\s+/).length; }, 0);
+    $("#reste").textContent = Math.round(mots / 2.6 / 60);
+  }
+
+  function rendreTour(){
+    var L = liste();
+    $("#box").hidden = L.length === 0; $("#vide-tour").hidden = L.length !== 0;
+    $("#sur").textContent = "sur " + L.length;
+    if (!L.length) { $("#pos").textContent = "0"; return; }
+    var k = L.findIndex(function(x){ return x.n === courant; });
+    if (k < 0) k = 0;
+    var s = L[k]; courant = s.n; memoriser();
+    $("#pos").textContent = k + 1;
+    $("#num").textContent = "n" + s.n;
+    $("#kw").textContent = s.mot || "";
+    $("#kw").hidden = !s.mot;
+    $("#dur").textContent = Math.round(s.txt.split(/\s+/).length / 2.6) + " s de lecture";
+    $("#src").textContent = (s.compte ? "@" + s.compte + ", " : "") + "source " + fmt(s.src) + " vues";
+    $("#titre").textContent = s.titre || ""; $("#titre").hidden = !s.titre;
+    $("#warn").textContent = s.warn || ""; $("#warnbox").hidden = !s.warn;
+    $("#leg").textContent = s.leg || "";
+    rendrePrompteur($("#txt"), s.prompteur || autoPrompteur(s.txt));
+    var seg = $("#seg"); seg.textContent = "";
+    ORDRE.forEach(function(o){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "s-" + o; b.dataset.s = o;
+      b.setAttribute("aria-pressed", String(statut(s.n) === o)); b.disabled = lecture;
+      var d = document.createElement("i"); d.className = "dot s-" + o; b.appendChild(d);
+      b.appendChild(document.createTextNode(LIB[o])); seg.appendChild(b);
+    });
+    var st = ETAT.statuts[String(s.n)];
+    $("#auto").hidden = !(st && st.auto);
+    if (st && st.auto) $("#auto").textContent = "Détecté automatiquement le " + st.d.split("-").reverse().join("/") + (st.dossier ? " dans " + st.dossier : "") + ".";
+    $("#prev").disabled = k === 0; $("#next").disabled = k === L.length - 1;
+  }
+
+  // Mise en forme téléprompteur : une ligne = un souffle, ligne vide = pause, *mot* = appui.
+  function rendrePrompteur(el, p){
+    el.textContent = "";
+    el.style.setProperty("--taille", taille + "px");
+    p.split(/\n\s*\n/).forEach(function(bloc){
+      var b = document.createElement("p"); b.className = "bloc";
+      bloc.split("\n").forEach(function(ligne){
+        if (!ligne.trim()) return;
+        var l = document.createElement("span"); l.className = "ligne";
+        ligne.split(/(\*[^*]+\*)/).forEach(function(bout){
+          if (!bout) return;
+          if (/^\*[^*]+\*$/.test(bout)) { var st = document.createElement("strong"); st.textContent = bout.slice(1, -1); l.appendChild(st); }
+          else l.appendChild(document.createTextNode(bout));
+        });
+        if (/\?\s*$/.test(ligne)) { var m = document.createElement("span"); m.className = "monte"; m.textContent = "↗"; m.setAttribute("aria-hidden", "true"); l.appendChild(m); }
+        b.appendChild(l);
+      });
+      el.appendChild(b);
+    });
+  }
+
+  // Repli pour un script pas encore mis en forme : une phrase par ligne, les phrases longues coupées aux virgules.
+  function autoPrompteur(t){
+    return t.split(/(?<=[.?!])\s+/).map(function(ph){
+      if (ph.split(/\s+/).length <= 10) return ph;
+      return ph.split(/(?<=,)\s+|\s+(?=(?:et|mais|donc|parce que) )/).join("\n");
+    }).join("\n");
+  }
+
+  function rendreVideos(){
+    var tb = $("#tv"); tb.textContent = "";
+    S.forEach(function(s){
+      var st = statut(s.n), x = ETAT.statuts[String(s.n)];
+      var tr = document.createElement("tr");
+      var c1 = document.createElement("td"); c1.className = "n"; c1.textContent = "n" + s.n;
+      var c2 = document.createElement("td"); c2.textContent = nom(s);
+      var c3 = document.createElement("td"); c3.textContent = s.compte ? "@" + s.compte : "";
+      var c4 = document.createElement("td"); var p = document.createElement("span");
+      p.className = "pill s-" + st; p.textContent = LIB[st]; c4.appendChild(p);
+      var c5 = document.createElement("td"); c5.className = "n";
+      c5.textContent = x && x.d ? x.d.split("-").reverse().join("/") + (x.auto ? " (auto)" : "") : "";
+      [c1, c2, c3, c4, c5].forEach(function(c){ tr.appendChild(c); }); tb.appendChild(tr);
+    });
+  }
+
+  function mediane(a){ if (!a.length) return 0; var b = a.slice().sort(function(x, y){ return x - y; }); return b[Math.floor(b.length / 2)]; }
+
+  function rendreSuivi(){
+    var P = ETAT.posts, tb = $("#tb"); tb.textContent = "";
+    $("#vide").hidden = P.length > 0; $("#tw").hidden = P.length === 0;
+    P.map(function(p, i){ return {p: p, i: i}; })
+      .sort(function(a, b){ return (b.p.date || "").localeCompare(a.p.date || ""); })
+      .forEach(function(o){
+        var p = o.p;
+        var prec = P.filter(function(q){ return (q.date || "") < (p.date || ""); })
+          .sort(function(a, b){ return (a.date || "").localeCompare(b.date || ""); }).slice(-10).map(function(q){ return q.vues; });
+        var med = mediane(prec), ind = med ? p.vues / med : null;
+        var s = S.find(function(x){ return x.n === p.n; });
+        var tr = document.createElement("tr");
+        var cells = [p.date || "", s ? "n" + s.n + " " + nom(s) : "?", p.fam || "", fmt(p.vues)];
+        cells.forEach(function(t, j){ var td = document.createElement("td"); if (j === 0 || j === 3) td.className = "n"; td.textContent = t; tr.appendChild(td); });
+        var tdi = document.createElement("td"), sp = document.createElement("span"), bi = document.createElement("i");
+        sp.className = "idx " + (ind === null ? "" : (ind >= 1.2 ? "up" : (ind < 0.8 ? "dn" : "")));
+        bi.className = "b"; bi.style.width = (ind === null ? 0 : Math.max(2, Math.min(64, ind * 32))) + "px";
+        sp.appendChild(bi); sp.appendChild(document.createTextNode(ind === null ? "référence" : ind.toFixed(2).replace(".", ",")));
+        tdi.appendChild(sp); tr.appendChild(tdi);
+        var tdr = document.createElement("td"), br = document.createElement("button");
+        br.className = "btn"; br.type = "button"; br.textContent = "Retirer"; br.dataset.del = String(o.i); br.disabled = lecture;
+        tdr.appendChild(br); tr.appendChild(tdr); tb.appendChild(tr);
+      });
+    var fams = {};
+    P.forEach(function(p){ if (p.fam) (fams[p.fam] = fams[p.fam] || []).push(p.vues); });
+    var f = $("#fam"); f.textContent = "";
+    var cles = Object.keys(fams);
+    if (cles.length) {
+      var n = document.createElement("p"); n.className = "note";
+      var b = document.createElement("b"); b.textContent = "Par famille d'idée"; n.appendChild(b);
+      cles.forEach(function(k, i){
+        if (i) n.appendChild(document.createElement("br"));
+        n.appendChild(document.createTextNode(k + " : " + fams[k].length + " post" + (fams[k].length > 1 ? "s" : "") +
+          ", médiane " + fmt(mediane(fams[k])) + " vues" + (fams[k].length < 5 ? " (trop peu pour conclure)" : "")));
+      });
+      f.appendChild(n);
+    }
+  }
+
+  function tout(){ enTete(); rendreChips(); rendreTour(); rendreVideos(); rendreSuivi(); }
+
+  function indiquer(t, err){ var e = $("#save"); e.textContent = t; e.classList.toggle("err", !!err); }
+
+  function passerEnLecture(){
+    lecture = true;
+    indiquer("Lecture seule : tu peux lire et naviguer, les changements ne sont pas enregistrés.");
+    $("#fadd").disabled = true; tout();
+  }
+
+  function planifier(){
+    if (lecture) return;
+    if (!api) { indiquer("Changement affiché mais pas enregistré : cette vue ne peut pas sauvegarder.", true); return; }
+    indiquer("Enregistrement…");
+    clearTimeout(minuterie); minuterie = setTimeout(publier, 1200);
+  }
+
+  function publier(){
+    var json = JSON.stringify(ETAT).replace(/</g, "\\u003c");
+    var corps = SOURCE.replace(/(<script[^>]*id="etat"[^>]*>)[\s\S]*?(<\/script>)/, function(m, a, b){ return a + json + b; });
+    api.publish(TETE + corps + "</body></html>").then(function(){
+      essais = 0; indiquer("Enregistré.");
+    }, function(e){
+      var code = e && e.code;
+      if (code === "conflict") { indiquer("Une version plus récente vient d'arriver, la page se recharge."); return; }
+      if (["not_writer", "not_granted", "consent_required", "not_declared", "capability_disabled", "capability_removed"].indexOf(code) >= 0) { passerEnLecture(); return; }
+      if ((code === "rate_limited" || code === "upstream_error" || !code) && essais < 1) {
+        essais++; indiquer("Enregistrement retardé, nouvel essai dans quelques secondes.", true);
+        minuterie = setTimeout(publier, 4000 + Math.random() * 3000); return;
+      }
+      indiquer("Échec de l'enregistrement (" + (code || "inconnu") + "). Recharge la page avant de continuer.", true);
+    });
+  }
+
+  function poser(n, s){
+    if (lecture) return;
+    if (s === "a_tourner") delete ETAT.statuts[String(n)];
+    else ETAT.statuts[String(n)] = {s: s, d: auj(), auto: false};
+    tout(); planifier();
+  }
+
+  root.addEventListener("click", function(e){
+    var t = e.target.closest("button"); if (!t || !root.contains(t)) return;
+    if (t.dataset.f) { filtre = t.dataset.f; courant = null; memoriser(); tout(); return; }
+    if (t.id === "plus" || t.id === "moins") { taille = Math.max(18, Math.min(56, taille + (t.id === "plus" ? 4 : -4))); memoriser(); rendreTour(); return; }
+    if (t.dataset.s && t.closest("#seg")) { poser(courant, t.dataset.s); return; }
+    if (t.dataset.del !== undefined && !lecture) { ETAT.posts.splice(parseInt(t.dataset.del, 10), 1); tout(); planifier(); return; }
+    if (t.id === "next" || t.id === "prev") {
+      var L = liste(), k = L.findIndex(function(x){ return x.n === courant; });
+      k = Math.max(0, Math.min(L.length - 1, k + (t.id === "next" ? 1 : -1)));
+      if (L[k]) courant = L[k].n; rendreTour(); return;
+    }
+    if (t.getAttribute("role") === "tab") {
+      root.querySelectorAll('[role="tab"]').forEach(function(x){ x.setAttribute("aria-selected", String(x === t)); });
+      ["tour", "videos", "suivi"].forEach(function(p){ $("#p-" + p).hidden = t.id !== "t-" + p; });
+    }
+  });
+
+  document.addEventListener("keydown", function(e){
+    if (/INPUT|SELECT|TEXTAREA/.test(e.target.tagName) || $("#p-tour").hidden) return;
+    if (e.key === "ArrowRight") { e.preventDefault(); $("#next").click(); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); $("#prev").click(); }
+    if (e.key === " " && courant !== null && !lecture) {
+      e.preventDefault();
+      poser(courant, statut(courant) === "a_tourner" ? "tourne" : "a_tourner");
+    }
+  });
+
+  $("#f").addEventListener("submit", function(e){
+    e.preventDefault(); if (lecture) return;
+    var n = parseInt($("#fs").value, 10), v = parseInt($("#fv").value, 10);
+    if (isNaN(v) || v < 0) return;
+    ETAT.posts.push({n: n, date: $("#fd").value, fam: $("#ff").value.trim(), vues: v});
+    ETAT.statuts[String(n)] = {s: "publie", d: $("#fd").value || auj(), auto: false};
+    $("#fv").value = ""; tout(); planifier();
+  });
+
+  var sel = $("#fs");
+  S.forEach(function(s){ var o = document.createElement("option"); o.value = String(s.n); o.textContent = "n" + s.n + " " + nom(s); sel.appendChild(o); });
+  $("#fd").value = auj();
+  tout();
+
+  var c = window.claude;
+  if (c && typeof c.use === "function") {
+    c.use("artifact").then(function(a){ api = a; if (!a) indiquer(""); }, function(){ api = null; });
+  }
+})();
+</script>
+</div>

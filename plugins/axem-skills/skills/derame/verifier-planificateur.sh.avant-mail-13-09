@@ -50,30 +50,6 @@ mkdir -p "$LOG_DIR" "$(dirname "$BATTEMENT")"
 
 log() { echo "$(date '+%Y-%m-%d %H:%M:%S')  $1" >> "$LOG"; }
 
-# Canal d'alerte, change le 13/09/2026 : l'iMessage vers le propre numero de Clement arrive SANS
-# notification (test avec temoin). Mail.app envoie depuis clementpredo4 vers clem.pred, expediteur
-# different, donc l'iPhone sonne. Le numero TEL ne sert plus qu'au controle de configuration.
-alerter() {
-  osascript - "$1" "$2" <<'OSA' >/dev/null 2>&1
-on run argv
-  set wasRunning to application "Mail" is running
-  tell application "Mail"
-    set m to make new outgoing message with properties {subject:item 1 of argv, content:item 2 of argv, visible:false}
-    tell m to make new to recipient at end of to recipients with properties {address:"<EMAIL_MASQUE>"}
-    send m
-  end tell
-  if not wasRunning then
-    repeat 30 times
-      tell application "Mail" to set n to count of messages of outbox
-      if n = 0 then exit repeat
-      delay 1
-    end repeat
-    tell application "Mail" to quit
-  end if
-end run
-OSA
-}
-
 maintenant=$(date +%s)
 
 # Pas de fichier du tout : le heartbeat n'a jamais tourne. On ne crie pas au premier passage,
@@ -111,7 +87,7 @@ if [ -f "$TEMOIN" ]; then
 fi
 
 if [ "$recent" = "1" ]; then
-  log "planificateur toujours mort ($((ecart/60)) min) : mail deja envoye recemment, silence"
+  log "planificateur toujours mort ($((ecart/60)) min) : iMessage deja envoye recemment, silence"
   exit 0
 fi
 
@@ -120,9 +96,14 @@ echo "$maintenant" > "$TEMOIN"
 # Texte SANS ACCENT et sans URL nue : regles iMessage de Clement, alignees sur claude-session-guard.
 msg="Planificateur mort : aucune tache programmee executee depuis $((ecart/3600)) h. Le correctif est de quitter et rouvrir l application Claude, ca coupe les sessions Claude Code ouvertes. Verifie ensuite qu une tache repasse."
 
-alerter "[Axem] Planificateur de taches arrete" "$msg"
+osascript <<OSA >/dev/null 2>&1
+tell application "Messages"
+  set svc to 1st service whose service type = iMessage
+  send "$msg" to buddy "$TEL" of svc
+end tell
+OSA
 
-log "ALERTE : planificateur muet depuis $((ecart/60)) min, 0 tache en cours, mail envoye"
+log "ALERTE : planificateur muet depuis $((ecart/60)) min, 0 tache en cours, iMessage envoye"
 
 # ─────────────────────────────────────────────────────────────────────────────
 # CONTROLE 2, ajoute le 27/08/2026 : le RUN AUTOPILOTE qui meurt en cours de route
@@ -161,9 +142,14 @@ if [ -f "$AUTO_DEBUT" ]; then
       dernier=${dernier:-0}
       if [ $(( now - dernier )) -gt "$SILENCE" ]; then
         msg2="Run LinkedIn mort en cours de route : demarre il y a $(( ecoule / 60 )) min, jamais termine. Il a peut-etre programme un post sans laisser de trace locale. Verifie tes posts programmes avant le prochain run, sinon risque de doublon."
-        alerter "[Axem] Run LinkedIn mort en cours de route" "$msg2"
+        osascript <<OSA2 >/dev/null 2>&1
+tell application "Messages"
+  set svc to 1st service whose service type = iMessage
+  send "$msg2" to buddy "$TEL" of svc
+end tell
+OSA2
         echo "$now" > "$AUTO_TEMOIN"
-        log "ALERTE : run autopilote demarre il y a $(( ecoule / 60 )) min sans fin, mail envoye"
+        log "ALERTE : run autopilote demarre il y a $(( ecoule / 60 )) min sans fin, iMessage envoye"
       fi
     fi
   fi
@@ -202,9 +188,14 @@ if [ "$jour" -ge 1 ] && [ "$jour" -le 4 ] && [ "$heure" -ge 22 ]; then
     now=$(date +%s)
     if [ $(( now - dernier )) -gt "$SILENCE" ]; then
       msg3="Run LinkedIn de 20h35 : aucune trace de fin ce soir. Il n'a pas tourne, ou il est mort avant d'ecrire. La file se vide de 3 creneaux par jour tant que ca dure."
-      alerter "[Axem] Run LinkedIn du soir absent" "$msg3"
+      osascript <<OSA3 >/dev/null 2>&1
+tell application "Messages"
+  set svc to 1st service whose service type = iMessage
+  send "$msg3" to buddy "$TEL" of svc
+end tell
+OSA3
       echo "$now" > "$AUTO_TEMOIN_ABS"
-      log "ALERTE : aucune fin de run autopilote datee d'aujourd'hui a ${heure}h, mail envoye"
+      log "ALERTE : aucune fin de run autopilote datee d'aujourd'hui a ${heure}h, iMessage envoye"
     fi
   fi
 fi

@@ -1,6 +1,6 @@
 ---
 name: derame
-description: "Diagnostique et allege RAM/CPU/disque du Mac en live (outil Mole); propose un nettoyage par categorie, ne supprime rien sans validation. /derame, ca rame, ca lag, disque plein"
+description: "Diagnostique RAM/CPU/disque en live des que Clement dit ca rame, ca bug, deramer tout ca, disque plein."
 ---
 
 # 🧠 Skill `/derame` — Déramage Mac à la demande (mode doux, propulsé par Mole)

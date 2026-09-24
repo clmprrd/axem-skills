@@ -3,6 +3,7 @@ name: gauntlet-loop
 description: "Fan-out d'agents + critique aveugle en boucle; /gauntlet-loop"
 argument-hint: "<la chose à porter au niveau maximum> [+ la référence à battre]"
 user-invocable: true
+disable-model-invocation: true
 ---
 
 # Gauntlet Loop : la boucle qui ne s'arrête pas avant d'avoir battu la référence

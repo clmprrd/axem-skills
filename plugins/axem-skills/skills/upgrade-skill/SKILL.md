@@ -5,6 +5,7 @@ version: 1.1
 created: 2026-07-02
 updated: 2026-07-02
 status: active
+disable-model-invocation: true
 ---
 
 # upgrade-skill — audit et amélioration de skills Claude

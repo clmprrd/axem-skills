@@ -1,6 +1,6 @@
 ---
 name: conseil-agents
-description: "Conseil d'agents autonome et critique: challenge sans pitie le fonctionnement en cours, deepsearch, debat a lentilles opposees, boucle de correction, arbitrage. Declencher: /conseil-agents, challenge notre fonctionnement, conseil d'agents, debat d'agents."
+description: "Challenge sans pitie un fonctionnement en cours : debat a lentilles opposees + deep search des que Clement dit challenge, debat, conseil d'agents."
 argument-hint: "<le sujet / le livrable / le fonctionnement à challenger>"
 user-invocable: true
 ---
@@ -63,6 +63,15 @@ n'est plus la porte d'entrée : c'est le banc d'essai. Sans lui, une dérive de 
 être vue, faute de pouvoir l'exercer seule.
 
 ---
+
+## 🔴 RECHERCHE LOURDE AVANT TOUT DÉBAT, QUEL QUE SOIT LE RÉGIME (24/09/2026)
+
+Clément, le 24/09/2026 : « avant de débattre il faut un maximum de sources et d'infos terrain,
+retours d'expérience, YouTube, Reddit, X ». **Le régime règle le débat, jamais la collecte.** En
+Éclair comme en Standard, le terrain part au calibre Plénier (6 collecteurs), avec au moins un
+collecteur YouTube (transcriptions) en plus de Reddit et X. Sur un outil ou un tarif, la source
+primaire est l'écran du compte réel, pas la page marketing : le 23/09, « Indy gratuit suffit »,
+lu sur une page tarifs, a été démenti par le compte le lendemain.
 
 ## 🔴 LE FILTRE DES 3 MOTIFS (en tete : mesure du 05/09/2026 sur les 6 conseils non suivis)
 

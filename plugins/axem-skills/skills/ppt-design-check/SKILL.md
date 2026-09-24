@@ -1,6 +1,6 @@
 ---
 name: ppt-design-check
-description: "Garde-fou anti-AI slop PowerPoint, avant creation ou sur deck existant."
+description: "Garde-fou anti-AI slop avant ou apres creation d'un deck PowerPoint."
 sources: recherche sourcée juillet 2026 (support.claude.com, Claude Cookbook Anthropic, github.com/anthropics/skills/pptx, superdesign.dev, winningpresentations.com)
 last_updated: 2026-07-02
 ---

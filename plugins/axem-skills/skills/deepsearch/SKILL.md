@@ -1,6 +1,6 @@
 ---
 name: deepsearch
-description: "Recherche multi-plateformes (Reddit, X, YouTube, Instagram, TikTok, LinkedIn, sources fiables) via sous-agents paralleles, 7 modes auto-detectes. Pour chercher, verifier, fouiller, monitorer, identifier des createurs, comprendre un sujet. /deepsearch."
+description: "Recherche massive multi-plateformes (Reddit, X, YouTube, sources fiables) des qu'il faut chercher, verifier, comparer un sujet ou trouver le top 5."
 ---
 
 # DeepSearch — banc d'essai de la collecte
@@ -642,7 +642,7 @@ Sépare en sections : Sources institutionnelles · Reddit · X · YouTube · Ins
 - Croiser au moins 2 sources indépendantes pour chaque affirmation présentée comme certaine
 - Toujours indiquer la fraîcheur des données
 - Signaler explicitement les contradictions entre sources
-- Zéro hallucination — si introuvable, le dire explicitement
+- Zéro hallucination : si introuvable, le dire, et pour tout item ANNONCÉ, BÊTA FERMÉE ou RUMEUR, nommer où on a cherché (plateformes, requêtes) et ce que ça a donné
 - Hiérarchie épistémique : études officielles > presse spécialisée indépendante > experts
   sectoriels reconnus > retours terrain Reddit/X/YT/IG > opinions générales
 - **Mais** : un take terrain confirmé par les sources fiables vaut autant que la source

@@ -1,6 +1,6 @@
 ---
 name: askuser-question-batch
-description: "Pousse Clement a l'action par lots de questions fermees (AskUserQuestion), options (Recommande). A invoquer en fin de tour des qu'une decision reste ouverte: fin d'audit, fin de livrable, arbitrage. Jamais de question en prose a la place."
+description: "Boucle A la fin de chaque reponse de fond : pousse Clement a trancher par lots de questions fermees, jamais dis-moi go en prose."
 ---
 
 # AskUser Question Batch — pousser à l'action, pas seulement valider
@@ -46,6 +46,14 @@ faute d'appel à l'action est réel.
 Ne jamais deviner un chiffre, un engagement ou une clause qui engage Clément vis-à-vis d'un tiers. Décomposer les inconnues en lots de questions fermées (AskUserQuestion, max 4 questions par appel), avec pour chaque question une option "Recommandé" pré-remplie à partir de données réelles du vault/CRM/mémoire — jamais une pure supposition non sourcée.
 
 ## Processus
+
+### 0. Découper la demande de Clément AVANT tout (décision du 14/09/2026)
+Clément : « je veux que 100 % de ma demande soit couverte ». Mesure du 14/09 sur 3 demandes dictées : 23/29 (79 %).
+1. Découper la demande verbatim en exigences atomiques dans `gates/exigences-<sujet>-<date>.md`, une gate unlazy chacune (`- [ ] R1 <verbatim court>` puis `  EVIDENCE: pending`). Le stop hook bloque tant qu'une ligne est pending : fermer le fichier en fin de chantier, sinon il bloque les autres sessions du dossier.
+2. Tout résoudre seul d'abord (vault, fil, mémoire, lecture complète) : une exigence sourcée prend `EVIDENCE: repris de <fichier ou fil>` et ne se redemande jamais.
+3. Le reste devient question, sans plafond de lots, en un seul passage dense, jamais au fil de la découverte. Argent et irréversible au lot 1.
+4. Artefact de dictée évident (répétition, faute) : `EVIDENCE: INFERE, <raison>`, ni question ni oubli.
+5. Une exigence qui nomme un skill (« /deepsearch », « conseil agent ») exige l'appel réel de l'outil Skill ; un agent ad hoc ne la couvre pas (2 ratés sur 3 mesurés). Une exigence déléguée à un sous-agent ne se coche qu'après re-mesure.
 
 ### 1. Cartographier les inconnues
 Avant de poser une seule question, lire ce qui existe déjà :
@@ -161,12 +169,9 @@ pour la forme.
 
 ## 🔴 MODE « 4 LOTS », valide par Clement le 03/09/2026
 
-**Quand un chantier a beaucoup de decisions ouvertes en meme temps, ne pas poser 1 ou 2 questions et
-garder le reste pour plus tard. Enchainer QUATRE appels de QUATRE questions, soit 16 questions.**
+**Beaucoup de decisions ouvertes : enchainer plusieurs appels de 4 questions, un theme chacun, sans plafond.**
 
-Clement l'a demande explicitement, puis valide apres l'avoir vu tourner : « package aussi ce style
-de question dans le skill batch askuser question, et la tu l'appelles en mode nouveau skill, 4 batch
-askuser question comme tu viens de le faire a l'instant, c'est bien ».
+Demande puis validee par Clement apres l'avoir vue tourner (03/09/2026).
 
 **Comment on structure les 4 lots.** Un lot = un THEME coherent, jamais un melange. Sur le dossier
 LinkedIn du 03/09, la decoupe qui a marche :
@@ -191,21 +196,16 @@ LinkedIn du 03/09, la decoupe qui a marche :
   les reponses du lot 1 fait perdre le fil, et Clement l'a dit : ce qu'il veut c'est que le travail
   avance entre les questions, pas qu'on empile les questions.
 
-⚠️ **Ne pas gonfler artificiellement a 16 questions.** Si un seul sujet est mur, poser une question.
-Le mode 4 lots s'active quand il y a REELLEMENT 4 themes distincts et murs, ce qui arrive sur les
-sessions longues, pas sur une demande ponctuelle.
+⚠️ **Pas de plafond sur l'inconnu, zéro question sur le déjà sourcé** (décision du 14/09/2026, remplace
+« ne pas gonfler à 16 » et « une question qui ne change rien se tranche seule »). Seule question interdite :
+celle dont la réponse est déjà écrite quelque part. Elle s'affiche alors en une ligne « repris de X ».
 
-⚠️ Une question dont la reponse ne change rien a ce que je vais faire n'est pas une question, c'est
-une demande de permission deguisee. Elle se tranche seule et s'annonce en une ligne.
+## Relecture finale, obligatoire avant tout rapport (14/09/2026)
 
-## Exemple de séquencement (mail de réponse à un questionnaire partenaire)
-
-1. Lot 1 — Positionnement & chiffres d'activité (statut juridique, clients citables, volume d'activité)
-2. Lot 2 — Prix (planchers, remises)
-3. Lot 3 — Modalités du partenariat (commissions, exclusivité)
-4. Lot 4 — Mécanique de suivi (jalons, propriété client, clauses)
-5. Audit de complétude vs le questionnaire d'origine, section par section
-6. Si des trous substantiels apparaissent (offres détaillées, preuves chiffrées, mécanique contractuelle, logistique formateurs, certifications) → nouveaux lots ciblés sur CES trous précis, en réutilisant en priorité les données déjà trouvées dans le vault (ex: cas clients chiffrés déjà documentés) avant de redemander à Clément.
+Relire la demande verbatim contre le livrable : chaque verbe et chaque quantité tenus (« une seule slide »
+= 1 slide), chaque skill nommé réellement invoqué, rien retiré sans l'accord de Clément. Clore par
+« Ta demande : N/N couvertes », INFERE listés ; une ligne restée pending passe en `ABANDON:` visible.
+Contrôle mécanique des skills nommés : `python3 ~/.claude/hooks/skill-nomme-invoque.py --audit <transcript>`.
 
 ## 🔴 INTERDICTION DURE : la question « on coupe ? » n'existe pas (05/09/2026)
 

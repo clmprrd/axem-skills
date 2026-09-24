@@ -1,6 +1,6 @@
 ---
 name: ponytail
-description: "Force la solution la plus simple (YAGNI); code/automations, pas visuel."
+description: "Force la solution la plus simple (YAGNI) sur tout code ou automatisation n8n, jamais sur du visuel."
 license: MIT
 source: https://github.com/DietrichGebert/ponytail — vendorisé dans le vault Axem le 21/06/2026
 note: À utiliser pour le CODE / les automations n8n / le build du site. PAS pour le contenu ou le visuel (axe différent de taste-skill).
