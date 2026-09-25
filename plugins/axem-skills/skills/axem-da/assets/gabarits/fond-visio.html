@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8"><title>Fonds visio AXEM</title>
 <link rel="stylesheet" href="axem-kit.css">
+<script src="monogramme-path.js"></script>
 <style>
   html, body { width: 1920px; height: 1080px; overflow: hidden; }
   .bg { position: absolute; inset: 0; overflow: hidden; }
@@ -33,22 +34,43 @@
   body[data-v="encre"] .kick { color: var(--blue); }
   body[data-v="encre"] .logo sup { color: var(--blue); }
   body:not([data-v="creme"]) .grid { display: none; }
+
+  /* Variante monogramme : la tete occupe le centre, rien de lisible derriere elle.
+     Sur le bleu : grand filigrane bleu profond, ancre en bas a droite, hors de la zone centrale.
+     Sur creme et encre : petit monogramme en bas a gauche, meme filigrane discret que les lettres geantes. */
+  body[data-m="mono"] .giant { display: none; }
+  body[data-m="mono"] .kick { top: auto; bottom: 132px; }
+  body[data-m="mono"] .url { top: auto; bottom: 92px; }
+  .mono-slot svg { width: 100%; height: auto; display: block; }
+  .mono-big { position: absolute; width: 1500px; right: -260px; bottom: -230px; color: var(--blue-deep); }
+  .mono-small { position: absolute; width: 190px; left: 92px; bottom: 84px; }
+  body[data-v="creme"] .mono-small { color: #E7E8F7; }
+  body[data-v="encre"] .mono-small { color: #151925; }
+  body[data-m="mono"]:not([data-v="bleu"]) .grid { display: none; }
 </style></head>
 <body>
 <div class="bg">
   <div class="grid"></div>
   <span class="giant f ga">A</span>
   <span class="giant f gz">Z</span>
+  <span class="mono-slot mono-big" id="mono-big"></span>
+  <span class="mono-slot mono-small" id="mono-small"></span>
   <span class="logo wm">axem<sup>IA</sup></span>
   <div class="who" id="who"></div>
   <span class="kick kicker">Votre partenaire IA, de A à Z</span>
   <span class="url">axem-ia.fr</span>
 </div>
 <script>
-  // #v=bleu|creme|encre & nom=Prénom Nom & role=Cofondateur, AXEM IA (nom facultatif)
+  // #v=bleu|creme|encre & nom=Prénom Nom & role=Cofondateur, AXEM IA (nom facultatif) & m=mono (variante monogramme, sinon lettres A/Z)
   const q = new URLSearchParams(location.hash.slice(1));
   document.body.dataset.v = q.get('v') || 'bleu';
+  if (q.get('m') === 'mono') document.body.dataset.m = 'mono';
   const esc = s => s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
   if (q.get('nom')) document.getElementById('who').innerHTML = '<b>' + esc(q.get('nom')) + '</b>' + esc(q.get('role') || 'Cofondateur, AXEM IA');
+  const svgMono = `<svg viewBox="${window.AXEM_MONO_VB}" xmlns="http://www.w3.org/2000/svg"><path d="${window.AXEM_MONO_D}" fill="currentColor" fill-rule="evenodd"/></svg>`;
+  if (document.body.dataset.m === 'mono') {
+    if (document.body.dataset.v === 'bleu') document.getElementById('mono-big').innerHTML = svgMono;
+    else document.getElementById('mono-small').innerHTML = svgMono;
+  }
 </script>
 </body></html>

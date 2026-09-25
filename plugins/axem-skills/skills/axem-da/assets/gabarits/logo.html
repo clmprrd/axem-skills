@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8"><title>Kit logo AXEM</title>
 <link rel="stylesheet" href="axem-kit.css">
+<script src="monogramme-path.js"></script>
 <style>
   body { background: transparent; padding: 40px; display: flex; flex-direction: column; gap: 40px; align-items: flex-start; }
   .lg { padding: 0.18em 0.12em 0.14em 0.08em; font-size: 320px; background: transparent; }
@@ -13,6 +14,13 @@
   .lock { padding: 40px; display: inline-flex; flex-direction: column; gap: 22px; }
   .lock .wm { font-size: 200px; }
   .lock .tag { font-size: 44px; letter-spacing: -0.01em; }
+  /* Monogramme "ax" : vectorise depuis le masque d'Alexis (site-A/img/logo-ax-mask.png), jamais un raster agrandi */
+  .mono-solo { padding: 40px; }
+  .mono-solo .mono-slot { width: 900px; }
+  .mono-slot svg { width: 100%; height: auto; display: block; }
+  .bloc-mono { padding: 50px; display: inline-flex; flex-direction: column; align-items: center; gap: 46px; }
+  .bloc-mono .mono-slot { width: 560px; }
+  .bloc-mono .wm { font-size: 168px; }
 </style></head><body>
   <div id="logo-bleu" class="lg c-blue"><span class="wm">axem<sup>IA</sup></span></div>
   <div id="logo-creme" class="lg c-cream"><span class="wm">axem<sup>IA</sup></span></div>
@@ -42,4 +50,20 @@
     <span class="wm">axem<sup>IA</sup></span>
     <span class="tag i">Votre partenaire IA, de A à Z.</span>
   </div>
+
+  <!-- Monogramme "ax" seul, vectorise depuis le masque d'Alexis : signature des supports physiques et visuels -->
+  <div id="monogramme-bleu" class="mono-solo c-blue"><span class="mono-slot"></span></div>
+  <div id="monogramme-creme" class="mono-solo c-cream"><span class="mono-slot"></span></div>
+  <div id="monogramme-encre" class="mono-solo" style="color:var(--ink)"><span class="mono-slot"></span></div>
+
+  <!-- Bloc complet : monogramme au-dessus du mot axem IA, comme la reference logo-ax-source.png -->
+  <div id="bloc-monogramme-bleu" class="bloc-mono c-blue"><span class="mono-slot"></span><span class="wm">axem<sup>IA</sup></span></div>
+  <div id="bloc-monogramme-creme" class="bloc-mono c-cream"><span class="mono-slot"></span><span class="wm">axem<sup>IA</sup></span></div>
+  <div id="bloc-monogramme-encre" class="bloc-mono" style="color:var(--ink)"><span class="mono-slot"></span><span class="wm">axem<sup>IA</sup></span></div>
+
+<script>
+  document.querySelectorAll('.mono-slot').forEach(el => {
+    el.innerHTML = `<svg viewBox="${window.AXEM_MONO_VB}" xmlns="http://www.w3.org/2000/svg"><path d="${window.AXEM_MONO_D}" fill="currentColor" fill-rule="evenodd"/></svg>`;
+  });
+</script>
 </body></html>

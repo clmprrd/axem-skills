@@ -24,6 +24,7 @@ Tout support qui porte la marque AXEM part de ce skill. On ne réinvente ni les 
 | En mail (polices web absentes) | Georgia pour les titres, Arial pour le texte |
 
 - **Logo** : le mot « axem » en Fraunces 900 suivi de « IA » en exposant Instrument Sans 700 (classe `.wm` de `axem-kit.css`). Bleu sur clair, crème sur bleu ou encre. PNG prêts dans `assets/logo/`. Ce n'est PAS le masque PNG d'origine d'Alexis (décision du 24/09).
+- **Monogramme « ax »** (25/09/2026) : un « a » et un « x » minuscules entrelacés, courbes pleines. Seul sur les petits formats et les objets (t-shirt côté cœur, sticker, avatar, fond Meet), ou au-dessus de « axem IA » en bloc. Fichiers `logo/monogramme-{bleu,creme,encre}.png` et `logo/bloc-monogramme-*.png` du kit ; c'est l'image de référence à joindre à ChatGPT. Sur un support physique, une seule phrase l'accompagne : l'accroche.
 - **Accroche verrouillée** : « Votre partenaire IA, de A à Z. »
 - **Le nom** : AX d'Alexis, EM de Clément, et IA. Titre des deux associés : « Cofondateur, AXEM IA ».
 - **Motifs** : le A et le Z géants en filigrane, la grille fine sur crème.
@@ -50,6 +51,7 @@ Nouveau support sans gabarit : créer une page HTML qui charge `axem-kit.css`, u
 
 ## Règles de production
 
+0. **Tout visuel qu'on regarde se génère avec ChatGPT** (décision de Clément, 25/09/2026) : fond Meet ou Teams, maquette de t-shirt, carte de visite, goodies, kakémono, visuel LinkedIn. Jamais en HTML (« ça ne rend pas beau »), jamais sur Canva (« moins précis, c'est nul »). Joindre le monogramme en image de référence, écrire le logo en minuscules « axem » + « IA » en exposant. Les gabarits HTML ci-dessus ne servent plus qu'aux documents fonctionnels (proposition, devis, signature mail, fichiers d'impression vectoriels). Si ChatGPT est limité, on attend sa reprise avec les prompts prêts, on ne contourne pas.
 1. **Regarder le rendu, toujours.** Ouvrir chaque PNG ou chaque page de PDF avant de le livrer : débordement, mot orphelin, accent cassé, texte coupé. Un gabarit qui compile n'est pas un visuel juste.
 2. **Montrer les captures à Clément**, il ne dit que son désaccord (règle du site AXEM, étendue à toute la DA).
 3. **Aucun chiffre non sourcé** sur un support. Pour « +200 entreprises accompagnées », « +3 000 collaborateurs formés » et le bandeau de logos clients, la source est `site-A/matiere/clients.md`, section 5 (décisions du 19/09/2026) : la relire avant de les reprendre. Le nombre d'abonnés LinkedIn se relit dans les `data-abo` du site, il bouge.
