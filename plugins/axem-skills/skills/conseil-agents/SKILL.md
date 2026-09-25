@@ -58,9 +58,7 @@ Le signal qui distingue les deux : une demande de recherche appelle **un état d
 appelle **une décision**. « Qu'est-ce qui se dit sur X » est du premier type ; « est-ce qu'on devrait faire X » est
 du second. En cas d'ambiguïté réelle, la question du batch amont porte là-dessus, en une ligne.
 
-⚠️ `/deepsearch` reste invocable, **uniquement pour tester la collecte isolément** quand quelque chose cloche. Ce
-n'est plus la porte d'entrée : c'est le banc d'essai. Sans lui, une dérive de la collecte passerait des mois sans
-être vue, faute de pouvoir l'exercer seule.
+⚠️ `/deepsearch` reste invocable, **uniquement comme banc d'essai de la collecte**, jamais comme porte d'entrée.
 
 ---
 
@@ -93,6 +91,23 @@ classé hallucination par la triangulation parce que le brief l'omettait, ARE de
    jamais classer un fait établi en hallucination, et de marquer `non_verifiable` (pas `contredit`) ce qui en est absent.
 
 Les mêmes FAITS ÉTABLIS ouvrent la synthèse remise aux lentilles en Phase 2.
+
+## 🔴 OMNISCIENCE : UN CONSEIL NE BASCULE PAS SUR UNE OPINION (25/09/2026)
+
+Trévise, 25/09 : v1 rend 11 400 € sans avoir lu l'historique des offres d'AXEM ; Clément cite Green Energy, v2
+bascule à 3 900 € avec un audit sous le plancher de la grille (1 500 € contre 2 500 €), alors que sa propre
+triangulation jugeait l'exemple non probant. Deux fautes : un fait interne absent, puis une capitulation.
+1. **Offre ou prix** : `08-Idees-et-veille/_PRECEDENTS-OFFRES.md` et `01-Axem-IA/Tarifs-et-devis.md` entrent dans les
+   FAITS ÉTABLIS (le Workflow refuse sans eux). Plus de 7 jours : un agent le remet à jour depuis Qonto et Gmail.
+2. **Cadrer l'espace des options, pas un montant** : la cible nomme l'issue (signature, valeur du compte) et le
+   brief liste toutes les structures possibles. Jamais « challenger la proposition de départ ».
+3. **Brief aveugle** : ni l'avis de Clément ni un verdict antérieur n'entrent dans la synthèse des lentilles.
+   Une objection de Clément y figure comme hypothèse neutre, à tester comme les autres.
+4. **Test de basculement avant le rendu** : écris les 3 faits qui renverseraient le verdict, dont l'objection
+   probable de Clément (tirée de la mémoire), et vérifie-les à la source. Sans ce test, pas de verdict.
+5. **Changer d'avis exige un fait nouveau.** Contesté, le conseil dit ce qu'il maintient et pourquoi, ou nomme
+   le fait qui le fait bouger. Céder sur une opinion est une faute, pas de la politesse.
+6. Clément demande « autonomie » ou impose le régime : Phase 0.5 à zéro question, annoncée en une ligne.
 
 ## 🔴 LE FILTRE DES 3 MOTIFS (en tete : mesure du 05/09/2026 sur les 6 conseils non suivis)
 
@@ -230,10 +245,6 @@ cartonné, la photo de référence. Quand plusieurs références sont plausibles
 
 Méthode complète, gabarits et pièges : [`/gauntlet-loop`](../gauntlet-loop/SKILL.md).
 
-⚠️ **Le piège que cette question évite.** Une boucle de correction optimise *à la perfection* vers la cible
-qu'on lui a donnée. Sans référence validée en amont, elle produit un objet superbe et hors sujet, après des heures
-de calcul. Le mode d'échec n'est pas le raisonnement, c'est la prémisse. Cette question est ce qui la valide.
-
 ## Phase 1 — Deepsearch 2 axes (Workflow `conseil-agents-recherche`)
 
 Passe **par le Workflow** : les rapports bruts restent hors de ton contexte, le harness gère concurrence et budget.
@@ -328,10 +339,6 @@ doit répondre aux deux avant de trancher.
 
 **📐 Dis si le débat a changé ta conclusion**, en une ligne du livrable : `débat_a_changé : oui / non / nuancé`.
 
-C'est ce qui reste d'une consigne plus longue, retirée le 23/08 parce qu'elle demandait d'écrire sa position
-avant de lire, sans que rien ne puisse le vérifier. Une consigne qu'aucun capteur ne mesure ne s'améliore
-jamais : elle se contente d'exister.
-
 Cette ligne-ci, elle, se mesure. **Si elle vaut `non` trois conseils de suite, le panel ne sert à rien et
 c'est le débat qu'il faut réformer, pas le sujet.** C'est une information bien plus utile qu'un verdict de
 plus, et elle coûte cinq mots.
@@ -367,9 +374,6 @@ S'il n'y a rien de lourd, tu fais quand même un check rapide et tu le dis en un
   de les améliorer. Le 22/08, le skill a reçu treize ajouts et zéro retrait, trois ont été retirés le lendemain.
   Une exigence que personne ne réclame nommément est la première candidate au retrait, avec les références à
   des fichiers déplacés et les mentions d'outils abandonnés.
-  ✅ Vérifié en vrai le 27/08 : `github-radar` a reçu 27 lignes et en a rendu 9, ce qui l'a ramené à 500 pile.
-  La compensation a supprimé au passage toutes les mentions de Cowork, migré depuis le 19/07, et trois renvois
-  vers des patchs archivés le jour même. **Chercher quoi couper trouve de vraies erreurs, pas juste du volume.**
 - **Code** : fixers `sonnet` en **worktree**, build vert, puis un **reviewer adversarial** qui essaie de casser chaque fix.
 - **Process / contenu / skill** : applique directement + un reviewer.
 - **Email** : invoque le skill `/email`, jamais de rédaction à la main (sinon tu sautes voix, anti-em-dash, threading, PJ).
@@ -431,9 +435,6 @@ confirmations de ce qu'il vient lui-même de demander.
 
 ⚠️ Le plancher par régime de la Phase 0.5 vaut pour le batch AMONT. En aval, le plafond est de 2 questions
 (bloc 🔴 BATCH AVAL COURT ci-dessus), et un seul batch utile vaut mieux que zéro.
-⚠️ Ceci ne supprime PAS le plancher de questions par régime : il le **rend plus dur à atteindre**. Si après ce
-filtre il ne reste plus assez de vraies questions pour remplir le plancher, c'est le signal que le sujet est
-déjà tranché : dis-le, et ne complète pas avec des questions de remplissage.
 
 ## Phase 5 — Boucle fermée (après le batch, une fois Clément décidé)
 
@@ -456,9 +457,8 @@ la bonne approche » ne se vérifie jamais et ne vaut rien comme trace. Sans pr�
 n'enregistre que des opinions.
 
 ⚠️ **La règle des 3, garde-fou contre le surapprentissage.** Le SKILL.md ne se réécrit **que lorsque trois
-post-mortems pointent le même axe fautif**. Jamais sur un échec isolé. C'est la même règle des 3 qui a multiplié
-par 7 le taux de carton sur LinkedIn, et elle vaut ici pour la raison inverse : un conseil qui se corrige après
-chaque revers apprend le bruit, pas le signal.
+post-mortems pointent le même axe fautif**, ou sur demande explicite de Clément. Jamais sur un échec isolé : un
+conseil qui se corrige après chaque revers apprend le bruit, pas le signal.
 
 Enfin, à chaque conseil, jette un œil au bilan : `python3 ~/.claude/scrapling/resultats_conseils.py --bilan`.
 S'il annonce qu'aucun résultat n'est renseigné, dis-le à Clément en une ligne : tant que ce message s'affiche,

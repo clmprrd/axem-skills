@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Cartes de visite AXEM</title>
+<link rel="stylesheet" href="axem-kit.css">
+<style>
+  /* 85 x 55 mm + 3 mm de fond perdu = 91 x 61 mm. Textes à 5 mm au moins du trait de coupe. */
+  @page { size: 91mm 61mm; margin: 0; }
+  html, body { background: #fff; }
+  .c { width: 91mm; height: 61mm; position: relative; overflow: hidden; page-break-after: always; break-after: page; }
+  .c:last-child { page-break-after: auto; }
+  .recto { background: var(--blue); color: var(--cream); }
+  .recto .wm { position: absolute; left: 11mm; top: 21mm; font-size: 30pt; }
+  .recto .g { position: absolute; right: -9mm; bottom: -14mm; font-size: 150pt; color: var(--blue-deep); line-height: 0.8; }
+  .recto .tag { position: absolute; left: 11mm; bottom: 10mm; font-size: 8.5pt; }
+  .verso { background: var(--cream); color: var(--ink); }
+  .verso .n { position: absolute; left: 11mm; top: 11mm; font-size: 17pt; }
+  .verso .r { position: absolute; left: 11mm; top: 20mm; font-size: 6.5pt; color: var(--blue); }
+  .verso .co { position: absolute; left: 11mm; bottom: 10mm; font-size: 7.5pt; line-height: 1.6; color: var(--grey); }
+  .verso .co b { color: var(--ink); font-weight: 600; }
+  .verso .wm { position: absolute; right: 11mm; bottom: 10mm; font-size: 13pt; color: var(--blue); }
+  .verso .sq2 { position: absolute; right: 11mm; top: 12mm; font-size: 6pt; color: var(--blue); }
+</style></head><body>
+<div id="d"></div>
+<script>
+  // #nom=Prénom Nom & role=… & tel=… & mail=… ; téléphone et mail restent à compléter tant qu'ils ne sont pas fournis
+  const q = new URLSearchParams(location.hash.slice(1));
+  const P = q.get('nom') || 'Prénom Nom';
+  document.getElementById('d').innerHTML = `
+  <div class="c recto"><span class="g f">A</span><span class="wm">axem<sup>IA</sup></span><span class="tag i">Votre partenaire IA, de A à Z.</span></div>
+  <div class="c verso"><span class="sq2"><i></i><i></i></span><span class="n f">${P}</span><span class="r kicker">${q.get('role') || 'Cofondateur, AXEM IA'}</span>
+    <div class="co"><b>${q.get('tel') || 'TÉLÉPHONE À COMPLÉTER'}</b><br>${q.get('mail') || 'MAIL À COMPLÉTER'}<br>axem-ia.fr</div>
+    <span class="wm">axem<sup>IA</sup></span></div>`;
+</script>
+</body></html>

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Fonds visio AXEM</title>
+<link rel="stylesheet" href="axem-kit.css">
+<style>
+  html, body { width: 1920px; height: 1080px; overflow: hidden; }
+  .bg { position: absolute; inset: 0; overflow: hidden; }
+  /* A et Z géants en filigrane, calés sur les bords : la tête de la personne occupe le centre */
+  .giant { position: absolute; font-size: 1180px; line-height: 0.8; letter-spacing: 0; }
+  .ga { left: -150px; bottom: -150px; }
+  .gz { right: -120px; top: -170px; }
+  .arrow { position: absolute; left: 300px; right: 300px; top: 540px; height: 0; }
+  .logo { position: absolute; left: 88px; top: 76px; font-size: 104px; }
+  .who { position: absolute; left: 92px; top: 222px; font-size: 26px; line-height: 1.35; }
+  .who b { font-weight: 700; display: block; font-size: 30px; }
+  .kick { position: absolute; right: 92px; top: 92px; font-size: 20px; text-align: right; }
+  .url { position: absolute; right: 92px; top: 132px; font-size: 22px; text-align: right; opacity: 0.8; }
+  .sqs { position: absolute; right: 92px; bottom: 88px; font-size: 26px; }
+  /* Grille fine sur le crème, rappel du système */
+  .grid { position: absolute; inset: 0; background-image:
+      linear-gradient(to right, var(--line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+    background-size: 120px 120px; background-position: -1px -1px; opacity: 0.6;
+    /* Pas de trame derrière la tête : elle scintille (moiré) dans une webcam compressée. Grille seulement sur les bords et le tiers haut. */
+    -webkit-mask-image: radial-gradient(ellipse 34% 62% at 50% 78%, transparent 70%, #000 100%);
+            mask-image: radial-gradient(ellipse 34% 62% at 50% 78%, transparent 70%, #000 100%); }
+
+  body[data-v="bleu"] .bg { background: var(--blue); color: var(--cream); }
+  body[data-v="bleu"] .giant { color: var(--blue-deep); }
+  body[data-v="creme"] .bg { background: var(--cream); color: var(--ink); }
+  body[data-v="creme"] .giant { color: #E7E8F7; }
+  body[data-v="creme"] .logo, body[data-v="creme"] .sqs, body[data-v="creme"] .kick { color: var(--blue); }
+  body[data-v="encre"] .bg { background: var(--ink); color: var(--cream); }
+  body[data-v="encre"] .giant { color: #151925; }
+  body[data-v="encre"] .sqs, body[data-v="encre"] .kick { color: var(--blue); }
+  body[data-v="encre"] .logo sup { color: var(--blue); }
+  body:not([data-v="creme"]) .grid { display: none; }
+</style></head>
+<body>
+<div class="bg">
+  <div class="grid"></div>
+  <span class="giant f ga">A</span>
+  <span class="giant f gz">Z</span>
+  <span class="logo wm">axem<sup>IA</sup></span>
+  <div class="who" id="who"></div>
+  <span class="kick kicker">Votre partenaire IA, de A à Z</span>
+  <span class="url">axem-ia.fr</span>
+  <span class="sqs sq2"><i></i><i></i></span>
+</div>
+<script>
+  // #v=bleu|creme|encre & nom=Prénom Nom & role=Cofondateur, AXEM IA (nom facultatif)
+  const q = new URLSearchParams(location.hash.slice(1));
+  document.body.dataset.v = q.get('v') || 'bleu';
+  const esc = s => s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+  if (q.get('nom')) document.getElementById('who').innerHTML = '<b>' + esc(q.get('nom')) + '</b>' + esc(q.get('role') || 'Cofondateur, AXEM IA');
+</script>
+</body></html>

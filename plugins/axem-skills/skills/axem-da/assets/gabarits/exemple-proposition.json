@@ -1,0 +1,80 @@
+{
+  "reference": "P-2026-EX01",
+  "date": "25 septembre 2026",
+  "validite": "30 jours",
+  "client": "Entreprise Exemple",
+  "interlocuteur": "Prénom Nom, Directeur général",
+  "objet": "Faire gagner deux heures par jour à l'équipe commerciale grâce à l'IA, sans changer d'outils.",
+  "contexte": [
+    "Douze commerciaux, un CRM en place, des comptes rendus de rendez-vous rédigés à la main.",
+    "Des essais de ChatGPT isolés, sans cadre ni règles sur les données clients.",
+    "Une direction qui veut des résultats mesurés avant d'aller plus loin."
+  ],
+  "objectifs": [
+    "Chaque commercial utilise l'IA au quotidien sur trois tâches précises.",
+    "Des règles claires sur les données sensibles, validées par la direction.",
+    "Un gain de temps mesuré à 30 jours."
+  ],
+  "etapes": [
+    {
+      "titre": "Audit des usages",
+      "texte": "Entretiens avec l'équipe, cartographie des tâches répétitives, choix des trois cas d'usage à plus fort gain.",
+      "duree": "Semaine 1"
+    },
+    {
+      "titre": "Formation en atelier",
+      "texte": "Une journée sur vos propres dossiers : chacun repart avec ses prompts et ses modèles prêts à l'emploi.",
+      "duree": "Semaine 2"
+    },
+    {
+      "titre": "Suivi et mesure",
+      "texte": "Point à 30 jours, mesure du temps gagné, ajustement des outils et des règles.",
+      "duree": "Semaines 3 à 6"
+    }
+  ],
+  "lignes": [
+    {
+      "libelle": "Audit IA",
+      "detail": "Entretiens, cartographie, restitution écrite",
+      "qte": 1,
+      "pu": 2500
+    },
+    {
+      "libelle": "Formation en atelier",
+      "detail": "Une journée, douze participants",
+      "qte": 12,
+      "pu": 200
+    }
+  ],
+  "tva": 20,
+  "paiement": "Acompte de 30 % à la signature, solde à la livraison, virement à 30 jours.",
+  "financement": "Formation éligible à une prise en charge OPCO selon votre branche : nous montons le dossier avec vous.",
+  "conditions": [
+    {
+      "titre": "Confidentialité",
+      "texte": "Les documents et données partagés pendant la mission restent votre propriété et ne sont jamais réutilisés."
+    },
+    {
+      "titre": "Livrables",
+      "texte": "Restitution écrite, supports de formation et modèles de prompts remis en fin de mission."
+    },
+    {
+      "titre": "Validité",
+      "texte": "Cette proposition est valable 30 jours à compter de sa date d'émission."
+    }
+  ],
+  "equipe": [
+    {
+      "nom": "Prénom Nom",
+      "lettres": "AX",
+      "role": "Cofondateur, AXEM IA",
+      "photo": ""
+    },
+    {
+      "nom": "Prénom Nom",
+      "lettres": "EM",
+      "role": "Cofondateur, AXEM IA",
+      "photo": ""
+    }
+  ]
+}

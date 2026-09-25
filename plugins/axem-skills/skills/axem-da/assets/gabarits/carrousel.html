@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Carrousel LinkedIn AXEM</title>
+<link rel="stylesheet" href="axem-kit.css">
+<style>
+  /* 1080 x 1350. #p=couv|page|fin & t=titre & a=mot en italique & x=texte & n=numéro & tot=total */
+  html, body { width: 1080px; height: 1350px; overflow: hidden; }
+  .s { position: absolute; inset: 0; overflow: hidden; }
+  .logo { position: absolute; left: 84px; top: 76px; font-size: 64px; }
+  .num { position: absolute; right: 84px; top: 92px; font-size: 22px; }
+  .kick { position: absolute; left: 84px; font-size: 22px; }
+  .t { position: absolute; left: 84px; right: 84px; font-size: 128px; line-height: 0.92; }
+  .t .i { font-weight: 400; }
+  .x { position: absolute; left: 84px; right: 120px; font-size: 38px; line-height: 1.35; }
+  .foot { position: absolute; left: 84px; right: 84px; bottom: 76px; display: flex; justify-content: space-between; align-items: center; font-size: 24px; }
+  .giant { position: absolute; font-size: 1100px; line-height: 0.8; }
+  .cta { display: inline-flex; gap: 0.5em; align-items: center; background: var(--cream); color: var(--blue); font-weight: 700; font-size: 34px; padding: 0.6em 1em; border-radius: 999px; }
+
+  body[data-p="couv"] .s { background: var(--blue); color: var(--cream); }
+  body[data-p="couv"] .giant { right: -330px; bottom: -330px; color: var(--blue-deep); }
+  body[data-p="couv"] .kick { top: 560px; }
+  body[data-p="couv"] .t { top: 610px; }
+  body[data-p="page"] .s { background: var(--cream); color: var(--ink); }
+  body[data-p="page"] .logo, body[data-p="page"] .num, body[data-p="page"] .kick { color: var(--blue); }
+  body[data-p="page"] .t { top: 300px; font-size: 104px; }
+  body[data-p="page"] .t .i { color: var(--blue); }
+  body[data-p="page"] .giant { display: none; }
+  body[data-p="page"] .foot .sq2 { color: var(--blue); }
+  body[data-p="page"] .x { top: 600px; color: var(--grey); }
+  body[data-p="page"] .kick { top: 250px; }
+  body[data-p="fin"] .s { background: var(--ink); color: var(--cream); }
+  body[data-p="fin"] .giant { right: -120px; top: -220px; color: #151925; }
+  body[data-p="fin"] .kick { top: 520px; color: var(--blue); }
+  body[data-p="fin"] .t { top: 570px; font-size: 112px; }
+  body[data-p="fin"] .x { top: 930px; }
+  body[data-p="fin"] .logo sup, body[data-p="fin"] .foot .sq2 { color: var(--blue); }
+</style></head>
+<body>
+<div class="s">
+  <span class="giant f" id="g">A</span>
+  <span class="logo wm">axem<sup>IA</sup></span>
+  <span class="num kicker" id="n"></span>
+  <span class="kick kicker" id="k"></span>
+  <h1 class="t f" id="t"></h1>
+  <div class="x" id="x"></div>
+  <div class="foot"><span id="f">axem-ia.fr</span><span class="sq2"><i></i><i></i></span></div>
+</div>
+<script>
+  const q = new URLSearchParams(location.hash.slice(1));
+  const p = q.get('p') || 'couv'; document.body.dataset.p = p;
+  const esc = s => (s || '').replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+  const t = esc(q.get('t') || 'Votre titre ici'), a = q.get('a');
+  document.getElementById('t').innerHTML = a ? t.replace(esc(a), '<span class="i">' + esc(a) + '</span>') : t;
+  document.getElementById('k').textContent = q.get('k') || (p === 'fin' ? 'Et maintenant ?' : '');
+  document.getElementById('x').innerHTML = p === 'fin'
+    ? '<span class="cta">' + esc(q.get('x') || 'Réserver 30 min avec l’équipe AXEM') + ' →</span>'
+    : esc(q.get('x') || '');
+  if (q.get('auteur')) document.getElementById('f').textContent = q.get('auteur') + ' · AXEM IA';
+  const n = q.get('n'), tot = q.get('tot');
+  if (n) document.getElementById('n').textContent = n.padStart(2, '0') + (tot ? ' / ' + tot.padStart(2, '0') : '');
+  document.getElementById('g').textContent = p === 'fin' ? 'Z' : 'A';
+</script>
+</body></html>

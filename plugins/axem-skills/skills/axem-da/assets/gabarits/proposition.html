@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Proposition commerciale AXEM</title>
+<link rel="stylesheet" href="axem-kit.css">
+<style>
+  @page { size: A4; margin: 0; }
+  html, body { background: #fff; }
+  .page { width: 210mm; height: 297mm; position: relative; overflow: hidden; page-break-after: always; break-after: page; }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+  .in { position: absolute; inset: 22mm 20mm 24mm 20mm; }
+  .pad { padding: 0; }
+
+  /* En-tête et pied communs aux pages intérieures */
+  .hd { position: absolute; left: 20mm; right: 20mm; top: 11mm; display: flex; justify-content: space-between; align-items: center; font-size: 8.5pt; color: var(--grey); }
+  .hd .wm { font-size: 17pt; color: var(--blue); }
+  .ft { position: absolute; left: 20mm; right: 20mm; bottom: 10mm; display: flex; justify-content: space-between; font-size: 7.5pt; color: var(--grey); border-top: 0.3mm solid var(--line); padding-top: 2.5mm; }
+  .ft .n { font-weight: 700; color: var(--blue); }
+
+  h2.t { font-size: 34pt; color: var(--ink); margin-bottom: 7mm; }
+  h2.t .i { color: var(--blue); font-weight: 400; }
+  .kk { font-size: 8pt; color: var(--blue); margin-bottom: 3mm; display: block; }
+  p, li { font-size: 10.5pt; line-height: 1.55; color: var(--ink); }
+  p + p { margin-top: 3mm; }
+  .lead { font-size: 13pt; line-height: 1.45; color: var(--grey); max-width: 150mm; }
+
+  /* Couverture */
+  .cover { background: var(--blue); color: var(--cream); }
+  .cover .wm { position: absolute; left: 20mm; top: 18mm; font-size: 40pt; }
+  .cover .ref { position: absolute; left: 20mm; top: 40mm; font-size: 8.5pt; line-height: 1.6; opacity: 0.9; }
+  .cover .kick { position: absolute; left: 20mm; top: 108mm; font-size: 9pt; }
+  .cover .client { position: absolute; left: 20mm; right: 20mm; top: 118mm; font-size: 50pt; line-height: 0.95; }
+  .cover .obj { position: absolute; left: 20mm; right: 32mm; top: 176mm; font-size: 20pt; line-height: 1.2; }
+  .cover .who { position: absolute; left: 20mm; bottom: 20mm; font-size: 9pt; line-height: 1.6; }
+  .cover .who b { display: block; font-size: 10pt; }
+  .cover .tag { position: absolute; right: 20mm; bottom: 20mm; font-size: 13pt; text-align: right; }
+  .cover .giant { position: absolute; right: -14mm; top: 20mm; font-size: 310pt; color: var(--blue-deep); line-height: 0.8; }
+  .cover .sq2 { position: absolute; right: 20mm; bottom: 34mm; font-size: 10pt; }
+
+  /* Contexte */
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; margin-top: 9mm; }
+  .box { border-top: 0.6mm solid var(--blue); padding-top: 4mm; }
+  .box h3 { font-family: 'Instrument Sans'; font-weight: 700; font-size: 10pt; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); margin-bottom: 3mm; }
+  ul.dot { list-style: none; }
+  ul.dot li { position: relative; padding-left: 5mm; margin-bottom: 2mm; }
+  ul.dot li::before { content: ""; position: absolute; left: 0; top: 2.2mm; width: 2mm; height: 2mm; background: var(--blue); }
+
+  /* Démarche : étapes de A à Z */
+  .steps { margin-top: 8mm; display: flex; flex-direction: column; gap: 0; }
+  .step { display: grid; grid-template-columns: 22mm 1fr 34mm; gap: 6mm; padding: 5mm 0; border-top: 0.3mm solid var(--line); align-items: start; }
+  .step:last-child { border-bottom: 0.3mm solid var(--line); }
+  .step .num { font-size: 30pt; color: var(--blue); line-height: 0.85; }
+  .step h4 { font-family: 'Fraunces'; font-weight: 900; font-variation-settings: "SOFT" 100, "opsz" 144; font-size: 15pt; letter-spacing: -0.02em; margin-bottom: 1.5mm; }
+  .step p { font-size: 9.8pt; color: var(--grey); }
+  .step .dur { font-size: 8.5pt; text-align: right; color: var(--blue); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding-top: 1mm; }
+
+  /* Investissement */
+  table.inv { width: 100%; border-collapse: collapse; margin-top: 8mm; font-size: 10pt; }
+  table.inv th { text-align: left; font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.12em; color: var(--grey); font-weight: 600; padding: 0 0 2.5mm; border-bottom: 0.6mm solid var(--ink); }
+  table.inv th.r, table.inv td.r { text-align: right; white-space: nowrap; }
+  table.inv td { padding: 3.6mm 0; border-bottom: 0.3mm solid var(--line); vertical-align: top; }
+  table.inv td small { display: block; color: var(--grey); font-size: 8.5pt; margin-top: 0.8mm; }
+  .tot { margin-top: 6mm; margin-left: auto; width: 88mm; }
+  .tot div { display: flex; justify-content: space-between; font-size: 10pt; padding: 1.6mm 0; }
+  .tot .big { background: var(--blue); color: var(--cream); padding: 4mm 5mm; margin-top: 2mm; font-weight: 700; font-size: 12pt; }
+  .tot .big span:last-child { font-family: 'Fraunces'; font-weight: 900; font-variation-settings: "SOFT" 100, "opsz" 144; font-size: 20pt; }
+  .fin { margin-top: 10mm; background: var(--cream); padding: 5mm 6mm; font-size: 9pt; line-height: 1.5; color: var(--grey); }
+  .fin b { color: var(--ink); }
+
+  /* Équipe et accord */
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; margin-top: 8mm; }
+  .duo figure { margin: 0; }
+  .duo img { width: 100%; height: 62mm; object-fit: cover; display: block; }
+  .duo figcaption { margin-top: 3mm; font-size: 9.5pt; line-height: 1.5; color: var(--grey); }
+  .duo figcaption b { display: block; color: var(--ink); font-size: 11pt; }
+  .duo figcaption .ax { color: var(--blue); font-weight: 700; }
+  .cond { margin-top: 9mm; font-size: 8.8pt; line-height: 1.55; color: var(--grey); columns: 2; column-gap: 8mm; }
+  .cond b { color: var(--ink); }
+  .cond p { break-inside: avoid; margin: 0 0 3mm; }
+  .sign { position: absolute; left: 20mm; right: 20mm; bottom: 24mm; display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
+  .sign div { border: 0.4mm solid var(--ink); height: 34mm; padding: 3.5mm 4mm; font-size: 8.5pt; color: var(--grey); }
+  .sign div b { display: block; color: var(--ink); font-size: 9.5pt; margin-bottom: 1mm; }
+</style></head>
+<body>
+<div id="doc"></div>
+<script>
+/* Données : window.DATA est injecté par gen_proposition.py. Sans données, l'exemple ci-dessous s'affiche. */
+const D = window.DATA || {
+  reference: "P-2026-000", date: "25 septembre 2026", validite: "30 jours",
+  client: "Nom du client", interlocuteur: "Prénom Nom, fonction",
+  objet: "Objet de la mission en une phrase claire.",
+  contexte: ["Ce que le client nous a dit de sa situation.", "Ce qui bloque aujourd'hui."],
+  objectifs: ["Objectif mesurable n°1.", "Objectif mesurable n°2."],
+  etapes: [
+    { titre: "Audit", texte: "Ce que l'on fait, avec qui, et ce que le client obtient.", duree: "Semaine 1" },
+    { titre: "Formation", texte: "Ce que l'on fait, avec qui, et ce que le client obtient.", duree: "Semaines 2 à 3" },
+    { titre: "Mise en place", texte: "Ce que l'on fait, avec qui, et ce que le client obtient.", duree: "Semaines 4 à 6" }
+  ],
+  lignes: [ { libelle: "Prestation", detail: "Détail", qte: 1, pu: 0 } ],
+  tva: 20, paiement: "Acompte de 30 % à la signature, solde à la livraison.",
+  financement: "", conditions: [],
+  equipe: [ { nom: "Prénom Nom", lettres: "AX", role: "Cofondateur, AXEM IA", photo: "" }, { nom: "Prénom Nom", lettres: "EM", role: "Cofondateur, AXEM IA", photo: "" } ]
+};
+const eur = n => n.toLocaleString('fr-FR', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).replace(/\u202f/g, '\u00a0') + '\u00a0€';
+const esc = s => String(s ?? '').replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+let pageNo = 1;
+const hd = () => `<div class="hd"><span class="wm">axem<sup>IA</sup></span><span>Proposition ${esc(D.reference)} · ${esc(D.client)}</span></div>`;
+const ft = () => `<div class="ft"><span>AXEM IA · axem-ia.fr · Votre partenaire IA, de A à Z.</span><span class="n">${String(++pageNo).padStart(2, '0')}</span></div>`;
+
+const ht = D.lignes.reduce((s, l) => s + l.qte * l.pu, 0);
+const tva = Math.round(ht * D.tva) / 100;
+// Étapes numérotées A, B, C… et la dernière toujours Z : le parcours de A à Z
+const etapeLettre = (k, n) => (k === n - 1 && n > 1) ? 'Z' : letters[k];
+
+document.getElementById('doc').innerHTML = `
+<section class="page cover">
+  <span class="giant f">A</span>
+  <span class="wm">axem<sup>IA</sup></span>
+  <div class="ref">${D.mode === 'devis' ? 'Devis' : 'Proposition'} ${esc(D.reference)}<br>${esc(D.date)}<br>Valable ${esc(D.validite)}</div>
+  <span class="kick kicker">${D.mode === 'devis' ? 'Devis' : 'Proposition commerciale'}</span>
+  <h1 class="client f">${esc(D.client)}</h1>
+  <p class="obj i" style="color:var(--cream)">${esc(D.objet)}</p>
+  <div class="who"><b>À l'attention de</b>${esc(D.interlocuteur)}</div>
+  <span class="sq2"><i></i><i></i></span>
+  <span class="tag i">Votre partenaire IA, de A à Z.</span>
+</section>
+${D.mode === 'devis' ? '' : `
+<section class="page">${hd()}<div class="in" style="top:30mm">
+  <span class="kk kicker">01 · Votre situation</span>
+  <h2 class="t f">Ce que vous <span class="i">nous avez</span> dit.</h2>
+  <p class="lead">${esc(D.objet)}</p>
+  <div class="cols">
+    <div class="box"><h3>Contexte</h3><ul class="dot">${D.contexte.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>
+    <div class="box"><h3>Objectifs</h3><ul class="dot">${D.objectifs.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>
+  </div>
+</div>${ft()}</section>
+
+<section class="page">${hd()}<div class="in" style="top:30mm">
+  <span class="kk kicker">02 · Notre démarche</span>
+  <h2 class="t f">De A <span class="i">à</span> Z.</h2>
+  <div class="steps">${D.etapes.map((e, k) => `
+    <div class="step"><span class="num f">${etapeLettre(k, D.etapes.length)}</span>
+      <div><h4>${esc(e.titre)}</h4><p>${esc(e.texte)}</p></div>
+      <span class="dur">${esc(e.duree)}</span></div>`).join('')}
+  </div>
+</div>${ft()}</section>
+
+<section class="page">${hd()}<div class="in" style="top:30mm">
+  <span class="kk kicker">03 · Investissement</span>
+  <h2 class="t f">Votre <span class="i">investissement</span>.</h2>
+  <table class="inv"><thead><tr><th>Prestation</th><th class="r">Qté</th><th class="r">Prix unitaire HT</th><th class="r">Total HT</th></tr></thead><tbody>
+  ${D.lignes.map(l => `<tr><td><b>${esc(l.libelle)}</b>${l.detail ? `<small>${esc(l.detail)}</small>` : ''}</td><td class="r">${l.qte}</td><td class="r">${eur(l.pu)}</td><td class="r">${eur(l.qte * l.pu)}</td></tr>`).join('')}
+  </tbody></table>
+  <div class="tot">
+    <div><span>Total HT</span><span>${eur(ht)}</span></div>
+    <div><span>TVA ${D.tva}&nbsp;%</span><span>${eur(tva)}</span></div>
+    <div class="big"><span>Total TTC</span><span>${eur(ht + tva)}</span></div>
+  </div>
+  <div class="fin"><b>Modalités de paiement.</b> ${esc(D.paiement)}${D.financement ? `<br><b>Financement.</b> ${esc(D.financement)}` : ''}</div>
+</div>${ft()}</section>
+
+<section class="page">${hd()}<div class="in" style="top:30mm">
+  <span class="kk kicker">04 · Qui sommes-nous</span>
+  <h2 class="t f">AX, EM, <span class="i">et</span> IA.</h2>
+  <p class="lead">${esc(D.equipe_intro || "Deux associés, un seul interlocuteur du premier échange jusqu'au résultat. AXEM, c'est AX d'Alexis, EM de Clément, et l'IA qu'on met au travail chez vous.")}</p>
+  <div class="duo">${(D.equipe || []).map(m => `
+    <figure>${m.photo ? `<img src="${esc(m.photo)}" alt="">` : '<div style="height:62mm;background:var(--cream)"></div>'}<figcaption><b>${esc(m.nom)}</b>${m.lettres ? `<span class="ax">${esc(m.lettres)}</span> · ` : ''}${esc(m.role || 'Cofondateur, AXEM IA')}</figcaption></figure>`).join('')}
+  </div>
+  ${D.conditions.length ? `<div class="cond">${D.conditions.map(c => `<p>${c.titre ? `<b>${esc(c.titre)}.</b> ` : ''}${esc(c.texte)}</p>`).join('')}</div>` : ''}
+</div>
+<div class="sign"><div><b>Pour AXEM IA</b>Date et signature</div><div><b>Pour ${esc(D.client)}</b>Date, signature et mention « Bon pour accord »</div></div>
+${ft()}</section>`}`;
+</script>
+</body></html>

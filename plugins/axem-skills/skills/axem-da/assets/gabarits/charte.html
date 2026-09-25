@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Charte graphique AXEM IA</title>
+<link rel="stylesheet" href="axem-kit.css">
+<style>
+  @page { size: A4; margin: 0; }
+  html, body { background: #fff; }
+  .page { width: 210mm; height: 297mm; position: relative; overflow: hidden; page-break-after: always; break-after: page; }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+  .in { position: absolute; left: 20mm; right: 20mm; top: 28mm; bottom: 24mm; }
+  .hd { position: absolute; left: 20mm; right: 20mm; top: 11mm; display: flex; justify-content: space-between; align-items: center; font-size: 8.5pt; color: var(--grey); }
+  .hd .wm { font-size: 17pt; color: var(--blue); }
+  .ft { position: absolute; left: 20mm; right: 20mm; bottom: 10mm; display: flex; justify-content: space-between; font-size: 7.5pt; color: var(--grey); border-top: 0.3mm solid var(--line); padding-top: 2.5mm; }
+  .ft b { color: var(--blue); }
+  .kk { font-size: 8pt; color: var(--blue); display: block; margin-bottom: 3mm; }
+  h2 { font-size: 34pt; margin-bottom: 6mm; }
+  h2 .i { color: var(--blue); }
+  h3 { font-family: 'Instrument Sans'; font-weight: 700; font-size: 9pt; text-transform: uppercase; letter-spacing: 0.12em; color: var(--blue); margin: 7mm 0 3mm; }
+  p, li { font-size: 10pt; line-height: 1.55; }
+  .lead { font-size: 12.5pt; line-height: 1.45; color: var(--grey); max-width: 150mm; }
+
+  .cover { background: var(--blue); color: var(--cream); }
+  .cover .wm { position: absolute; left: 20mm; top: 96mm; font-size: 110pt; }
+  .cover .kick { position: absolute; left: 20mm; top: 84mm; font-size: 9pt; }
+  .cover .tag { position: absolute; left: 20mm; top: 150mm; font-size: 22pt; }
+  .cover .sq2 { position: absolute; left: 20mm; bottom: 22mm; font-size: 12pt; }
+  .cover .v { position: absolute; right: 20mm; bottom: 22mm; font-size: 8.5pt; text-align: right; line-height: 1.6; opacity: 0.9; }
+
+  .logos { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4mm; margin-top: 6mm; }
+  .logos div { height: 34mm; display: grid; place-items: center; font-size: 30pt; }
+  .logos small { display: block; font-size: 7.5pt; color: var(--grey); margin-top: 1.5mm; }
+  .zone { margin-top: 4mm; display: flex; gap: 10mm; align-items: center; }
+  .zone .box { position: relative; padding: 10mm 12mm; outline: 0.3mm dashed var(--blue); }
+  .zone .box .wm { font-size: 34pt; color: var(--blue); outline: 0.3mm solid rgba(35,73,255,0.35); }
+  .zone p { font-size: 9.5pt; color: var(--grey); max-width: 80mm; }
+  ul.no { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 2mm 8mm; }
+  ul.no li { font-size: 9.5pt; padding-left: 6mm; position: relative; color: var(--grey); }
+  ul.no li::before { content: "×"; position: absolute; left: 0; color: var(--blue); font-weight: 700; }
+
+  .sw { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3mm; margin-top: 4mm; }
+  .sw div { height: 50mm; padding: 4mm; display: flex; flex-direction: column; justify-content: flex-end; font-size: 8pt; line-height: 1.5; }
+  .sw b { font-size: 11pt; font-family: 'Fraunces'; font-weight: 900; font-variation-settings: "SOFT" 100, "opsz" 144; }
+  .prop { display: flex; height: 5mm; margin-top: 3mm; }
+  .typo { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; margin-top: 2mm; }
+  .typo .big { font-size: 46pt; color: var(--blue); line-height: 1; }
+  .typo p { font-size: 9pt; color: var(--grey); margin-top: 2mm; }
+
+  .motifs { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4mm; margin-top: 2mm; }
+  .motifs div { height: 40mm; display: grid; place-items: center; position: relative; overflow: hidden; }
+  .motifs small { position: absolute; left: 3mm; bottom: 2mm; font-size: 7.5pt; }
+  .apps { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; margin-top: 2mm; }
+  .apps figure { margin: 0; }
+  .apps img { width: 100%; display: block; border: 0.2mm solid var(--line); }
+  .apps figcaption { font-size: 7.5pt; color: var(--grey); margin-top: 1mm; }
+
+  .voice { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; margin-top: 4mm; }
+  .voice div { border-top: 0.6mm solid var(--blue); padding-top: 3mm; }
+  .voice li { font-size: 9.5pt; margin-bottom: 1.5mm; color: var(--grey); }
+  .name { margin-top: 10mm; display: flex; gap: 0; align-items: flex-end; }
+  .name div { flex: 1; padding: 6mm 5mm; }
+  .name .f { font-size: 44pt; line-height: 1; }
+  .name small { display: block; font-size: 8.5pt; margin-top: 2mm; }
+</style></head><body>
+
+<section class="page cover">
+  <span class="kick kicker">Charte graphique</span>
+  <span class="wm">axem<sup>IA</sup></span>
+  <p class="tag i">Votre partenaire IA, de A à Z.</p>
+  <span class="sq2"><i></i><i></i></span>
+  <div class="v">Version 1, septembre 2026<br>axem-ia.fr</div>
+</section>
+
+<section class="page">
+  <div class="hd"><span class="wm">axem<sup>IA</sup></span><span>Charte graphique</span></div>
+  <div class="in">
+    <span class="kk kicker">01 · Le logo</span>
+    <h2 class="f">Un nom, <span class="i">trois</span> couleurs.</h2>
+    <p class="lead">Le logo est le mot « axem » en Fraunces 900, suivi de « IA » en exposant. Il s'utilise en bleu sur fond clair, en crème sur fond bleu ou sombre, en encre quand la couleur est impossible.</p>
+    <div class="logos">
+      <div class="bg-cream"><span class="wm c-blue">axem<sup>IA</sup></span></div>
+      <div class="bg-blue"><span class="wm">axem<sup>IA</sup></span></div>
+      <div class="bg-ink"><span class="wm">axem<sup>IA</sup></span></div>
+    </div>
+    <div class="logos" style="margin-top:1mm"><small>Bleu sur crème ou blanc</small><small>Crème sur bleu</small><small>Crème sur encre</small></div>
+    <h3>Zone de protection et taille minimale</h3>
+    <div class="zone"><div class="box"><span class="wm">axem<sup>IA</sup></span></div>
+      <p>Autour du logo, garder un vide au moins égal à la hauteur du « a ». Taille minimale : 18 mm de large à l'impression, 90 px à l'écran. En dessous, utiliser l'icône « a ».</p></div>
+    <h3>À ne pas faire</h3>
+    <ul class="no">
+      <li>Changer la police ou l'espacement du mot</li>
+      <li>Mettre « IA » sur la même ligne que « axem »</li>
+      <li>Le poser sur une photo chargée sans aplat</li>
+      <li>Le colorer autrement qu'en bleu, crème ou encre</li>
+      <li>Ajouter une ombre, un contour ou un dégradé</li>
+      <li>Le déformer ou le faire pivoter</li>
+    </ul>
+  </div>
+  <div class="ft"><span>AXEM IA · Charte graphique</span><b>02</b></div>
+</section>
+
+<section class="page">
+  <div class="hd"><span class="wm">axem<sup>IA</sup></span><span>Charte graphique</span></div>
+  <div class="in">
+    <span class="kk kicker">02 · Couleurs et polices</span>
+    <h2 class="f">Le bleu <span class="i">d'abord</span>.</h2>
+    <div class="sw">
+      <div class="bg-blue"><b>Bleu électrique</b>#2349FF<br>RVB 35 73 255<br>Couleur de la marque</div>
+      <div class="bg-cream" style="outline:0.2mm solid var(--line)"><b>Crème</b>#FAF6EA<br>Fonds clairs</div>
+      <div class="bg-ink"><b>Encre</b>#0B0D12<br>Textes, fonds sombres</div>
+      <div style="background:var(--grey);color:var(--cream)"><b>Gris</b>#3A3D45<br>Textes secondaires</div>
+    </div>
+    <p style="font-size:9pt;color:var(--grey);margin-top:3mm">Proportions d'usage : environ 60 % de crème ou blanc, 30 % de bleu, 10 % d'encre. Le bleu se pose en aplat, jamais en dégradé.</p>
+    <div class="prop"><span style="flex:6;background:var(--cream);outline:0.2mm solid var(--line)"></span><span style="flex:3;background:var(--blue)"></span><span style="flex:1;background:var(--ink)"></span></div>
+    <h3>Polices</h3>
+    <div class="typo">
+      <div><span class="big f">Fraunces</span><p>Titres, en graisse 900 arrondie. L'italique légère sert d'accent sur un mot, jamais sur une phrase entière. Google Fonts, gratuite.</p></div>
+      <div><span class="big" style="font-family:'Instrument Sans';font-weight:600;letter-spacing:-0.02em">Instrument</span><p>Textes courants et surtitres en capitales espacées. Google Fonts, gratuite. En mail, repli sur Georgia pour les titres et Arial pour le texte.</p></div>
+    </div>
+    <h3>Hiérarchie</h3>
+    <p><span class="kicker" style="font-size:8pt;color:var(--blue)">Surtitre en capitales</span></p>
+    <p class="f" style="font-size:26pt;margin:2mm 0">Un titre court, <span class="i" style="color:var(--blue)">un mot</span> en italique.</p>
+    <p style="color:var(--grey)">Le texte courant reste simple, en phrases courtes, avec des chiffres quand on en a.</p>
+  </div>
+  <div class="ft"><span>AXEM IA · Charte graphique</span><b>03</b></div>
+</section>
+
+<section class="page">
+  <div class="hd"><span class="wm">axem<sup>IA</sup></span><span>Charte graphique</span></div>
+  <div class="in">
+    <span class="kk kicker">03 · Motifs et applications</span>
+    <h2 class="f">De A <span class="i">à</span> Z.</h2>
+    <div class="motifs">
+      <div class="bg-blue"><span class="sq2" style="font-size:22pt"><i></i><i></i></span><small>Les deux carrés, un plein, un vide</small></div>
+      <div class="bg-blue"><span class="f" style="font-size:110pt;color:var(--blue-deep)">A</span><small>Le A et le Z géants en filigrane</small></div>
+      <div class="bg-cream" style="background-image:linear-gradient(to right,var(--line) 1px,transparent 1px),linear-gradient(to bottom,var(--line) 1px,transparent 1px);background-size:6mm 6mm;"><small style="color:var(--grey)">La grille fine sur fond crème</small></div>
+    </div>
+    <h3>Exemples</h3>
+    <div class="apps">
+      <figure><img src="../visio/fond-visio-bleu-clement.png" alt=""><figcaption>Fond de visio Meet et Teams</figcaption></figure>
+      <figure><img src="../linkedin/reserver-30min-1200x627.png" alt=""><figcaption>Visuel « Réserver 30 min » pour LinkedIn</figcaption></figure>
+      <figure><img src="../visio/fond-visio-creme.png" alt=""><figcaption>Fond de visio, version crème</figcaption></figure>
+      <figure><img src="../logo/carre-bleu.png" alt="" style="width:50%"><figcaption>Carré pour avatar d'outil</figcaption></figure>
+    </div>
+  </div>
+  <div class="ft"><span>AXEM IA · Charte graphique</span><b>04</b></div>
+</section>
+
+<section class="page">
+  <div class="hd"><span class="wm">axem<sup>IA</sup></span><span>Charte graphique</span></div>
+  <div class="in">
+    <span class="kk kicker">04 · Le nom et le ton</span>
+    <h2 class="f">AX, EM, <span class="i">et</span> IA.</h2>
+    <div class="name">
+      <div class="bg-blue"><span class="f">AX</span><small>Alexis</small></div>
+      <div class="bg-ink"><span class="f">EM</span><small>Clément</small></div>
+      <div class="bg-cream" style="outline:0.2mm solid var(--line)"><span class="f c-blue">IA</span><small style="color:var(--grey)">Intelligence artificielle</small></div>
+    </div>
+    <p class="lead" style="margin-top:6mm">AXEM, ce sont deux associés et l'IA qu'ils mettent au travail chez leurs clients. L'accroche ne change pas : « Votre partenaire IA, de A à Z. »</p>
+    <div class="voice">
+      <div><h3 style="margin-top:0">On écrit</h3><ul style="padding-left:4mm">
+        <li>Des phrases courtes, au présent.</li>
+        <li>Des chiffres réels et sourcés, ou rien.</li>
+        <li>Le nom du client, son métier, son cas.</li>
+        <li>Une question directe pour conclure.</li></ul></div>
+      <div><h3 style="margin-top:0">On évite</h3><ul style="padding-left:4mm">
+        <li>Le jargon technique sans explication.</li>
+        <li>Les promesses sans chiffre ni exemple.</li>
+        <li>Les numéros de version de modèle d'IA.</li>
+        <li>Les formules creuses et symétriques.</li></ul></div>
+    </div>
+  </div>
+  <div class="ft"><span>AXEM IA · Charte graphique</span><b>05</b></div>
+</section>
+</body></html>
