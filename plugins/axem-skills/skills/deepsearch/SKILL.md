@@ -108,6 +108,42 @@ mention faible, elle décrédibilise les vraies.
 
 ---
 
+## 🔴 TROIS RÈGLES AVANT L'ÉTAGE 0 (24/09/2026, mesurées sur 18 runs, moyenne 77,2/100)
+
+### 1. ROUTES D'ABORD : lire ce qui est mort AVANT de lancer un agent
+
+13 runs sur 18 se sont plaints en fin de course que Reddit ou X étaient morts. Une partie de ces plaintes était
+déjà périmée : la route Reddit commentaires existe et répond. Donc, avant l'étage 0 :
+
+```bash
+cat ~/.claude/scrapling/_etat_routes.json      # daté, réécrit chaque matin
+```
+
+Si la date n'est pas celle du jour : `~/.claude/scrapling/.venv/bin/python ~/.claude/scrapling/collect.py doctor`.
+Écris l'état dans le prompt de chaque agent (le 24/09 : `x_recherche: false`, Reddit sous-reddit, recherche et
+commentaires vivants). Une route morte ne se retente pas ; X se replie sur les comptes nommés et `x-tweet`, plus
+Hacker News et GitHub trending pour le signal précoce. Le rapport annonce en tête les routes mortes, pour que
+leur vide ne se lise jamais comme un silence du sujet.
+
+### 2. SOURCE OFFICIELLE D'ABORD : la doc, l'écran, le document interne, puis les agents
+
+4 runs sur 18 ont été renversés par une source que l'orchestrateur pouvait ouvrir lui-même en deux minutes :
+l'index des docs n8n réorganisé en 2026, le pacte ALMA signé qui contredisait la mémoire, les tailles réelles sur
+ollama.com qui ont éliminé 11 candidats sur 15. Donc, avant de lancer l'étage 1 :
+- ouvre la page index de la doc officielle, l'écran du compte concerné (tarif, abonnement), ou le document
+  interne qui gouverne la décision (contrat, pacte, facture), et donne ce que tu y lis aux agents ;
+- toute mesure mécanique possible (taille, prix, date, version) se fait AVANT le fan-out, pas après ;
+- **une page en 403 pour WebFetch ou curl s'ouvre dans le navigateur intégré** (`mcp__Claude_Browser__navigate`
+  puis `get_page_text`). C'est ce qui a confirmé ou corrigé 6 affirmations sur help.openai.com et perplexity.ai.
+  Jamais d'affirmation forte tirée du résumé d'une page qu'on n'a pas pu ouvrir.
+
+### 3. QUALITÉ NON NÉGOCIABLE : l'étage 2 tourne toujours hors mode lite
+
+4 runs sur 18 ont sauté les responsables qualité et fait la triangulation à la main. Hors depth `lite`, l'étage 2
+tourne, point. S'il n'a pas pu tourner, **la première ligne du rapport le dit** (« étage 2 non exécuté, raison ») et
+le score de boucle est plafonné à 70. Un agent de l'étage 1 revenu en échec réseau se relance **une fois** avant la
+synthèse ; au deuxième échec, son angle est déclaré manquant dans le rapport.
+
 ## Model-tiering & discipline de tokens (pour l'invoquer souvent sans exploser)
 
 Chaque rôle tourne sur le modèle le moins cher qui fait bien le job — passe `model` à chaque appel `Agent` :

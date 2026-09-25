@@ -73,6 +73,27 @@ collecteur YouTube (transcriptions) en plus de Reddit et X. Sur un outil ou un t
 primaire est l'écran du compte réel, pas la page marketing : le 23/09, « Indy gratuit suffit »,
 lu sur une page tarifs, a été démenti par le compte le lendemain.
 
+## 🔴 FAITS ÉTABLIS AVANT LE BRIEF, SINON LE WORKFLOW REFUSE (24/09/2026)
+
+**Mesure du 24/09 sur 49 runs : 16 conseils ont raté sur une prémisse, aucun sur le raisonnement.** Le brief
+avait été écrit depuis le vault, la mémoire ou une page marketing : grille Asphere périmée, Capstone à 900 €
+classé hallucination par la triangulation parce que le brief l'omettait, ARE de Clément déjà à zéro, devis
+Ça Compte Pour Moi présenté comme jamais reçu, offre Swapn non réconciliée avec le fil.
+
+**Donc, avant d'écrire la moindre consigne d'angle** :
+1. Ouvre la **source primaire** de chaque entité nommée : le fil Gmail entier (dernier entrant ET dernier
+   sortant), l'écran du compte (facturation, abonnement, tarif réel), le document signé (pacte, contrat, devis).
+   Le vault sert à savoir quoi ouvrir, jamais à dire ce qui est vrai.
+2. Écris **5 à 15 FAITS ÉTABLIS**, une ligne chacun, avec sa source : `Devis 4 200 € HT envoyé le 18/09 (Gmail 19a2f…)`.
+   Chaque montant, chaque date, chaque état (signé, payé, refusé, en attente) se relit à la source à ce moment-là.
+3. Passe-les au Workflow dans `faits_etablis`, avec `dossier_client: true` dès qu'un client, prospect,
+   prestataire ou partenaire est nommé. **Le Workflow refuse de partir** si la cible fait moins de 30
+   caractères, si args contient `SEE_FILE`, ou si `dossier_client` est vrai sans faits (testé le 24/09).
+4. Ces faits sont injectés dans chaque angle, chaque collecteur et la triangulation, qui a pour consigne de ne
+   jamais classer un fait établi en hallucination, et de marquer `non_verifiable` (pas `contredit`) ce qui en est absent.
+
+Les mêmes FAITS ÉTABLIS ouvrent la synthèse remise aux lentilles en Phase 2.
+
 ## 🔴 LE FILTRE DES 3 MOTIFS (en tete : mesure du 05/09/2026 sur les 6 conseils non suivis)
 
 Sur 15 conseils notes, 3 se sont reveles faux mais **6 n'ont jamais ete executes**. On mesurait le
@@ -138,6 +159,13 @@ Tu as déjà le contexte ; un agent isolé coûterait un aller-retour pour rien.
 - **régime** · **angles** : 3 à 15 selon régime, distincts et non-chevauchants, une consigne courte chacun
 - **besoin_web** : faits à vérifier en ligne, ou pur sujet interne (code/process/fichier) ? ⚠️ `true` **arme
   automatiquement le terrain + la triangulation**
+- **faits_établis** : voir le bloc 🔴 FAITS ÉTABLIS en tête. Sans eux, pas de Workflow.
+- **état des routes** (si `besoin_web`, 24/09/2026) : lis `~/.claude/scrapling/_etat_routes.json` (daté,
+  réécrit chaque matin) AVANT de cadrer le terrain, et écris dans le brief ce qui est mort ce jour-là. Le
+  24/09 : recherche X morte (`x_recherche: false`), routes Reddit sous-reddit, recherche et commentaires
+  vivantes. Un terrain découvert mort en cours de route a coûté 7 runs sur 49 (Reddit en 429, triangulation
+  faite à la main). Si le fichier date de plus d'un jour : `python3 ~/.claude/scrapling/collect.py doctor`.
+  Un collecteur revenu en 429 se relance **une fois** avant la triangulation, jamais zéro, jamais plus.
 - **cadrage terrain** (si `besoin_web`) : **ne devine plus, mesure**. Lance
   `python3 ~/.claude/scrapling/cadrage_terrain.py "<le sujet>"`, qui rend les communautés Reddit réelles
   triées par pertinence, les fils Hacker News les plus commentés, les projets actifs et des formulations de
@@ -217,6 +245,8 @@ Passe **par le Workflow** : les rapports bruts restent hors de ton contexte, le 
 ```
 Workflow({ name: 'conseil-agents-recherche', args: {
   cible, besoin_web, regime,
+  dossier_client: true,                       // dès qu'une entité réelle est nommée
+  faits_etablis: [ "fait + source (ID Gmail, date, écran)", … ],   // 5 à 15, texte en clair, jamais SEE_FILE
   angles: [ { key: "sceptique", prompt: "<consigne>" }, … ],
   terrain: { subreddits: [...], comptes_x: [...], requetes: [...] }
 }})
@@ -364,6 +394,15 @@ S'il n'y a rien de lourd, tu fais quand même un check rapide et tu le dis en un
 
 ## Phase 4 — Batch AVAL (★ sortie garantie, jamais sautée)
 
+🔴 **BATCH AVAL COURT (24/09/2026, 5 runs sur 49 refusés ou incompris).** Le 24/09, un batch de 4 questions
+sur la TVA a été refusé, trop long pour un Clément perdu ; le 13/09, un batch rédigé en anglais n'a pas été
+compris. Donc :
+1. **Le verdict d'abord, en une phrase, dans le texte de la réponse**, avant l'appel `AskUserQuestion`.
+2. **2 questions au maximum** dans ce batch, quel que soit le régime. Le reste se tranche seul et s'annonce
+   en une ligne, ou va dans le livrable.
+3. **Relis chaque question et chaque option avant l'appel : tout mot anglais se traduit** (accents en clair).
+4. Si Clément vient de dire qu'il est perdu : pas de batch du tout, une explication pas à pas.
+
 **C'est LE but du skill** : après le débat, ça finit **toujours** par un batch d'options **« (Recommandé) »**. Questions
 fermées, chaque recommandation **sourcée sur le débat / la triangulation / le vault**, jamais une supposition, l'option
 recommandée en premier. Porte sur ce que le conseil n'a pas tranché + les next steps.
@@ -390,6 +429,8 @@ conséquences, un arbitrage où plusieurs options sont également défendables, 
 Ce qui n'y va plus : les réglages techniques évidents, les choix où une option domine clairement, les
 confirmations de ce qu'il vient lui-même de demander.
 
+⚠️ Le plancher par régime de la Phase 0.5 vaut pour le batch AMONT. En aval, le plafond est de 2 questions
+(bloc 🔴 BATCH AVAL COURT ci-dessus), et un seul batch utile vaut mieux que zéro.
 ⚠️ Ceci ne supprime PAS le plancher de questions par régime : il le **rend plus dur à atteindre**. Si après ce
 filtre il ne reste plus assez de vraies questions pour remplir le plancher, c'est le signal que le sujet est
 déjà tranché : dis-le, et ne complète pas avec des questions de remplissage.
