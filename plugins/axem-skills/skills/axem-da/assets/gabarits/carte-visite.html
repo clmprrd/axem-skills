@@ -17,7 +17,6 @@
   .verso .co { position: absolute; left: 11mm; bottom: 10mm; font-size: 7.5pt; line-height: 1.6; color: var(--grey); }
   .verso .co b { color: var(--ink); font-weight: 600; }
   .verso .wm { position: absolute; right: 11mm; bottom: 10mm; font-size: 13pt; color: var(--blue); }
-  .verso .sq2 { position: absolute; right: 11mm; top: 12mm; font-size: 6pt; color: var(--blue); }
 </style></head><body>
 <div id="d"></div>
 <script>
@@ -26,7 +25,7 @@
   const P = q.get('nom') || 'Prénom Nom';
   document.getElementById('d').innerHTML = `
   <div class="c recto"><span class="g f">A</span><span class="wm">axem<sup>IA</sup></span><span class="tag i">Votre partenaire IA, de A à Z.</span></div>
-  <div class="c verso"><span class="sq2"><i></i><i></i></span><span class="n f">${P}</span><span class="r kicker">${q.get('role') || 'Cofondateur, AXEM IA'}</span>
+  <div class="c verso"><span class="n f">${P}</span><span class="r kicker">${q.get('role') || 'Cofondateur, AXEM IA'}</span>
     <div class="co"><b>${q.get('tel') || 'TÉLÉPHONE À COMPLÉTER'}</b><br>${q.get('mail') || 'MAIL À COMPLÉTER'}<br>axem-ia.fr</div>
     <span class="wm">axem<sup>IA</sup></span></div>`;
 </script>

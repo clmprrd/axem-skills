@@ -76,6 +76,11 @@ OSA
 
 maintenant=$(date +%s)
 
+# OBSERVATION du 25/09/2026 (audit) : second detecteur sans battement, lu dans l'etat du planificateur
+# lui-meme. Journalise seulement, n'alerte pas. S'il concorde une semaine avec le battement, il le remplace
+# et la tache heartbeat-planificateur (168 sessions/sem, ~470 k tokens chacune) s'arrete.
+/usr/bin/python3 "$(dirname "$0")/creneaux-rates.py" >> "$LOG_DIR/creneaux-rates.log" 2>&1
+
 # Pas de fichier du tout : le heartbeat n'a jamais tourne. On ne crie pas au premier passage,
 # on cree le fichier a l'heure courante et on laisse une chance au premier battement.
 if [ ! -f "$BATTEMENT" ]; then

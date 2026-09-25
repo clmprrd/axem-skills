@@ -26,7 +26,8 @@ Tout support qui porte la marque AXEM part de ce skill. On ne réinvente ni les 
 - **Logo** : le mot « axem » en Fraunces 900 suivi de « IA » en exposant Instrument Sans 700 (classe `.wm` de `axem-kit.css`). Bleu sur clair, crème sur bleu ou encre. PNG prêts dans `assets/logo/`. Ce n'est PAS le masque PNG d'origine d'Alexis (décision du 24/09).
 - **Accroche verrouillée** : « Votre partenaire IA, de A à Z. »
 - **Le nom** : AX d'Alexis, EM de Clément, et IA. Titre des deux associés : « Cofondateur, AXEM IA ».
-- **Motifs** : les deux carrés (un plein, un vide, classe `.sq2`), le A et le Z géants en filigrane, la grille fine sur crème.
+- **Motifs** : le A et le Z géants en filigrane, la grille fine sur crème.
+- **Les deux carrés ne font plus partie de la DA** (décision de Clément, 25/09/2026) : ne jamais les réintroduire.
 - **Proportions** : environ 60 % crème ou blanc, 30 % bleu, 10 % encre. Bleu en aplat, jamais de dégradé.
 
 ## Gabarits disponibles
@@ -45,7 +46,7 @@ Tout support qui porte la marque AXEM part de ce skill. On ne réinvente ni les 
 
 Photos des associés : `kit/_src/img/` (jamais copiées dans le skill, qui reste partageable). Dans le kit, sans équivalent ici car trop lourds ou nominatifs : le deck de base (`kit/deck/`, PDF + PowerPoint), les t-shirts (`kit/textile/`), Skool (`kit/skool/`) et les signatures mail (`kit/signature/`).
 
-Nouveau support sans gabarit : créer une page HTML qui charge `axem-kit.css`, utiliser ses classes (`.f`, `.i`, `.kicker`, `.wm`, `.sq2`, `.bg-blue`, `.bg-cream`, `.bg-ink`), rendre avec `render.py`, puis ajouter le gabarit au kit et à la cartographie.
+Nouveau support sans gabarit : créer une page HTML qui charge `axem-kit.css`, utiliser ses classes (`.f`, `.i`, `.kicker`, `.wm`, `.bg-blue`, `.bg-cream`, `.bg-ink`), rendre avec `render.py`, puis ajouter le gabarit au kit et à la cartographie.
 
 ## Règles de production
 

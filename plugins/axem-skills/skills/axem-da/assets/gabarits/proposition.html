@@ -33,7 +33,6 @@
   .cover .who b { display: block; font-size: 10pt; }
   .cover .tag { position: absolute; right: 20mm; bottom: 20mm; font-size: 13pt; text-align: right; }
   .cover .giant { position: absolute; right: -14mm; top: 20mm; font-size: 310pt; color: var(--blue-deep); line-height: 0.8; }
-  .cover .sq2 { position: absolute; right: 20mm; bottom: 34mm; font-size: 10pt; }
 
   /* Contexte */
   .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; margin-top: 9mm; }
@@ -120,7 +119,6 @@ document.getElementById('doc').innerHTML = `
   <h1 class="client f">${esc(D.client)}</h1>
   <p class="obj i" style="color:var(--cream)">${esc(D.objet)}</p>
   <div class="who"><b>À l'attention de</b>${esc(D.interlocuteur)}</div>
-  <span class="sq2"><i></i><i></i></span>
   <span class="tag i">Votre partenaire IA, de A à Z.</span>
 </section>
 ${D.mode === 'devis' ? '' : `

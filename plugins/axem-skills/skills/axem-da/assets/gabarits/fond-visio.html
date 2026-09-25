@@ -14,7 +14,6 @@
   .who b { font-weight: 700; display: block; font-size: 30px; }
   .kick { position: absolute; right: 92px; top: 92px; font-size: 20px; text-align: right; }
   .url { position: absolute; right: 92px; top: 132px; font-size: 22px; text-align: right; opacity: 0.8; }
-  .sqs { position: absolute; right: 92px; bottom: 88px; font-size: 26px; }
   /* Grille fine sur le crème, rappel du système */
   .grid { position: absolute; inset: 0; background-image:
       linear-gradient(to right, var(--line) 1px, transparent 1px),
@@ -28,10 +27,10 @@
   body[data-v="bleu"] .giant { color: var(--blue-deep); }
   body[data-v="creme"] .bg { background: var(--cream); color: var(--ink); }
   body[data-v="creme"] .giant { color: #E7E8F7; }
-  body[data-v="creme"] .logo, body[data-v="creme"] .sqs, body[data-v="creme"] .kick { color: var(--blue); }
+  body[data-v="creme"] .logo, body[data-v="creme"] .kick { color: var(--blue); }
   body[data-v="encre"] .bg { background: var(--ink); color: var(--cream); }
   body[data-v="encre"] .giant { color: #151925; }
-  body[data-v="encre"] .sqs, body[data-v="encre"] .kick { color: var(--blue); }
+  body[data-v="encre"] .kick { color: var(--blue); }
   body[data-v="encre"] .logo sup { color: var(--blue); }
   body:not([data-v="creme"]) .grid { display: none; }
 </style></head>
@@ -44,7 +43,6 @@
   <div class="who" id="who"></div>
   <span class="kick kicker">Votre partenaire IA, de A à Z</span>
   <span class="url">axem-ia.fr</span>
-  <span class="sqs sq2"><i></i><i></i></span>
 </div>
 <script>
   // #v=bleu|creme|encre & nom=Prénom Nom & role=Cofondateur, AXEM IA (nom facultatif)

@@ -34,11 +34,6 @@ body { font-family: 'Instrument Sans', system-ui, sans-serif; color: var(--ink);
 .wm { font-family: 'Fraunces', serif; font-weight: 900; font-variation-settings: "SOFT" 100, "WONK" 0, "opsz" 144; letter-spacing: -0.02em; line-height: 1; display: inline-flex; align-items: flex-start; white-space: nowrap; }
 .wm sup { font-family: 'Instrument Sans', sans-serif; font-weight: 700; font-size: 0.26em; letter-spacing: 0.02em; line-height: 1; margin-top: 0.62em; margin-left: 0.3em; vertical-align: baseline; }
 
-/* Le motif des deux carrés, un plein, un vide */
-.sq2 { display: inline-flex; gap: 0.45em; }
-.sq2 i { display: block; width: 1em; height: 1em; background: currentColor; }
-.sq2 i + i { background: transparent; box-shadow: inset 0 0 0 0.12em currentColor; }
-
 .bg-blue { background: var(--blue); color: var(--cream); }
 .bg-cream { background: var(--cream); color: var(--ink); }
 .bg-ink { background: var(--ink); color: var(--cream); }
