@@ -180,6 +180,10 @@ de SKILL.md sur le disque : les invoquer, ne pas supposer leur contenu.
 
 La console est la page ou Clement lit ses scripts au teleprompteur et suit chaque video :
 https://claude.ai/code/artifact/ea20780b-cb5a-44af-bc24-0c295f1d1c0d
+(meme artifact que https://claude.ai/artifact/VuqXzrJnN9EwCudg5rUgEQ). Depuis le 26/09/2026 c'est la
+**Console Instagram**, tableau unique qui porte aussi les carrousels et les pubs Stories : a chaque
+republication, repasser `--carrousels` et `--pubs` (commande complete dans `instagram-bout-en-bout/SKILL.md`),
+sinon les onglets Carrousels et Pubs restent tels quels mais leurs images ne sont pas renvoyees.
 
 **Quelle console ?** Si le fichier `~/.claude/skills/veille-reels-ig/console/URL` existe, son
 contenu (une URL `claude.ai/code/artifact/...`) remplace l'URL ci-dessus partout. C'est ainsi

@@ -1,4 +1,4 @@
-<title>Console Reels Axem</title>
+<title>Console Instagram</title>
 <div id="cr-root">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,7 +44,9 @@
   #cr-root .save.err{color:var(--accent)}
 
   .tabs{display:flex;border:1px solid var(--rule);background:var(--surface);
-        margin:22px 0 0;border-radius:2px;overflow:hidden;width:fit-content}
+        margin:22px 0 0;border-radius:2px;overflow-x:auto;max-width:100%;width:fit-content;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tabs button{flex:0 0 auto;white-space:nowrap}
   .tabs button{font:600 14px "IBM Plex Sans",sans-serif;padding:9px 20px;border:0;background:transparent;
     color:var(--ink-2);cursor:pointer;border-right:1px solid var(--rule)}
   .tabs button:last-child{border-right:0}
@@ -140,15 +142,52 @@
   .pl-barre .mpm{font:500 13px "IBM Plex Mono",monospace;color:#A6ACAE;min-width:78px;text-align:center}
   .copie{width:100%;min-height:140px;font:15px/1.5 "IBM Plex Sans",sans-serif;padding:10px;border:1px solid var(--rule);background:var(--ground);color:var(--ink);margin-top:12px}
   .copie[hidden]{display:none}
+
+  /* Carrousels et pubs (ajoutés le 26/09/2026 : une seule console pour tout Instagram). */
+  .s-a_publier{--c:var(--ink-3);--cs:var(--surface-2)} .s-ecarte{--c:var(--ink-3);--cs:var(--surface-2)}
+  .s-a_tester{--c:var(--ink-3);--cs:var(--surface-2)} .s-choisie{--c:var(--blue);--cs:var(--blue-soft)}
+  .s-en_ligne{--c:var(--warn);--cs:var(--warn-soft)} .s-gagnante{--c:var(--good);--cs:var(--good-soft)}
+  .s-ecartee{--c:var(--ink-3);--cs:var(--surface-2)}
+  .cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:16px;margin-top:12px}
+  .carte{border:1px solid var(--rule);background:var(--surface);display:flex;flex-direction:column;min-width:0}
+  .carte.fait{opacity:.6}
+  .carte .haut{display:flex;align-items:center;gap:8px;padding:10px 12px;font-size:12px;color:var(--ink-3);flex-wrap:wrap}
+  .carte .haut .th{font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+  .carte .haut .pos{margin-left:auto;font:500 12px "IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+  .prochain{background:var(--accent);color:#fff;font-weight:600;padding:2px 8px;border-radius:999px;font-size:11.5px}
+  .glisse{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;background:var(--surface-2)}
+  .glisse::-webkit-scrollbar{display:none}
+  .glisse img{flex:0 0 100%;width:100%;max-width:100%;aspect-ratio:4/5;object-fit:cover;scroll-snap-align:center;display:block}
+  .pts{display:flex;justify-content:center;gap:5px;padding:8px 0 0}
+  .pts i{width:6px;height:6px;border-radius:50%;background:var(--rule)}
+  .pts i.on{background:var(--accent)}
+  .carte .corps{padding:10px 12px 14px;display:flex;flex-direction:column;gap:10px}
+  .carte .seg{margin:0}
+  .carte .meta{margin:0}
+  .carte .dm{font-size:13.5px;color:var(--ink-2);margin:0}
+  .carte .dm b{color:var(--ink)}
+  .carte .lg{white-space:pre-wrap;font-size:14px;background:var(--surface-2);padding:10px 12px;margin:0;max-height:7.5em;overflow:hidden}
+  .carte .lg.ouverte{max-height:none}
+  .carte .act{display:flex;gap:6px;flex-wrap:wrap}
+  .carte .act button.btn{padding:7px 12px;font-size:13px}
+  .pubs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:12px}
+  .pub{border:1px solid var(--rule);background:var(--surface);display:flex;flex-direction:column;min-width:0}
+  .pub img{width:100%;max-width:100%;aspect-ratio:9/16;object-fit:cover;display:block;background:var(--surface-2)}
+  .pub .pi{padding:8px 10px 10px;display:flex;flex-direction:column;gap:6px;font-size:12.5px}
+  .pub .pi .num{font-size:12px}
+  .pub select{font-size:13px;padding:6px 8px}
+  .manque{padding:10px 14px;border:1px solid var(--accent);color:var(--accent);background:var(--accent-soft);margin-top:12px;font-size:14px}
 </style>
 
 <div class="wrap">
-  <h1>Console Reels Axem</h1>
+  <h1>Console Instagram</h1>
   <p class="sub" id="sub"></p>
   <p class="save" id="save" aria-live="polite"></p>
 
   <div class="tabs" role="tablist">
     <button role="tab" id="t-tour" aria-selected="true" aria-controls="p-tour">Tournage</button>
+    <button role="tab" id="t-carr" aria-selected="false" aria-controls="p-carr">Carrousels</button>
+    <button role="tab" id="t-pubs" aria-selected="false" aria-controls="p-pubs">Pubs</button>
     <button role="tab" id="t-videos" aria-selected="false" aria-controls="p-videos">Vidéos</button>
     <button role="tab" id="t-suivi" aria-selected="false" aria-controls="p-suivi">Suivi</button>
   </div>
@@ -200,6 +239,23 @@
     </div>
   </section>
 
+  <section id="p-carr" role="tabpanel" aria-labelledby="t-carr" hidden>
+    <p class="note"><b>Publication automatique, un par jour</b>
+      Le carrousel marqué « Prochain » part tout seul au prochain passage de la tâche programmée, puis passe en
+      « Publié ». « Écarté » le sort de la file sans le supprimer. Fais glisser les slides pour les relire.</p>
+    <div class="chips" id="cchips" role="group" aria-label="Filtrer les carrousels"></div>
+    <p class="manque" id="cmanque" hidden>Des images ne se chargent pas : relance la mise à jour de la console depuis Claude.</p>
+    <div class="cartes" id="cartes"></div>
+  </section>
+
+  <section id="p-pubs" role="tabpanel" aria-labelledby="t-pubs" hidden>
+    <p class="note"><b>Pubs Stories</b>
+      Visuels 1080 × 1920 prêts pour Meta, bas de l'image laissé libre pour le bouton « En savoir plus ». Le statut
+      sert de mémoire : ce qui est choisi pour un test, ce qui tourne, ce qui a gagné.</p>
+    <div class="chips" id="pchips" role="group" aria-label="Filtrer les pubs"></div>
+    <div class="pubs" id="pubs"></div>
+  </section>
+
   <section id="p-videos" role="tabpanel" aria-labelledby="t-videos" hidden>
     <p class="note"><b>Comment les statuts avancent</b>
       « Tourné », « Monté » et « Prêt » se mettent à jour tout seuls quand le skill de veille repasse :
@@ -246,10 +302,18 @@
   var root = document.getElementById("cr-root");
   // Source intacte capturee AVANT tout rendu : c'est elle qu'on republie, jamais le DOM vivant.
   var SOURCE = root.outerHTML;
-  var TETE = '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Console Reels Axem</title></head><body>';
+  var TETE = '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Console Instagram</title></head><body>';
   var ETAT = JSON.parse(document.getElementById("etat").textContent);
   ETAT.statuts = ETAT.statuts || {};
   ETAT.posts = ETAT.posts || [];
+  ETAT.carrousels = ETAT.carrousels || []; ETAT.cstatuts = ETAT.cstatuts || {};
+  ETAT.pubs = ETAT.pubs || []; ETAT.pstatuts = ETAT.pstatuts || {};
+  var CORDRE = ["a_publier", "publie", "ecarte"], CLIB = {a_publier: "À publier", publie: "Publié", ecarte: "Écarté"};
+  var PORDRE = ["a_tester", "choisie", "en_ligne", "gagnante", "ecartee"];
+  var PLIB = {a_tester: "À tester", choisie: "Choisie pour un test", en_ligne: "En ligne", gagnante: "Gagnante", ecartee: "Écartée"};
+  var cstat = function(k){ var x = ETAT.cstatuts[k]; return x && x.s ? x.s : "a_publier"; };
+  var pstat = function(n){ var x = ETAT.pstatuts[String(n)]; return x && x.s ? x.s : "a_tester"; };
+  var cfiltre = "a_publier", pfiltre = "tous";
   var S = ETAT.scripts || [];
   var ORDRE = ["a_tourner", "tourne", "monte", "pret", "publie"];
   var LIB = {a_tourner: "À tourner", tourne: "Tourné", monte: "Monté", pret: "Prêt", publie: "Publié"};
@@ -258,6 +322,7 @@
   var auj = function(){ return new Date().toISOString().slice(0, 10); };
   var statut = function(n){ var x = ETAT.statuts[String(n)]; return x && x.s ? x.s : "a_tourner"; };
   var nom = function(s){ return s.titre || s.mot || ("Script " + s.n); };
+  var formeFichiers = null;
   var filtre = "tous", courant = null, api = null, lecture = false, minuterie = null, essais = 0, taille = 30, mpm = 160;
 
   try {
@@ -275,7 +340,9 @@
     var lots = {};
     S.forEach(function(x){ var l = x.lot || "sans lot"; lots[l] = (lots[l] || 0) + 1; });
     var parts = Object.keys(lots).map(function(l){ return l + " (" + lots[l] + ")"; });
-    $("#sub").textContent = S.length + " scripts, " + parts.join(", ") +
+    var cr = ETAT.carrousels.filter(function(c){ return cstat(c.k) === "a_publier"; }).length;
+    $("#sub").textContent = S.length + " scripts, " + parts.join(", ") + ". " + ETAT.carrousels.length + " carrousels dont " + cr +
+      " à publier, " + ETAT.pubs.length + " visuels de pub" +
       (ETAT.maj ? ". Dernière mise à jour par la veille le " + ETAT.maj.split("-").reverse().join("/") + "." : ".");
   }
 
@@ -484,7 +551,106 @@
     }
   }
 
-  function tout(){ enTete(); rendreChips(); rendreTour(); rendreVideos(); rendreSuivi(); }
+  function puces(box, ordre, lib, compte, courantF, attr){
+    box.textContent = "";
+    ["tous"].concat(ordre).forEach(function(o){
+      var b = document.createElement("button");
+      b.type = "button"; b.setAttribute("aria-pressed", String(courantF === o)); b.dataset[attr] = o;
+      if (o !== "tous") { var d = document.createElement("i"); d.className = "dot s-" + o; b.appendChild(d); }
+      b.appendChild(document.createTextNode(o === "tous" ? "Tous" : lib[o]));
+      var n = document.createElement("b"); n.textContent = compte(o); b.appendChild(n);
+      box.appendChild(b);
+    });
+  }
+
+  function segment(ordre, lib, actuel, attr, cle){
+    var g = document.createElement("div"); g.className = "seg"; g.setAttribute("role", "group"); g.setAttribute("aria-label", "Statut");
+    ordre.forEach(function(o){
+      var b = document.createElement("button"); b.type = "button"; b.className = "s-" + o;
+      b.dataset[attr] = o; b.dataset.cle = cle; b.setAttribute("aria-pressed", String(actuel === o)); b.disabled = lecture;
+      var d = document.createElement("i"); d.className = "dot s-" + o; b.appendChild(d);
+      b.appendChild(document.createTextNode(lib[o])); g.appendChild(b);
+    });
+    return g;
+  }
+
+  // Ordre de la file automatique : lots du plus ancien au plus récent, puis numéro du carrousel.
+  function fileCarrousels(){
+    return ETAT.carrousels.slice().sort(function(a, b){ return a.k < b.k ? -1 : a.k > b.k ? 1 : 0; });
+  }
+
+  function rendreCarrousels(){
+    var F = fileCarrousels(), prochain = F.find(function(c){ return cstat(c.k) === "a_publier"; });
+    puces($("#cchips"), CORDRE, CLIB, function(o){
+      return o === "tous" ? F.length : F.filter(function(c){ return cstat(c.k) === o; }).length;
+    }, cfiltre, "cf");
+    var box = $("#cartes"); box.textContent = "";
+    var vus = F.filter(function(c){ return cfiltre === "tous" || cstat(c.k) === cfiltre; });
+    if (!vus.length) { var v = document.createElement("div"); v.className = "empty"; v.textContent = "Aucun carrousel dans ce statut."; box.appendChild(v); return; }
+    vus.forEach(function(c){
+      var st = cstat(c.k), x = ETAT.cstatuts[c.k];
+      var a = document.createElement("article"); a.className = "carte" + (st === "a_publier" ? "" : " fait");
+      var h = document.createElement("div"); h.className = "haut";
+      var th = document.createElement("span"); th.className = "th"; th.textContent = c.theme; h.appendChild(th);
+      if (prochain && prochain.k === c.k) { var pr = document.createElement("span"); pr.className = "prochain"; pr.textContent = "Prochain"; h.appendChild(pr); }
+      if (x && x.d && st !== "a_publier") { var dd = document.createElement("span"); dd.textContent = CLIB[st] + " le " + x.d.split("-").reverse().join("/") + (x.auto ? " (auto)" : ""); h.appendChild(dd); }
+      var pos = document.createElement("span"); pos.className = "pos"; pos.textContent = "1 / " + c.images.length; h.appendChild(pos);
+      a.appendChild(h);
+      var g = document.createElement("div"); g.className = "glisse";
+      c.images.forEach(function(src, i){
+        var im = document.createElement("img"); im.src = src; im.alt = "Slide " + (i + 1) + " : " + c.id;
+        im.loading = i ? "lazy" : "eager"; im.decoding = "async";
+        im.addEventListener("error", function(){ $("#cmanque").hidden = false; });
+        g.appendChild(im);
+      });
+      a.appendChild(g);
+      var pts = document.createElement("div"); pts.className = "pts";
+      c.images.forEach(function(_, i){ var d = document.createElement("i"); if (!i) d.className = "on"; pts.appendChild(d); });
+      a.appendChild(pts);
+      g.addEventListener("scroll", function(){
+        var i = Math.round(g.scrollLeft / g.clientWidth);
+        pos.textContent = (i + 1) + " / " + c.images.length;
+        [].forEach.call(pts.children, function(p, k){ p.className = k === i ? "on" : ""; });
+      }, {passive: true});
+      var co = document.createElement("div"); co.className = "corps";
+      co.appendChild(segment(CORDRE, CLIB, st, "cs", c.k));
+      var mt = document.createElement("div"); mt.className = "meta";
+      var kw = document.createElement("span"); kw.className = "kw"; kw.textContent = c.mot; mt.appendChild(kw);
+      mt.appendChild(document.createTextNode("mot-clé à faire commenter")); co.appendChild(mt);
+      var dm = document.createElement("p"); dm.className = "dm"; var db = document.createElement("b"); db.textContent = "En DM : ";
+      dm.appendChild(db); dm.appendChild(document.createTextNode(c.ressource)); co.appendChild(dm);
+      var lg = document.createElement("p"); lg.className = "lg"; lg.textContent = c.legende; co.appendChild(lg);
+      var ac = document.createElement("div"); ac.className = "act";
+      [["leg", "Copier la légende"], ["mot", "Copier le mot"], ["plus", "Tout lire"]].forEach(function(b){
+        var bt = document.createElement("button"); bt.type = "button"; bt.className = "btn"; bt.dataset.ca = b[0]; bt.dataset.cle = c.k; bt.textContent = b[1]; ac.appendChild(bt);
+      });
+      co.appendChild(ac); a.appendChild(co); box.appendChild(a);
+    });
+  }
+
+  function rendrePubs(){
+    puces($("#pchips"), PORDRE, PLIB, function(o){
+      return o === "tous" ? ETAT.pubs.length : ETAT.pubs.filter(function(p){ return pstat(p.n) === o; }).length;
+    }, pfiltre, "pf");
+    var box = $("#pubs"); box.textContent = "";
+    ETAT.pubs.filter(function(p){ return pfiltre === "tous" || pstat(p.n) === pfiltre; }).forEach(function(p){
+      var d = document.createElement("div"); d.className = "pub";
+      var im = document.createElement("img"); im.src = p.image; im.alt = "Pub " + p.n + " : " + p.format; im.loading = "lazy"; d.appendChild(im);
+      var pi = document.createElement("div"); pi.className = "pi";
+      var t = document.createElement("span"); t.className = "num"; t.textContent = "n°" + p.n + " · " + p.format; pi.appendChild(t);
+      var s = document.createElement("select"); s.dataset.pn = String(p.n); s.disabled = lecture; s.setAttribute("aria-label", "Statut de la pub " + p.n);
+      PORDRE.forEach(function(o){ var op = document.createElement("option"); op.value = o; op.textContent = PLIB[o]; if (pstat(p.n) === o) op.selected = true; s.appendChild(op); });
+      pi.appendChild(s); d.appendChild(pi); box.appendChild(d);
+    });
+  }
+
+  function copierTexte(txt, b, lib){
+    function fait(m){ b.textContent = m; setTimeout(function(){ b.textContent = lib; }, 1800); }
+    try { navigator.clipboard.writeText(txt).then(function(){ fait("Copié"); }, function(){ fait("Sélectionne le texte"); }); }
+    catch (e) { fait("Sélectionne le texte"); }
+  }
+
+  function tout(){ enTete(); rendreChips(); rendreTour(); rendreCarrousels(); rendrePubs(); rendreVideos(); rendreSuivi(); }
 
   function indiquer(t, err){ var e = $("#save"); e.textContent = t; e.classList.toggle("err", !!err); }
 
@@ -504,7 +670,15 @@
   function publier(){
     var json = JSON.stringify(ETAT).replace(/</g, "\\u003c");
     var corps = SOURCE.replace(/(<script[^>]*id="etat"[^>]*>)[\s\S]*?(<\/script>)/, function(m, a, b){ return a + json + b; });
-    api.publish(TETE + corps + "</body></html>").then(function(){
+    var page = TETE + corps + "</body></html>";
+    // Forme « fichiers » d'abord : elle ne remplace que index.html et garde les images jointes.
+    // Elle est refusée sur une page partagée publiquement : on retombe alors sur la forme html.
+    var envoi = formeFichiers === false ? api.publish(page) : api.publish({"index.html": page}).then(function(r){ formeFichiers = true; return r; }, function(e){
+      var code = e && e.code;
+      if (formeFichiers === null && (code === "capability_disabled" || code === "invalid" || code === "invalid_argument" || code === "unsupported")) { formeFichiers = false; return api.publish(page); }
+      throw e;
+    });
+    envoi.then(function(){
       essais = 0; indiquer("Enregistré.");
     }, function(e){
       var code = e && e.code;
@@ -518,6 +692,13 @@
     });
   }
 
+  function poserCarrousel(k, s){
+    if (lecture) return;
+    if (s === "a_publier") delete ETAT.cstatuts[k];
+    else ETAT.cstatuts[k] = {s: s, d: auj(), auto: false};
+    tout(); planifier();
+  }
+
   function poser(n, s){
     if (lecture) return;
     if (s === "a_tourner") delete ETAT.statuts[String(n)];
@@ -528,6 +709,16 @@
   root.addEventListener("click", function(e){
     var t = e.target.closest("button"); if (!t || !root.contains(t)) return;
     if (t.dataset.f) { filtre = t.dataset.f; courant = null; memoriser(); tout(); return; }
+    if (t.dataset.cf) { cfiltre = t.dataset.cf; rendreCarrousels(); return; }
+    if (t.dataset.pf) { pfiltre = t.dataset.pf; rendrePubs(); return; }
+    if (t.dataset.cs) { poserCarrousel(t.dataset.cle, t.dataset.cs); return; }
+    if (t.dataset.ca) {
+      var cc = ETAT.carrousels.find(function(x){ return x.k === t.dataset.cle; }); if (!cc) return;
+      if (t.dataset.ca === "leg") copierTexte(cc.legende, t, "Copier la légende");
+      if (t.dataset.ca === "mot") copierTexte(cc.mot, t, "Copier le mot");
+      if (t.dataset.ca === "plus") { var l = t.closest(".corps").querySelector(".lg"); l.classList.toggle("ouverte"); t.textContent = l.classList.contains("ouverte") ? "Replier" : "Tout lire"; }
+      return;
+    }
     var pb = {copier: copier, defiler: ouvrirPlein, "pl-go": basculer, "pl-rejouer": decompte, "pl-suivant": suivantPlein,
       "pl-fermer": fermerPlein, "pl-lent": function(){ changerMpm(-10); }, "pl-vite": function(){ changerMpm(10); },
       "pl-miroir": function(){ var m = $("#plein").classList.toggle("miroir"); t.setAttribute("aria-pressed", String(m)); }};
@@ -542,7 +733,8 @@
     }
     if (t.getAttribute("role") === "tab") {
       root.querySelectorAll('[role="tab"]').forEach(function(x){ x.setAttribute("aria-selected", String(x === t)); });
-      ["tour", "videos", "suivi"].forEach(function(p){ $("#p-" + p).hidden = t.id !== "t-" + p; });
+      ["tour", "carr", "pubs", "videos", "suivi"].forEach(function(p){ $("#p-" + p).hidden = t.id !== "t-" + p; });
+      try { localStorage.setItem("cr-onglet", t.id); } catch (e) {}
     }
   });
 
@@ -572,6 +764,13 @@
     $("#fv").value = ""; tout(); planifier();
   });
 
+  root.addEventListener("change", function(e){
+    var s = e.target; if (!s.dataset || !s.dataset.pn || lecture) return;
+    if (s.value === "a_tester") delete ETAT.pstatuts[s.dataset.pn];
+    else ETAT.pstatuts[s.dataset.pn] = {s: s.value, d: auj(), auto: false};
+    tout(); planifier();
+  });
+
   $("#pl-zone").addEventListener("click", basculer);
   $("#copie").addEventListener("focus", function(){ this.select(); });
 
@@ -579,6 +778,7 @@
   S.forEach(function(s){ var o = document.createElement("option"); o.value = String(s.n); o.textContent = "n" + s.n + " " + nom(s); sel.appendChild(o); });
   $("#fd").value = auj();
   tout();
+  try { var og = localStorage.getItem("cr-onglet"); var tb = og && root.querySelector("#" + og); if (tb && tb.getAttribute("role") === "tab") tb.click(); } catch (e) {}
 
   var c = window.claude;
   if (c && typeof c.use === "function") {

@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
-"""Met a jour la Console Reels Axem a partir de sa version EN LIGNE.
+"""Met a jour la Console Instagram (ex Console Reels Axem) a partir de sa version EN LIGNE.
+
+Depuis le 26/09/2026 la meme page porte aussi les carrousels et les pubs Stories :
+  --carrousels LOT.json   lot du skill carrousels-insta, deja rendu par rendu.py
+  --pubs pubs.json        liste des visuels de pub ({n, fichier, format, titre, statut})
+  --medias DIR            ou ecrire les images allegees ; DIR/files.json donne la carte
+                          {chemin publie: fichier source} a passer a `Artifact files`.
+Les statuts des carrousels (etat.cstatuts) et des pubs (etat.pstatuts) sont repris de la page
+en ligne comme ceux des scripts, jamais ecrases.
 
 Trois choses, dans cet ordre, sans jamais perdre ce que Clement a saisi dans la page :
   1. relit l'etat embarque dans la page publiee (scripts, statuts, posts) ;
@@ -18,7 +26,14 @@ Deux passages de suite sur les memes entrees donnent un fichier identique a l'oc
 """
 import argparse, datetime, hashlib, io, json, os, re, sys
 
+try:
+    from PIL import Image
+except ImportError:  # seulement requis avec --medias
+    Image = None
+
 ICI = os.path.dirname(os.path.abspath(__file__))
+VAULT = os.path.abspath(os.path.join(ICI, "..", "..", ".."))
+RENDUS = os.path.join(VAULT, "09-Marketing-LinkedIn", "carrousels-insta")
 GABARIT = os.path.join(os.path.dirname(ICI), "console", "console.template.html")
 ORDRE = ["a_tourner", "tourne", "monte", "pret", "publie"]
 VIDEO = re.compile(r"\.(mp4|mov|m4v)$", re.I)
@@ -123,6 +138,69 @@ def statut_dossier(d):
     return None
 
 
+def alleger(src, dst, largeur):
+    if os.path.exists(dst) and os.path.getmtime(dst) >= os.path.getmtime(src):
+        return
+    os.makedirs(os.path.dirname(dst), exist_ok=True)
+    im = Image.open(src).convert("RGB")
+    if im.width > largeur:
+        im = im.resize((largeur, round(im.height * largeur / im.width)), Image.LANCZOS)
+    im.save(dst, "JPEG", quality=80, optimize=True, progressive=True)
+
+
+def fusion_carrousels(etat, chemins, medias, carte):
+    """Ajoute ou rafraichit les carrousels des lots. Cle = lot/id ; le contenu vient du lot, le statut de la page."""
+    par_k = {c["k"]: c for c in etat["carrousels"]}
+    ajoutes = []
+    for chemin in chemins:
+        lot = json.loads(lire(chemin))
+        rendu = os.path.join(RENDUS, lot["nom"])
+        for c in lot["carrousels"]:
+            images = sorted(f for f in os.listdir(os.path.join(rendu, c["id"])) if f.endswith(".jpg")) \
+                if os.path.isdir(os.path.join(rendu, c["id"])) else []
+            if not images:
+                sys.exit("ERREUR : pas de rendu pour %s/%s, lancer rendu.py d'abord" % (lot["nom"], c["id"]))
+            k = lot["nom"] + "/" + c["id"]
+            rel = ["m/c/%s/%s" % (k, f) for f in images]
+            if medias:
+                for f, r in zip(images, rel):
+                    alleger(os.path.join(rendu, c["id"], f), os.path.join(medias, r), 720)
+                    carte[r] = os.path.join(medias, r)
+            o = {"k": k, "lot": lot["nom"], "id": c["id"], "theme": c.get("theme", ""), "mot": c.get("mot", ""),
+                 "ressource": c.get("ressource", ""), "legende": c.get("legende", ""), "images": rel}
+            if k not in par_k:
+                ajoutes.append(k)
+                etat["carrousels"].append(o)
+            else:
+                par_k[k].update(o)
+    return ajoutes
+
+
+def fusion_pubs(etat, chemin, medias, carte):
+    d = json.loads(lire(chemin))
+    base = os.path.dirname(os.path.abspath(os.path.expanduser(chemin)))
+    par_n = {p["n"]: p for p in etat["pubs"]}
+    ajoutes = []
+    for p in d["pubs"]:
+        src = os.path.join(base, p["fichier"])
+        if not os.path.exists(src):
+            sys.exit("ERREUR : visuel de pub introuvable : " + src)
+        rel = "m/p/%02d.jpg" % p["n"]
+        if medias:
+            alleger(src, os.path.join(medias, rel), 540)
+            carte[rel] = os.path.join(medias, rel)
+        o = {"n": p["n"], "format": p.get("format", ""), "titre": p.get("titre", ""), "image": rel}
+        if p["n"] not in par_n:
+            ajoutes.append(p["n"])
+            etat["pubs"].append(o)
+            if p.get("statut") and str(p["n"]) not in etat["pstatuts"]:
+                etat["pstatuts"][str(p["n"])] = {"s": p["statut"], "d": d.get("date", ""), "auto": True}
+        else:
+            par_n[p["n"]].update(o)
+    etat["pubs"].sort(key=lambda x: x["n"])
+    return ajoutes
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--live", required=True)
@@ -133,6 +211,9 @@ def main():
     ap.add_argument("--date", default=datetime.date.today().isoformat())
     ap.add_argument("--modifs", help='{"retirer": [n, ...], "remplacer": {"n": {"txt": ..., "titre": ..., "leg": ...}}}')
     ap.add_argument("--gabarit", default=GABARIT)
+    ap.add_argument("--carrousels", action="append", default=[])
+    ap.add_argument("--pubs")
+    ap.add_argument("--medias")
     a = ap.parse_args()
     racines = a.racines or ["~/Documents/videos"]
 
@@ -212,9 +293,20 @@ def main():
                                            "dossier": d.replace(os.path.expanduser("~"), "~")}
                 montes.append((n, actuel, trouve))
 
+    for cle, defaut in (("carrousels", []), ("pubs", []), ("cstatuts", {}), ("pstatuts", {})):
+        etat.setdefault(cle, defaut)
+    carte = {}
+    if a.medias and Image is None:
+        sys.exit("ERREUR : Pillow manquant, requis pour --medias")
+    c_ajoutes = fusion_carrousels(etat, a.carrousels, a.medias, carte)
+    p_ajoutes = fusion_pubs(etat, a.pubs, a.medias, carte) if a.pubs else []
+    if a.medias:
+        io.open(os.path.join(a.medias, "files.json"), "w", encoding="utf-8").write(
+            json.dumps(dict(sorted(carte.items())), ensure_ascii=False, indent=0))
+
     etat["statuts"] = {k: etat["statuts"][k] for k in sorted(etat["statuts"], key=int)}
     etat["version"] = 1
-    if ajoutes or montes or ancien or retires_ici or remplaces or json.dumps(etat, sort_keys=True, ensure_ascii=False) != avant:
+    if ajoutes or montes or ancien or retires_ici or remplaces or c_ajoutes or p_ajoutes or json.dumps(etat, sort_keys=True, ensure_ascii=False) != avant:
         etat["maj"] = a.date
     doc = lire(a.gabarit)
     if doc.count("/*ETAT*/") != 1:
@@ -229,7 +321,10 @@ def main():
         "codes_uniques": len(set(codes_)) == len(codes_), "sans_code": [s["n"] for s in etat["scripts"] if not s.get("code")],
         "ajoutes": ajoutes, "doublons_ignores": len(doublons), "statuts_montes": montes,
         "dossiers_orphelins": orphelins, "posts": len(etat["posts"]), "statuts": len(etat["statuts"]),
-        "migration_ancienne_console": ancien, "retires": retires_ici, "remplaces": remplaces, "maj": etat["maj"]}, ensure_ascii=False))
+        "migration_ancienne_console": ancien, "retires": retires_ici, "remplaces": remplaces, "maj": etat["maj"],
+        "carrousels": len(etat["carrousels"]), "carrousels_ajoutes": c_ajoutes,
+        "carrousels_publies": sum(1 for v in etat["cstatuts"].values() if v.get("s") == "publie"),
+        "pubs": len(etat["pubs"]), "pubs_ajoutees": p_ajoutes, "medias": len(carte)}, ensure_ascii=False))
 
 
 if __name__ == "__main__":
